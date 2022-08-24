@@ -25,6 +25,8 @@
     "req-flash": "^0.0.3"
   },
   "devDependencies": {
+    "mongoose-delete": "^0.5.4",
+    "mongoose-slug-generator": "^1.0.4",
     "node-sass": "^7.0.1"
   }
 }

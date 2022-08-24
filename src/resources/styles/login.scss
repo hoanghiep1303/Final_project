@@ -50,8 +50,8 @@
     // color: rgb(17, 99, 17);
 }
 
-input[type='email'],
-input[type='password'] {
+.validation-container input[type='email'],
+.validation-container input[type='password'] {
     border: none;
     outline: none;
     box-shadow: none;
@@ -64,7 +64,7 @@ input[type='password'] {
     box-shadow: none
 }
 
-img {
+.validation-container img {
     width: 40px;
     height: 40px;
     object-fit: cover;
@@ -72,7 +72,7 @@ img {
     position: relative
 }
 
-a[target='_blank'] {
+.validation-container a[target='_blank'] {
     position: relative;
     transition: all 0.1s ease-in-out
 }
@@ -99,7 +99,7 @@ a[target='_blank'] {
 //     border: 0 !important;
 // }
 
-input:focus {
+.validation-container input:focus {
     outline: 0 0 0 0 !important;
     box-shadow: 0 0 0 0 !important;
 

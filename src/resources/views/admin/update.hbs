@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="">
+            <div class="panel border bg-white">
+                <div class="panel-heading">
+                    <h3 class="pt-3 font-weight-bold">Update product</h3>
+                </div>
+                <div class="panel-body p-3">
+                    {{#if msg}}
+                        <div class="{{#if success}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
+                            <span class="text-white h6">{{msg}}</span>
+                        </div>
+                    {{/if}}
+                    <form action="/product/update/{{product._id}}" method="POST">
+                        <div class="form-group py-2">
+                            <label>Product name</label>
+                            <input type="text" placeholder="Enter name" class="form-control" name="name" value="{{product.name}}" required>
+                        </div>
+                        <div class="form-group py-2">
+                            <label>Product description</label>
+                            <input type="text" placeholder="Enter desc" class="form-control" name="desc" value="{{product.desc}}" required>
+                        </div>
+                        <div class="form-group py-2">
+                            <label>Product category</label>
+                            <input type="text" placeholder="Enter category" class="form-control" name="category" value="{{product.category}}" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group py-2">
+                                    <label>Product URL image</label>
+                                    <input type="text" placeholder="Enter URL image" class="form-control" name="image" value="{{product.image}}" required>
+                                </div>
+                                <div class="form-group py-2">
+                                    <label>Product price</label>
+                                    <input type="number" placeholder="Enter price" class="form-control" name="price" value="{{product.price}}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group py-2">
+                                    <label>Product color</label>
+                                    <input type="text" placeholder="Enter color" class="form-control" name="color" value="{{product.color}}">
+                                </div>
+                                <div class="form-group py-2">
+                                    <label>Product size</label>
+                                    <input type="text" placeholder="Enter size" class="form-control" name="size" value="{{product.size}}">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block mt-3">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

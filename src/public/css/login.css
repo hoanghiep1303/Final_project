@@ -40,8 +40,8 @@
   border: 1px solid #ddd;
   color: #4343ff; }
 
-input[type='email'],
-input[type='password'] {
+.validation-container input[type='email'],
+.validation-container input[type='password'] {
   border: none;
   outline: none;
   box-shadow: none;
@@ -52,14 +52,14 @@ input[type='password'] {
   outline: none;
   box-shadow: none; }
 
-img {
+.validation-container img {
   width: 40px;
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
   position: relative; }
 
-a[target='_blank'] {
+.validation-container a[target='_blank'] {
   position: relative;
   transition: all 0.1s ease-in-out; }
 
@@ -67,7 +67,7 @@ a[target='_blank'] {
   border-top: 1px solid #aaa;
   position: relative; }
 
-input:focus {
+.validation-container input:focus {
   outline: 0 0 0 0 !important;
   box-shadow: 0 0 0 0 !important; }
 

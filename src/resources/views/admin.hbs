@@ -1,0 +1,70 @@
+{{!-- <a href="/admin/product/create"><button class="btn btn-info">Create</button></a>
+<a href="/admin/product/update"><button class="btn btn-secondary">update</button></a>
+<a href="/admin/product/delete"><button class="btn btn-danger">delete</button></a> --}}
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Product Tables</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Tables</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Product Database
+                </div>
+                <div class="card-body">
+                    <a href="/admin/product/create"><button class="btn btn-info mb-2">Create Product</button></a>
+                    {{!-- <a href="#deleted-brand-table">
+                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Products</button>
+                    </a> --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Description</th>
+                                    {{!-- <th>Image</th> --}}
+                                    <th>Price</th>
+                                    <th>Color</th>
+                                    <th>Size</th>
+                                    <th>Created date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each listProduct}}
+                                <tr>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.desc}}</td>
+                                    <td>{{this.category}}</td>
+                                    {{!-- <td>{{this.image}}</td> --}}
+                                    <td>$ {{this.price}}</td>
+                                    <td>{{this.color}}</td>
+                                    <td>{{this.size}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>
+                                        <a href="/admin/product/update/{{this._id}}">
+                                            <button class="btn btn-dark">Edit</button>
+                                        </a>
+                                        <a href="/product/delete/{{this._id}}">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        There are no products have been created.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>

@@ -3,6 +3,7 @@
 @import "header.scss";
 @import "footer.scss";
 @import "login.scss";
+@import "home.scss";
 
 
 body
@@ -16,4 +17,8 @@ body
     background-size:cover;
     background-position:center;
     box-sizing: border-box;
+}
+
+.w-33{
+    width: 33.333333333%;
 }

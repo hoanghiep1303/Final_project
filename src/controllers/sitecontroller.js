@@ -1,10 +1,17 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User')
+const Product = require('../models/Product')
+
+const {multipleMongooseToObject, mongooseToObject} = require ('../ulti/mongoose')
 
 class sitecontroller {
     index(req, res) {
-        res.render('home')
+        Product.find({}).limit(3)
+        .then((product) => res.render('home', {
+            product: multipleMongooseToObject(product)
+        }))
+        .catch(err => console.log(err))
     }
 
     login(req, res) {
