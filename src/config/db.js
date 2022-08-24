@@ -10,7 +10,7 @@ const ConnectDB = async () => {
         });
         console.log('Connected to Mongoose');
     } catch (error) {
-        console.log(err);
+        console.log(error);
     }
 };
 

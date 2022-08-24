@@ -46,10 +46,11 @@
     align-items: center;
     cursor: pointer;
     border: 1px solid #ddd;
-    color: #4343ff
+    color: #4343ff;
+    // color: rgb(17, 99, 17);
 }
 
-input[type='text'],
+input[type='email'],
 input[type='password'] {
     border: none;
     outline: none;
@@ -81,13 +82,32 @@ a[target='_blank'] {
     position: relative
 }
 
-.bordert:after {
-    content: "or connect with";
-    position: absolute;
-    top: -13px;
-    left: 33%;
-    background-color: #fff;
-    padding: 0px 8px
+// .bordert:after {
+//     content: "or connect with";
+//     position: absolute;
+//     top: -13px;
+//     left: 33%;
+//     background-color: #fff;
+//     padding: 0px 8px
+// }
+
+// .input-group-prepend span {
+//     width: 40px;
+//     height: 100%;
+//     background-color: rgb(17, 99, 17);
+//     color: black;
+//     border: 0 !important;
+// }
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+.hide-md-lg {
+    display: block;
+    text-align: center;
 }
 
 @media(max-width: 360px) {

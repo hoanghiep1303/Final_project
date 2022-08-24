@@ -8,7 +8,7 @@ const exphbs = require('express-handlebars');
 const route = require('./routes');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const flash = require('req-flash');
 ConnectDB();
 dotenv.config();
 

@@ -6,36 +6,26 @@
                     <h3 class="pt-3 font-weight-bold">Register</h3>
                 </div>
                 <div class="panel-body p-3">
-                    <form action="/register" method="POST">
+                    {{#if failMsg}}{{failMsg}}{{/if}}
+                    <form action="/store" method="POST">
                         <div class="form-group py-2">
                             <div class="input-field">
                                 <span class="far fa-user p-2" style="color: green"></span>
-                                <input type="text" placeholder="Enter your Email" name="email" required>
+                                <input type="email" placeholder="Enter your Email" name="email" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group py-1 pb-2">
                             <div class="input-field">
                                 <span class="fas fa-lock px-2" style="color: green"></span>
-                                <input type="password" placeholder="Enter your Password" name="password" required>
-                                {{!-- <button class="btn bg-white text-muted">
-                                    <span class="far fa-eye-slash"></span>
-                                </button> --}}
+                                <input type="password" placeholder="Enter your Password"  class="form-control" name="password" required>
                             </div>
                         </div>
                         <div class="form-group py-1 pb-2">
                             <div class="input-field">
                                 <span class="fas fa-lock px-2" style="color: green"></span>
-                                <input type="password" placeholder="Confirm your Password" name="cofirm_password" required>
-                                {{!-- <button class="btn bg-white text-muted">
-                                    <span class="far fa-eye-slash"></span>
-                                </button> --}}
+                                <input type="password" placeholder="Confirm your Password"  class="form-control" name="confirmPassword" required>
                             </div>
                         </div>
-                        {{!-- <div class="d-flex form-inline">
-                            <input type="checkbox" name="remember" id="remember">
-                            <label for="remember" class="text-muted">Remember me</label>
-                            <a class="login-link" href="#" id="forgot" class="font-weight-bold">Forgot password?</a>
-                        </div> --}}
                         <button type="submit" class="btn btn-success btn-block mt-3">Register</button>
                         <div class="text-center pt-4 text-muted">Don't have an account?
                             <a class="login-link" href="/login">Login</a>
@@ -43,6 +33,9 @@
                     </form>
                 </div>
                 <div class="mx-3 my-2 py-2 bordert">
+                    <div class="hide-md-lg">
+                        <p class="m-0">Or connect with:</p>
+                    </div>
                     <div class="text-center py-3">
                         <a class="login-link" href="https://wwww.facebook.com" target="_blank" class="px-2">
                             <img class="mx-2" src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt="">

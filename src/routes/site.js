@@ -6,8 +6,12 @@ router.get('/', sitecontroller.index);
 
 router.get('/login', sitecontroller.login);
 
+router.post('/validate', sitecontroller.validate);
+
 router.get('/register', sitecontroller.register);
 
-router.post('/register', sitecontroller.store);
+router.post('/store', sitecontroller.store);
+
+router.get('/error', sitecontroller.error);
 
 module.exports = router;

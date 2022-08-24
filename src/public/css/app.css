@@ -185,7 +185,7 @@ header {
   border: 1px solid #ddd;
   color: #4343ff; }
 
-input[type='text'],
+input[type='email'],
 input[type='password'] {
   border: none;
   outline: none;
@@ -212,13 +212,13 @@ a[target='_blank'] {
   border-top: 1px solid #aaa;
   position: relative; }
 
-.bordert:after {
-  content: "or connect with";
-  position: absolute;
-  top: -13px;
-  left: 33%;
-  background-color: #fff;
-  padding: 0px 8px; }
+input:focus {
+  outline: 0 0 0 0 !important;
+  box-shadow: 0 0 0 0 !important; }
+
+.hide-md-lg {
+  display: block;
+  text-align: center; }
 
 @media (max-width: 360px) {
   #forgot {
