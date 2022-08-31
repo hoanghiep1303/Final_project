@@ -6,7 +6,10 @@
                     <h3 class="pt-3 font-weight-bold">Register</h3>
                 </div>
                 <div class="panel-body p-3">
-                    {{#if failMsg}}{{failMsg}}{{/if}}
+                    {{!-- {{#if failMsg}}{{failMsg}}{{/if}} --}}
+                    {{#if error_messages }}
+                    <div class="alert alert-danger shadow p-2 rounded m-0">{{error_messages}}</div>
+                    {{/if}}
                     <form action="/store" method="POST">
                         <div class="form-group py-2">
                             <div class="input-field">
