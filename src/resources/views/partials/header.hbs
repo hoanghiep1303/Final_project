@@ -1,18 +1,20 @@
 <header class="sticky-top">
     <a href="/" class="logo">Woody</a>
     <div class="mean-toggle"></div>
-    <nav class="navbar navbar-expand-sm  menu">
-        <ul class="abc navbar-nav me-auto mb-2 mb-sm-0">
+    <nav class="navbar navbar-expand-md menu">
+        <ul class="nav-elements navbar-nav me-auto mb-2 mb-sm-0">
             <li class="nav-item mx-1"><a href="/" class="rounded">Home</a></li>
+            <li class="nav-item mx-1"><a href="/oder" class="rounded">Oder</a></li>
             {{#if user}}
             <li class="nav-item mx-1 dropdown">
                 <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" style="padding: 10px 20px;">
-                    <i class="fa fa-user"></i> {{this.email}}
+                    {{this.user.email}}
+                    {{!-- <i class="fa fa-user"></i> --}}
                 </a>
                 <ul class="dropdown-menu">
                     {{#ifeq user.role "Admin"}}
-                    <li><a class="dropdown-item" href="/admin">Dashboard</a></li>
+                    <li><a class="dropdown-item" href="/admin">Admin Dashboard</a></li>
                     {{/ifeq}}
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li>
@@ -21,12 +23,16 @@
                     <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
             </li>
-            <li class="nav-item mx-1"><a href="/logout" class="rounded">Logout</a></li>
+            {{!-- <li class="nav-item mx-1"><a href="/logout" class="rounded">Logout</a></li> --}}
             {{else}}
             <li class="nav-item mx-1"><a href="/login" class="rounded">Login</a></li>
             <li class="nav-item mx-1"><a href="/register" class="rounded">Register</a></li>
             {{/if}}
-            <li class="nav-item mx-1"><a href="#" class="rounded"><i class="fa fa-shopping-cart"></i></a></li>
+            <li class="nav-item mx-1">
+                <a href="/cart" class="rounded">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+            </li>
         </ul>
     </nav>
     <div class="clear"></div>

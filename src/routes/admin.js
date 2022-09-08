@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admincontroller =require('../controllers/admincontroller');
-const { isLoggined, isAdmin} = require('../ulti/login');
+const { isLoggined, isAdmin } = require('../ulti/login');
 const cookieParser = require('cookie-parser');
 
 

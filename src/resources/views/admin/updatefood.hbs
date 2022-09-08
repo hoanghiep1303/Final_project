@@ -6,9 +6,9 @@
                     <h3 class="pt-3 font-weight-bold">Update product</h3>
                 </div>
                 <div class="panel-body p-3">
-                    {{#if msg}}
-                        <div class="{{#if success}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
-                            <span class="text-white h6">{{msg}}</span>
+                    {{#if messages}}
+                        <div class="{{#if messages}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
+                            <span class="text-white h6">{{messages}}</span>
                         </div>
                     {{/if}}
                     <form action="/product/update/{{product._id}}" method="POST">

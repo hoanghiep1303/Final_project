@@ -1,4 +1,3 @@
-
 const User = require('../models/User');
 const Product = require('../models/Product');
 const jwt = require('jsonwebtoken');
@@ -10,7 +9,7 @@ class admincontroller {
     index(req, res) {
         if (req.cookies.token) {
             var token = req.cookies.token;
-            var decodeToken = jwt.verify(token, 'tokenabc');
+            var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}),
@@ -33,18 +32,19 @@ class admincontroller {
         }
     }
     create(req, res) {
-        res.render('admin/create')
+        res.render('admin/createfood')
     }
     update(req, res) {
         Product.findOne({ _id: req.params.id })
             .then(product => {
                 if (!product) {
-                    res.render('admin/update', {
+                    res.render('admin/updatefood', {
                         msg: 'Product not found!'
                     })
                 } else {
-                    res.render('admin/update', {
-                        product: mongooseToObject(product)
+                    res.render('admin/updatefood', {
+                        product: mongooseToObject(product),
+                        messages: req.flash('success')
                     })
                 }
             })

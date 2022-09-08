@@ -30,17 +30,17 @@ header
 {
     clear: both;
 }
-.menu .abc
+.menu .nav-elements
 {
     margin: 0;
     padding: 0;
     display: flex;
 }
-.menu .abc li
+.menu .nav-elements li
 {
     list-style: none;
 }
-.menu .abc li a
+.menu .nav-elements li a
 {
     display: block;
     // margin: 10px 0;
@@ -48,8 +48,8 @@ header
     text-decoration: none;
     color: #262626;
 }
-.menu .abc li a.active,
-.menu .abc li a:hover
+.menu .nav-elements li a.active,
+.menu .nav-elements li a:hover
 {
     background: #069370;
     color: #fff;
@@ -95,11 +95,11 @@ header
         display:block;
         width :100%;
     }
-    .menu.active .abc
+    .menu.active .nav-elements
     {
         display: block;
     }
-    .menu.active .abc li 
+    .menu.active .nav-elements li 
     {
         margin: 0;
         text-align: center;

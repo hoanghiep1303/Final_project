@@ -24,6 +24,8 @@
     "mongoose": "^6.5.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
+    "passport": "^0.6.0",
+    "paypal-rest-sdk": "^1.8.1",
     "req-flash": "^0.0.3"
   },
   "devDependencies": {

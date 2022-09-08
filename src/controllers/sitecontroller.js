@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/User')
-const Product = require('../models/Product')
+const User = require('../models/User');
+const Product = require('../models/Product');
+const Cart = require('../models/Cart');
+const paypal = require('paypal-rest-sdk');
 
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
@@ -9,7 +11,7 @@ class sitecontroller {
     index(req, res) {
         if (req.cookies.token) {
             var token = req.cookies.token;
-            var decodeToken = jwt.verify(token, 'tokenabc');
+            var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
 
                 User.findOne({ _id: decodeToken }),
@@ -37,55 +39,39 @@ class sitecontroller {
                 }))
                 .catch(err => console.log(err))
         }
-
-        // Product.find({}).limit(3)
-        //     .then((product) => res.render('home', {
-        //         product: multipleMongooseToObject(product)
-        //     }))
-        //     .catch(err => console.log(err))
     }
 
     login(req, res, next) {
         if (!req.cookies.token) {
-            res.render('login', {
-                // failMsg: 'Invalid token'
-            });
+            res.render('login');
         }
         else {
-            res.redirect('/')
+            res.redirect('/');
         }
     }
 
-    // login(req, res) {
-    //     res.render('login')
-    // }
-
-    register(req, res) {
-        if (req.cookies.token) {
-            return res.redirect('/');
+    register(req, res, next) {
+        if (!req.cookies.token) {
+            res.render('register');
         }
         else {
-            return res.redirect('register');
+            res.redirect('/');
         }
     }
 
-    // error(req, res) {
-    //     res.render('partials/error')
-    // }
-
-    //REGISTER
+    //REGISTER USER
     store(req, res) {
         User.findOne({ email: req.body.email })
             .then(user => {
                 if (user) {
                     req.flash('error', 'Email is already exist!');
-                    res.redirect('register');
+                    res.redirect('/register');
                     // res.render('register', {
                     //     failMsg: 'Email is already exist!',
                     // })
                 } else if (req.body.confirmPassword != req.body.password) {
                     req.flash('error', 'Password does not match!');
-                    res.redirect('register');
+                    res.redirect('/register');
                     // res.render('register', {
                     //     failMsg: 'Password does not match!',
                     // })
@@ -100,7 +86,7 @@ class sitecontroller {
                         newUser.save(err, result => {
                             if (err) {
                                 req.flash('error', 'Server ERR!');
-                                res.redirect('register');
+                                res.redirect('/register');
                                 // res.render('register', {
                                 //     failMsg: 'Server ERR!',
                                 // })
@@ -108,29 +94,17 @@ class sitecontroller {
                         })
                         return res.redirect('/login')
                     })
-                    // var token = jwt.sign({ _id: user.id }, 'tokenabc');
-                    // res.cookie('token', token, { maxAge: 2147483647, httpOnly: true });
                 }
             })
     }
 
-    login(req, res, next) {
-        if (!req.cookies.token) {
-            res.render('login', {
-                // failMsg: 'Invalid token'
-            });
-        }
-        else {
-            res.redirect('/')
-        }
-    }
-
+    //LOGIN USER
     validate(req, res) {
         User.findOne({ email: req.body.email })
             .then(user => {
                 if (!user) {
                     req.flash('error', 'Email is not exist!');
-                    res.redirect('login');
+                    res.redirect('/login');
                     // res.render('login', {
                     //     failMsg: 'Email is not exist!'
                     // })
@@ -148,12 +122,12 @@ class sitecontroller {
                         //     })
                         // }
                         if (result) {
-                            var token = jwt.sign({ _id: user.id }, 'tokenabc');
+                            var token = jwt.sign({ _id: user.id }, 'mytoken');
                             res.cookie('token', token, { maxAge: 2147483647, httpOnly: true });
                             return res.redirect('/');
                         } else {
                             req.flash('error', 'Password is incorrect');
-                            res.redirect('login');
+                            res.redirect('/login');
                             // return res.render('login', {
                             //     failMsg: 'Password is incorrect'
                             // })
@@ -167,14 +141,14 @@ class sitecontroller {
     error(req, res, next) {
         if (req.cookies.token) {
             var token = req.cookies.token;
-            var decodeToken = jwt.verify(token, 'tokenabc')
+            var decodeToken = jwt.verify(token, 'mytoken')
             User.findOne({
                 _id: decodeToken
             }).then(user => {
                 if (user) {
                     req.user = user
                     // console.log(user)
-                    return res.render('partials/error',
+                    return res.render('error',
                         {
                             user: mongooseToObject(user),
                         })
@@ -182,10 +156,7 @@ class sitecontroller {
             })
         }
         else {
-            res.render('partials/error', {
-                title: 'Not Found',
-                // layout: null
-            });
+            res.render('error');
         }
     }
 
@@ -193,6 +164,123 @@ class sitecontroller {
     logout(req, res) {
         res.clearCookie('token');
         return res.redirect('/login');
+    }
+
+    checkout(req, res, next) {
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            User.findOne({ _id: decodeToken })
+                .then(user => {
+                    req.user = user
+                    if (!req.session.cart) {
+                        return res.render('checkout', {
+                            user: mongooseToObject(user),
+                            products: null,
+                        });
+                    }
+                    const cart = new Cart(req.session.cart);
+                    return res.render('checkout', {
+                        user: mongooseToObject(user),
+                        products: cart.generateArray(),
+                        totalPrice: cart.totalPrice
+                    });
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            res.redirect('/error');
+        }
+    }
+
+    checkoutbyPaypal(req, res, next) {
+        paypal.configure({
+            'mode': 'sandbox', //sandbox or live
+            'client_id': 'Ab9ADnUFlhhvW_yM_7RakcfMJ3LoVD9k7BAP4DM2EpaYG8OYVzSrM92z59FZ4VlSkSzzDF-2H9k4KEuV',
+            'client_secret': 'EEIpWJBixDOxpOqEreH5csgxM8SOunzVCq40fM_yAkdAW8M5wHDg4u1fZT1iVQdPkL_VbhTB3Vkukdrn'
+        });
+        const create_payment_json = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "http://localhost:5000/checkoutsuccess",
+                "cancel_url": "http://localhost:5000/checkoutfail"
+            },
+            "transactions": [{
+                "item_list": {
+                    "items": [{
+                        "name": "Redhock Bar Soap",
+                        "sku": "001",
+                        "price": "25.00",
+                        "currency": "USD",
+                        "quantity": 1
+                    }]
+                },
+                "amount": {
+                    "currency": "USD",
+                    "total": "25.00"
+                },
+                "description": "Washing Bar soap"
+            }]
+        };
+
+        paypal.payment.create(create_payment_json, function (error, payment) {
+            if (error) {
+                throw error;
+            } else {
+                for (let i = 0; i < payment.links.length; i++) {
+                    if (payment.links[i].rel === 'approval_url') {
+                        res.redirect(payment.links[i].href);
+                    }
+                }
+            }
+        });
+    }
+
+    oder(req, res, next) {
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+
+                User.findOne({ _id: decodeToken }),
+                Product.find({}).limit(3),
+            ])
+                .then(([
+                    user, product
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('oder', {
+                            user: mongooseToObject(user),
+                            product: multipleMongooseToObject(product),
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Product.find({}).limit(3)
+                .then((product) => res.render('oder', {
+                    product: multipleMongooseToObject(product)
+                }))
+                .catch(err => console.log(err))
+        }
+    }
+
+    checkoutsuccess(req, res, next) {
+        req.session.cart = null;
+        req.flash('success', 'Checkout successfully!')
+        return res.redirect('/cart');
+    }
+
+    checkoutfail(req, res, next) {
+        req.flash('error', 'Checkout failed!')
+        return res.redirect('/cart');
     }
 };
 

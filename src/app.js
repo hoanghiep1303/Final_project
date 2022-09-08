@@ -9,8 +9,8 @@ const route = require('./routes');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('req-flash');
-// const connectflash = require('connect-flash');
 const session = require('express-session');
+const jwt = require('jsonwebtoken');
 
 
 
@@ -35,12 +35,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(session({
-  cookie: { maxAge: 60000 },
-  secret: 'secret',
+  cookie: { maxAge: 30 * 86400 * 1000 },
+  secret: 'mysecret',
   saveUninitialized: false,
   resave: false
 }));
-
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_mesages = req.flash('success')

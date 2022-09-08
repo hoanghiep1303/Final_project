@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 function isLoggined(req, res, next) {
     try {
         var token = req.cookies.token;
-        var decodeToken = jwt.verify(token, 'tokenabc');
+        var decodeToken = jwt.verify(token, 'mytoken');
         User.findOne({_id: decodeToken})
         .then(data => {
             if (data) {
