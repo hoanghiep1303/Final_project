@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('req-flash');
 const session = require('express-session');
-const jwt = require('jsonwebtoken');
 
 
 

@@ -205,22 +205,22 @@ class sitecontroller {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:5000/checkoutsuccess",
+                "return_url": "http://localhost:5000/checkoutsuccess?amount="+ amount + "&userId="+ userId + "",
                 "cancel_url": "http://localhost:5000/checkoutfail"
             },
             "transactions": [{
                 "item_list": {
                     "items": [{
-                        "name": "Redhock Bar Soap",
-                        "sku": "001",
-                        "price": "25.00",
+                        "name": "item",
+                        "sku": "item",
+                        "price": "amount",
                         "currency": "USD",
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "currency": "USD",
-                    "total": "25.00"
+                    "total": "amount"
                 },
                 "description": "Washing Bar soap"
             }]
@@ -281,6 +281,39 @@ class sitecontroller {
     checkoutfail(req, res, next) {
         req.flash('error', 'Checkout failed!')
         return res.redirect('/cart');
+    }
+
+    profile(req, res, next) {
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+
+                User.findOne({ _id: decodeToken }),
+                Product.find({}).limit(3),
+            ])
+                .then(([
+                    user, product
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('profile', {
+                            user: mongooseToObject(user),
+                            product: multipleMongooseToObject(product),
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Product.find({}).limit(3)
+                .then((product) => res.render('profile', {
+                    product: multipleMongooseToObject(product)
+                }))
+                .catch(err => console.log(err))
+        }
     }
 };
 

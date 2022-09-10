@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
 class cartcontroller {
-    addtocart(req, res) {
+    addtocart(req, res, next) {
         const productId = req.params.id;
         const cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -19,21 +19,21 @@ class cartcontroller {
             res.redirect('/');
         })
     }
-    reduce(req, res) {
+    reduce(req, res, next) {
         const productId = req.params.id;
         const cart = new Cart(req.session.cart ? req.session.cart : {});
         cart.reduceByOne(productId);
         req.session.cart = cart;
         res.redirect('/cart');
     }
-    remove(req, res) {
+    remove(req, res, next) {
         const productId = req.params.id;
         const cart = new Cart(req.session.cart ? req.session.cart : {});
         cart.removeItem(productId);
         req.session.cart = cart;
         res.redirect('/cart');
     }
-    cart(req, res) {
+    cart(req, res, next) {
         if (req.cookies.token) {
         var token = req.cookies.token;
         var decodeToken = jwt.verify(token, 'mytoken');

@@ -325,6 +325,10 @@ header {
   text-underline-offset: 5px;
   text-decoration: underline; }
 
+.card-header {
+  background-color: seagreen;
+  color: white; }
+
 body {
   margin: 0;
   padding: 0;
