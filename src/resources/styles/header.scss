@@ -20,7 +20,9 @@ header
     color:#069370;
     font-weight: 700;
     text-decoration: none;
-    
+}
+.logo:hover{
+    color:#057441;
 }
 .menu
 {
@@ -106,3 +108,7 @@ header
     }
 }
 
+.header-cart {
+    padding: 9px 20px;
+    text-decoration: none;
+}

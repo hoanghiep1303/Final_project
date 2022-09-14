@@ -15,6 +15,9 @@ header {
   font-weight: 700;
   text-decoration: none; }
 
+.logo:hover {
+  color: #057441; }
+
 .menu {
   float: right; }
 
@@ -68,3 +71,7 @@ header {
   .menu.active .nav-elements li {
     margin: 0;
     text-align: center; } }
+
+.header-cart {
+  padding: 9px 20px;
+  text-decoration: none; }

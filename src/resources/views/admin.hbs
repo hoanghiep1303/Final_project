@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item active">Tables</li>
             </ol>
             <div class="card mb-2">
-                <div class="card-header">
+                <div class="card-header text-white" style="background-color: seagreen;">
                     <i class="fas fa-table me-1"></i>
                     Product Database
                 </div>
@@ -25,7 +25,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th>Description</th>
+                                    <th>Category</th>
                                     {{!-- <th>Image</th> --}}
                                     <th>Price</th>
                                     <th>Color</th>
@@ -46,10 +46,10 @@
                                     <td>{{this.size}}</td>
                                     <td>{{this.createdAt}}</td>
                                     <td>
-                                        <a href="/admin/product/update/{{this._id}}">
+                                        <a class="text-decoration-none" href="/admin/product/update/{{this._id}}">
                                             <button class="btn btn-dark">Edit</button>
                                         </a>
-                                        <a href="/product/delete/{{this._id}}">
+                                        <a class="text-decoration-none" href="/product/delete/{{this._id}}">
                                             <button class="btn btn-danger">Delete</button>
                                         </a>
                                     </td>

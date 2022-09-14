@@ -5,7 +5,10 @@
 @import "login.scss";
 @import "home.scss";
 @import "admin.scss";
-@import "oder.scss";
+@import "cart.scss";
+@import "profile.scss";
+@import "order.scss";
+@import "dashboard.scss";
 
 
 body
@@ -13,7 +16,7 @@ body
     margin: 0;
     padding: 0;
     font-family: 'Noto+Serif+SC',sans-serif;
-    // background: #262626;
+    background:#eee;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size:cover;

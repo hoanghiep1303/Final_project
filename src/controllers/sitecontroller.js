@@ -205,7 +205,7 @@ class sitecontroller {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:5000/checkoutsuccess?amount="+ amount + "&userId="+ userId + "",
+                "return_url": "http://localhost:5000/checkoutsuccess",
                 "cancel_url": "http://localhost:5000/checkoutfail"
             },
             "transactions": [{
@@ -213,14 +213,14 @@ class sitecontroller {
                     "items": [{
                         "name": "item",
                         "sku": "item",
-                        "price": "amount",
+                        "price": "25.00",
                         "currency": "USD",
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "currency": "USD",
-                    "total": "amount"
+                    "total": "25.00"
                 },
                 "description": "Washing Bar soap"
             }]
@@ -310,6 +310,39 @@ class sitecontroller {
         else {
             Product.find({}).limit(3)
                 .then((product) => res.render('profile', {
+                    product: multipleMongooseToObject(product)
+                }))
+                .catch(err => console.log(err))
+        }
+    }
+
+    history(req, res, next) {
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+
+                User.findOne({ _id: decodeToken }),
+                Product.find({}).limit(3),
+            ])
+                .then(([
+                    user, product
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('history', {
+                            user: mongooseToObject(user),
+                            product: multipleMongooseToObject(product),
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Product.find({}).limit(3)
+                .then((product) => res.render('history', {
                     product: multipleMongooseToObject(product)
                 }))
                 .catch(err => console.log(err))

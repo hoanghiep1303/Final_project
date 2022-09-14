@@ -21,11 +21,6 @@
   margin: 0;
   cursor: pointer; }
 
-.btn.btn-success {
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 20px; }
-
 .panel {
   min-height: 380px;
   box-shadow: 20px 20px 80px #dadada;

@@ -1,0 +1,35 @@
+.profile-head .nav-tabs {
+  margin-bottom: 5%; }
+
+.profile-head .nav-tabs .nav-link {
+  font-weight: 600;
+  border: none; }
+
+.profile-head .nav-tabs .nav-link.active {
+  border: none;
+  border-bottom: 2px solid #048413; }
+
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6; }
+
+.proile-role {
+  color: #818182;
+  margin-top: 5%; }
+
+.bio-graph-info {
+  color: #89817e; }
+
+.bio-graph-info h1 {
+  font-size: 22px;
+  font-weight: 300;
+  margin: 0 0 20px; }
+
+.bio-row {
+  width: 50%;
+  float: left;
+  margin-bottom: 10px;
+  padding: 0 15px; }
+
+.bio-row p span {
+  width: 100px;
+  display: inline-block; }

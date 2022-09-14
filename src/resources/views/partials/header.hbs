@@ -9,31 +9,39 @@
             <li class="nav-item mx-1 dropdown">
                 <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" style="padding: 10px 20px;">
-                    {{this.user.email}}
-                    {{!-- <i class="fa fa-user"></i> --}}
+                    {{#if this.user.email}}{{this.user.email}} {{else}}{{this.user.name}} {{/if}}
                 </a>
                 <ul class="dropdown-menu">
                     {{#ifeq user.role "Admin"}}
                     <li><a class="dropdown-item" href="/admin">Admin Dashboard</a></li>
                     {{/ifeq}}
                     <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/history">History</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
             </li>
-            {{!-- <li class="nav-item mx-1"><a href="/logout" class="rounded">Logout</a></li> --}}
             {{else}}
             <li class="nav-item mx-1"><a href="/login" class="rounded">Login</a></li>
             <li class="nav-item mx-1"><a href="/register" class="rounded">Register</a></li>
             {{/if}}
-            <li class="nav-item mx-1">
+            {{!-- <li class="nav-item mx-1">
                 <a href="/cart" class="rounded">
                     <i class="fa fa-shopping-cart"></i>
+                    Cart
+                    <span class="badge bg-danger text-white ms-1 rounded-pill">0</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
+        <div class="justify-content-center d-flex mx-1">
+            <a href="/cart" class="header-cart btn btn-outline-success rounded">
+                <i class="fa fa-shopping-cart me-1"></i>
+                Cart
+                <span class="badge bg-danger text-white ms-1 rounded-pill">0</span>
+            </a>
+        </div>
     </nav>
     <div class="clear"></div>
 </header>

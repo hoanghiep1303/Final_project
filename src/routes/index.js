@@ -2,14 +2,18 @@ const siteRouter = require('./site');
 const productRouter = require('./product');
 const adminRouter = require('./admin');
 const cartRouter = require('./cart');
+const categoryRouter = require('./category');
+const { isLoggined, isAdmin } = require('../ulti/login');
 
 
 function route(app){
+    app.use('/category', categoryRouter);
+
     app.use('/product', productRouter);
 
-    app.use('/admin', adminRouter);
+    app.use('/admin', isLoggined,isAdmin,adminRouter);
 
-    app.use('/cart' , cartRouter)
+    app.use('/cart' , isLoggined,cartRouter)
 
     app.use('/', siteRouter);
 

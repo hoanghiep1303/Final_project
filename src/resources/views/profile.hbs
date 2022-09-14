@@ -1,2 +1,163 @@
-<h1>Profile page</h1>
-
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">John Smith</h5>
+                        <p class="text-muted mb-1">Full Stack Developer</p>
+                        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" class="btn btn-success">Follow</button>
+                            <button type="button" class="btn btn-outline-success ms-2">Message</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <p class="m-0 fw-bolder">Payment methods</p>
+                                <p class="m-0 fw-bolder">Balance</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fa-brands fa-paypal" style="color: #3b5998;"> PayPal</i>
+                                <p class="mb-0">$855,913</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fa-solid fa-credit-card" style="color: #ac2bac;"> Credit Card</i>
+                                <p class="mb-0">$1,259,742</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4 p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                <h5 class="fw-bold">User Information</h5>
+                                <h6 class="text-danger">
+                                    {{this.user.email}}
+                                </h6>
+                                <p class="proile-role"><strong>ROLE : {{this.user.role}}</strong></p>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist"
+                                    style="--bs-nav-link-color: #198754; --bs-nav-link-hover-color: #0f5132;">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home"
+                                            role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile"
+                                            role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="#" class="btn btn-outline-secondary rounded-pill">Change Password</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="panel-body bio-graph-info">
+                                    <h1>Bio Graph</h1>
+                                    <div class="row">
+                                        <div class="bio-row">
+                                            <p><span>First Name </span>: Camila</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Last Name </span>: Smith</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Country </span>: Australia</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Birthday</span>: 13 July 1983</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Occupation </span>: UI Designer</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Email </span>: jsmith@flatlab.com</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Mobile </span>: (12) 03 4567890</p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>Phone </span>: 88 (02) 123456</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <a href="/"
+                                        class="text-decoration-none profile-text d-flex flex-row align-items-center"
+                                        style="color: #198754;">
+                                        <i class="fa fa-long-arrow-left me-1"></i>
+                                        Back to home
+                                    </a>
+                                    <button class="btn btn-success profile-button" type="button">
+                                        <i class="fas fa-user-edit"></i>
+                                        Edit Profile
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="first name" value="John">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" value="Doe" placeholder="Doe">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Email"
+                                            value="john_doe12@bbb.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" value="+19685969668"
+                                            placeholder="Phone number">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="address"
+                                            value="D-113, right avenue block, CA,USA">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" value="USA" placeholder="Country">
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Bank Name"
+                                            value="Bank of America">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" value="043958409584095"
+                                            placeholder="Account Number">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="mt-3 text-right">
+                                        <button class="btn btn-dark profile-button" type="button">Save Profile</button>
+                                    </div>
+                                    <div class="mt-3 text-right">
+                                        <button class="btn btn-danger profile-button" type="button">Save
+                                            Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

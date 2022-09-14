@@ -16,13 +16,14 @@ class productcontroller {
 
     store(req, res, next) {
         var newProduct = new Product(req.body)
+        console.log(newProduct);
         newProduct.save((err, result) => {
             if (err) {
                 return res.render('admin/createfood', {
                     msg: 'Product created failed'
                 })
             }
-            next()
+            // next()
         })
         return (
             res.render('admin/createfood', {
