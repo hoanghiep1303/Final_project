@@ -11,12 +11,12 @@ header {
   line-height: 60px;
   font-size: 36px;
   padding: 0 20px;
-  color: #069370;
+  color: #198754;
   font-weight: 700;
   text-decoration: none; }
 
 .logo:hover {
-  color: #057441; }
+  color: #044527; }
 
 .menu {
   float: right; }
@@ -40,11 +40,13 @@ header {
 
 .menu .nav-elements li a.active,
 .menu .nav-elements li a:hover {
-  background: #069370;
+  background: #198754;
   color: #fff;
   transition: 0.5s; }
 
 @media (max-width: 768px) {
+  .logo {
+    font-size: 26px; }
   .mean-toggle {
     display: block;
     width: auto;
@@ -54,7 +56,7 @@ header {
     cursor: pointer;
     text-align: center;
     font-size: 30px;
-    color: #069370; }
+    color: #198754; }
   .mean-toggle:before {
     content: '\f0c9';
     font-family: fontAwesome;
@@ -70,8 +72,13 @@ header {
     display: block; }
   .menu.active .nav-elements li {
     margin: 0;
-    text-align: center; } }
+    text-align: center; }
+  .header-cart {
+    margin-top: 0.25rem; } }
 
 .header-cart {
   padding: 9px 20px;
   text-decoration: none; }
+
+.header-font {
+  font-family: 'Dancing Script', cursive; }

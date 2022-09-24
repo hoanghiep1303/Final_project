@@ -1,10 +1,10 @@
 <header class="sticky-top">
-    <a href="/" class="logo">Foody</a>
+    <a href="/" class="logo header-font">HappyFood</a>
     <div class="mean-toggle"></div>
     <nav class="navbar navbar-expand-md menu">
         <ul class="nav-elements navbar-nav me-auto mb-2 mb-sm-0">
             <li class="nav-item mx-1"><a href="/" class="rounded">Home</a></li>
-            <li class="nav-item mx-1"><a href="/oder" class="rounded">Oder</a></li>
+            <li class="nav-item mx-1"><a href="/order" class="rounded">Order</a></li>
             {{#if user}}
             <li class="nav-item mx-1 dropdown">
                 <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -13,14 +13,14 @@
                 </a>
                 <ul class="dropdown-menu">
                     {{#ifeq user.role "Admin"}}
-                    <li><a class="dropdown-item" href="/admin">Admin Dashboard</a></li>
+                    <li><a class="dropdown-item" href="/admin"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
                     {{/ifeq}}
-                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="/history">History</a></li>
+                    <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                    <li><a class="dropdown-item" href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History Log</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                 </ul>
             </li>
             {{else}}

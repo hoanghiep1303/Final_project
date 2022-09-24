@@ -239,7 +239,7 @@ class sitecontroller {
         });
     }
 
-    oder(req, res, next) {
+    order(req, res, next) {
         if (req.cookies.token) {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
@@ -253,7 +253,7 @@ class sitecontroller {
                 ]) => {
                     if (user) {
                         req.user = user
-                        res.render('oder', {
+                        res.render('order', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
                         })
@@ -265,7 +265,7 @@ class sitecontroller {
         }
         else {
             Product.find({}).limit(3)
-                .then((product) => res.render('oder', {
+                .then((product) => res.render('order', {
                     product: multipleMongooseToObject(product)
                 }))
                 .catch(err => console.log(err))

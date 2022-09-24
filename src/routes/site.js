@@ -27,7 +27,7 @@ router.get('/logout', sitecontroller.logout);
 
 router.get('/checkout', sitecontroller.checkout);
 
-router.get('/oder', sitecontroller.oder);
+router.get('/order', sitecontroller.order);
 
 router.post('/checkoutbyPaypal', sitecontroller.checkoutbyPaypal);
 

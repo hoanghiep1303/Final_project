@@ -7,9 +7,9 @@ const { isLoggined, isAdmin } = require('../ulti/login');
 
 
 function route(app){
-    app.use('/category', categoryRouter);
+    app.use('/category', isLoggined,categoryRouter);
 
-    app.use('/product', productRouter);
+    app.use('/product', isLoggined,productRouter);
 
     app.use('/admin', isLoggined,isAdmin,adminRouter);
 

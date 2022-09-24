@@ -7,9 +7,9 @@
                 </div>
                 <div class="panel-body p-3">
                     {{#if msg}}
-                        <div class="{{#if success}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
-                            <span class="text-white h6">{{msg}}</span>
-                        </div>
+                    <div class="{{#if success}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
+                        <span class="text-white h6">{{msg}}</span>
+                    </div>
                     {{/if}}
                     <form action="/product/store" method="POST">
                         <div class="form-group py-2">
@@ -22,17 +22,29 @@
                         </div>
                         <div class="form-group py-2">
                             <label>Product category</label>
-                            <input type="text" placeholder="Enter category" class="form-control" name="category" required>
+                            {{!-- <input type="text" placeholder="Enter category" class="form-control" name="category"
+                                required> --}}
+                            <select class="form-select py-2" name="select" required="required">
+                                <option value="">Select your option:</option>
+                                {{#if category}}
+                                <option value="Completed">Completed</option>
+                                <option value="OverDue">OverDue</option>
+                                <option value="SentToPayer">SentToPayer</option>
+                                <option value="None">None</option>
+                                {{/if}}
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group py-2">
                                     <label>Product URL image</label>
-                                    <input type="text" placeholder="Enter URL image" class="form-control" name="image" required>
+                                    <input type="text" placeholder="Enter URL image" class="form-control" name="image"
+                                        required>
                                 </div>
                                 <div class="form-group py-2">
                                     <label>Product price</label>
-                                    <input type="number" placeholder="Enter price" class="form-control" name="price" required>
+                                    <input type="number" placeholder="Enter price" class="form-control" name="price"
+                                        required>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -46,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success btn-block mt-3">Create</button>
+                        <button type="submit" class="btn btn-success w-100 rounded-pill btn-block mt-3">Create</button>
                     </form>
                 </div>
             </div>

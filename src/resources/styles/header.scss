@@ -1,6 +1,4 @@
-
-header
-{
+header {
     position: relative;
     // max-width: 1200px;
     width: 100%;
@@ -8,55 +6,57 @@ header
     padding: 10px;
     background: #FFF;
     // border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 }
-.logo
-{
-    float:left;
+
+.logo {
+    float: left;
     text-align: center;
     line-height: 60px;
     font-size: 36px;
     padding: 0 20px;
-    color:#069370;
+    color: #198754;
     font-weight: 700;
     text-decoration: none;
 }
-.logo:hover{
-    color:#057441;
+
+.logo:hover {
+    color: #044527;
 }
-.menu
-{
-    float:right;
+
+.menu {
+    float: right;
 }
-.clear
-{
+
+.clear {
     clear: both;
 }
-.menu .nav-elements
-{
+
+.menu .nav-elements {
     margin: 0;
     padding: 0;
     display: flex;
 }
-.menu .nav-elements li
-{
+
+.menu .nav-elements li {
     list-style: none;
 }
-.menu .nav-elements li a
-{
+
+.menu .nav-elements li a {
     display: block;
     // margin: 10px 0;
     padding: 10px 20px;
     text-decoration: none;
     color: #262626;
 }
+
 .menu .nav-elements li a.active,
-.menu .nav-elements li a:hover
-{
-    background: #069370;
+.menu .nav-elements li a:hover {
+    background: #198754;
     color: #fff;
     transition: 0.5s;
 }
+
 // @media (max-width: 1200px)
 // {
 //     header
@@ -64,10 +64,12 @@ header
 //         margin: 16px;
 //     }
 // }
-@media (max-width: 768px)
-{
-    .mean-toggle
-    {
+@media (max-width: 768px) {
+    .logo {
+        font-size: 26px;
+    }
+
+    .mean-toggle {
         display: block;
         width: auto;
         height: auto;
@@ -76,39 +78,48 @@ header
         cursor: pointer;
         text-align: center;
         font-size: 30px;
-        color: #069370;
+        color: #198754;
     }
-    .mean-toggle:before
-    {
+
+    .mean-toggle:before {
         content: '\f0c9';
         font-family: fontAwesome;
         line-height: 40px;
     }
-    .mean-toggle.active:before
-    {
+
+    .mean-toggle.active:before {
         content: '\f00d';
     }
-    .menu
-    {
-        display:none;
+
+    .menu {
+        display: none;
     }
-    .menu.active
-    {
-        display:block;
-        width :100%;
+
+    .menu.active {
+        display: block;
+        width: 100%;
     }
-    .menu.active .nav-elements
-    {
+
+    .menu.active .nav-elements {
         display: block;
     }
-    .menu.active .nav-elements li 
-    {
+
+    .menu.active .nav-elements li {
         margin: 0;
         text-align: center;
+    }
+
+    .header-cart {
+        margin-top: 0.25rem;
     }
 }
 
 .header-cart {
     padding: 9px 20px;
     text-decoration: none;
+}
+
+.header-font {
+    // font-family: 'Nunito', sans-serif;
+    font-family: 'Dancing Script', cursive;
 }

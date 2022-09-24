@@ -21,7 +21,7 @@ class admincontroller {
                     res.render('admin', {
                         user: mongooseToObject(user),
                         product: multipleMongooseToObject(product),
-                        // layout: 'admindashboard',
+                        // layout: 'dashboard',
                     })
 
                 })
