@@ -1,5 +1,16 @@
 <section class="padding-y">
-  <div class="container">
+  <div class="d-flex flex-row my-4 justify-content-center">
+    <h1 class="m-0 text-uppercase text-success text-center pages-title">Order
+    </h1>
+  </div>
+
+  <div class="container my-3">
+    <div class="p-2 rounded w-100" style="background-color: rgb(0 0 0 / 10%);">
+      <nav class="woocommerce-breadcrumb"><a href="/">Home</a>&nbsp;/&nbsp;Order&nbsp;/&nbsp;Page 2</nav>
+    </div>
+  </div>
+
+  <div class="container mt-4">
 
     <div class="row">
       <aside class="col-lg-3">
@@ -205,20 +216,32 @@
       </aside> <!-- col .// -->
       <main class="col-lg-9">
 
-        <div class="d-sm-flex justify-content-center border-bottom mb-4">
-          <div class="w-100 col-lg-5 col-md-12 col-12">
+        <div class="d-xl-flex justify-content-between border-bottom mb-4">
+          <div class=" col-lg-4 col-md-12 col-12">
             <form action="#" class="">
               <div class="input-group">
                 <input type="search" class="form-control" style="width:55%" placeholder="Search">
+                {{!-- <select class="form-select">
+                  <option value="">All type</option>
+                  <option value="codex">Special</option>
+                  <option value="comments">Only best</option>
+                  <option value="content">Latest</option>
+                </select> --}}
+                <button class="btn btn-primary">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div> <!-- input-group end.// -->
+            </form>
+          </div>
+          <div class=" col-lg-4 col-md-12 col-12">
+            <form action="#" class="">
+              <div class="input-group">
                 <select class="form-select">
                   <option value="">All type</option>
                   <option value="codex">Special</option>
                   <option value="comments">Only best</option>
                   <option value="content">Latest</option>
                 </select>
-                <button class="btn btn-primary">
-                  <i class="fa fa-search"></i>
-                </button>
               </div> <!-- input-group end.// -->
             </form>
           </div>
@@ -267,7 +290,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="col-md-6 col-sm-6 col-lg-4 mb-4 mb-lg-0">
               <div class="card">
                 <div class="d-flex justify-content-between p-3">
                   <p class="lead mb-0">Today's Combo Offer</p>
@@ -308,7 +331,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="col-md-6 col-sm-6 col-lg-4 mb-4 mb-lg-0">
               <div class="card">
                 <div class="d-flex justify-content-between p-3">
                   <p class="lead mb-0">Today's Combo Offer</p>
@@ -355,7 +378,7 @@
 
         <hr>
 
-        <div class="d-flex mt-4">
+        <div class="d-flex mt-4 justify-content-center">
           <div>
             <a href="javascript: history.back()" class="btn btn-light"> « Go back</a>
           </div>

@@ -1,0 +1,69 @@
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4 pb-4">
+            <h1 class="mt-4" style="font-family: 'Nunito', sans-serif; color: green"><strong>User Tables</strong>
+            </h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Tables</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fas fa-table me-1"></i>
+                    User Database
+                </div>
+                <div class="card-body">
+                    <a href="/admin/user/create"><button class="btn btn-info mb-2">Create User</button></a>
+                    {{!-- <a href="#deleted-brand-table">
+                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Users</button>
+                    </a> --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    {{!-- <th>Image</th> --}}
+                                    <th>Birthday</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
+                                    <th>Created date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each users}}
+                                <tr>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.phone}}</td>
+                                    {{!-- <td>{{this.image}}</td> --}}
+                                    <td>{{moment this.birthday format = "DD/MM/yyyy"}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>{{this.gender}}</td>
+                                    <td>{{moment this.createdAt format = "HH:mm - DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a class="text-decoration-none" href="/admin/user/update/{{this._id}}">
+                                            <button class="btn btn-dark">Edit</button>
+                                        </a>
+                                        <a class="text-decoration-none" href="/user/delete/{{this._id}}">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        There are no users have been created.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

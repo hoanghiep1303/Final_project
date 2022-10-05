@@ -25,13 +25,10 @@
                             {{!-- <input type="text" placeholder="Enter category" class="form-control" name="category"
                                 required> --}}
                             <select class="form-select py-2" name="select" required="required">
-                                <option value="">Select your option:</option>
-                                {{#if category}}
-                                <option value="Completed">Completed</option>
-                                <option value="OverDue">OverDue</option>
-                                <option value="SentToPayer">SentToPayer</option>
-                                <option value="None">None</option>
-                                {{/if}}
+                                {{!-- <option value="">Select your option:</option> --}}
+                                {{#each category}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="row">

@@ -6,7 +6,7 @@
 @import "footer.scss";
 @import "login.scss";
 @import "home.scss";
-@import "admin.scss";
+@import "checkout.scss";
 @import "cart.scss";
 @import "profile.scss";
 @import "order.scss";
@@ -38,3 +38,44 @@ body {
 // h1 {
 //     font-family: 'Nunito', sans-serif;
 // }
+
+.pages-title:before {
+    position: absolute;
+    content: '';
+    left: -60px;
+    top: 0;
+    margin: auto;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: currentColor;
+}
+
+.pages-title::after {
+    position: absolute;
+    content: '';
+    right: -60px;
+    top: 0;
+    margin: auto;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: currentColor;
+}
+
+.pages-title {
+    // font-family: 'Nunito', sans-serif;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    width: fit-content;
+    position: relative;
+    margin: auto;
+    letter-spacing: 6px;
+}
+
+@media (max-width: 376px) {
+    .pages-title {
+        max-width: 128px;
+        letter-spacing: 0;
+    }
+}

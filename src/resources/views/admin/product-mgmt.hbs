@@ -1,0 +1,254 @@
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4 pb-4">
+            <h1 class="mt-4" style="color: green;"><strong>Product Tables</strong>
+            </h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Tables</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fas fa-table me-1"></i>
+                    Product Database
+                </div>
+                <div class="card-body">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#createfoodModal"><button
+                            class="btn btn-info mb-2">Create Product</button></a>
+                    {{!-- <a href="#deleted-brand-table">
+                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Products</button>
+                    </a> --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    {{!-- <th>Image</th> --}}
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Size</th>
+                                    <th>Created date</th>
+                                    <th>updated date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each product}}
+                                <tr>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-desc">{{this.desc}}</td>
+                                    <td>{{this.category.name}}</td>
+                                    <td id="{{this._id}}-price">{{this.price}}</td>
+                                    <td><img src="../../uploads/{{this.image}}" class="card-img-top"/></td>
+                                    <td>{{this.image}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>{{this.updatedAt}}</td>
+                                    <td>
+                                        <a class="text-decoration-none open-modal-edit-product" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#editfoodModal" data-id="{{this._id}}">
+                                            <button class="btn btn-dark">Edit</button>
+                                        </a>
+                                        <a class="text-decoration-none" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deletefoodModal">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        There are no products have been created.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Deleted Food Table --}}
+        <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
+            <h1 class="mt-4" style="color: green;"><strong>Deleted Food Tables</strong></h1>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fa-solid fa-trash-can me-1"></i>
+                    Recycle Bin
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Product Name</th>
+                                    <th>Deleted at</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each shoeDeleted}}
+                                <tr>
+                                    <td><img class="img-user-table" id="{{this._id}}-image" src="../uploads/{{this.image}}" alt="{{this.name}}"></td>
+                                    <td>{{this.category.name}}</td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a href="" data-toggle="modal" data-target="#restore-shoe" data-id="{{this._id}}">
+                                            <button class="btn btn-info">Restore</button>
+                                        </a>
+                                        <a href="" data-toggle="modal" data-target="#force-delete-shoe" data-id="{{this._id}}">
+                                            <button class="btn btn-danger">Permantly Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="13" class="text-center">
+                                        No product have been deleted.
+                                        <a href="#layoutSidenav_content">Available products</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Create Food Modal-->
+<div class="modal fade" id="createfoodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/product/store" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Food</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Name</label>
+                    <input type="text" placeholder="Enter name" class="form-control" name="name" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Description</label>
+                    <input type="text" placeholder="Enter desc" class="form-control" name="desc" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Category</label>
+                    <select class="form-select form-control py-2" name="category" required>
+                        <option selected disabled>Please select a category</option>
+                        {{#each category}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Product Price</label>
+                    <input type="number" placeholder="Enter price" class="form-control" name="price" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label for="imageFile">Product Image</label>
+                    <input id="imageFile" type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
+                        >
+                    <div class="text-center">
+                        <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
+                            src="../images/imgnotfound.png" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Create</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<form action="/asdasds" method="post"> 
+                    <input type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
+                        >
+                        <button type="submit">Add</button>
+                        </form>
+
+<!-- Delete Food Modal-->
+<div class="modal fade" id="deletefoodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Food</h5>
+                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure to delete this product?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="/product/delete/{{this._id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Food Modal-->
+<div class="modal fade" id="editfoodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/product/update/{{product._id}}" method="POST" name="edit-product-form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductLabel">Edit food</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Name</label>
+                    <input type="text" id="edit-product-name" placeholder="Enter name" class="form-control" name="name" value="{{product.name}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Description</label>
+                    <input type="text" id="edit-product-desc" placeholder="Enter desc" class="form-control" name="desc" value="{{product.desc}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Food Category</label>
+                    <select class="form-select form-control py-2" name="category" required>
+                        {{#each category}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Product Price</label>
+                    <input type="number" id="edit-product-price" placeholder="Enter price" class="form-control" name="price" value="{{product.price}}" required>
+                </div>
+                {{!-- <div class="modal-body py-2">
+                    <label>Product Image</label>
+                    <input type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
+                        >
+                    <div class="text-center">
+                        <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
+                            src="{{product.image}}" />
+                    </div>
+                </div> --}}
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit" id="btn-edit-product">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,9 @@
 <section>
-    <div class="container">
+    <div class="d-flex flex-row my-4 justify-content-center">
+        <h1 class="m-0 text-uppercase text-success text-center pages-title">My Profile
+        </h1>
+    </div>
+    <div class="container mt-4">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
@@ -40,9 +44,9 @@
                         <div class="col-md-6">
                             <div class="profile-head">
                                 <h5 class="fw-bold">User Information</h5>
-                                <h6 class="text-danger">
+                                {{!-- <h6 class="text-danger">
                                     {{this.user.email}}
-                                </h6>
+                                </h6> --}}
                                 <p class="proile-role"><strong>ROLE : {{this.user.role}}</strong></p>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist"
                                     style="--bs-nav-link-color: #198754; --bs-nav-link-hover-color: #0f5132;">
@@ -58,7 +62,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="#" class="btn btn-outline-secondary rounded-pill">Change Password</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#changepassword" class="btn btn-outline-secondary rounded-pill">Change Password</a>
                         </div>
                     </div>
                     <div class="row">
@@ -74,19 +78,13 @@
                                             <p><span>Last Name </span>: Smith</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Country </span>: Australia</p>
+                                            <p><span>Gender </span>: Male</p>
                                         </div>
                                         <div class="bio-row">
                                             <p><span>Birthday</span>: 13 July 1983</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Occupation </span>: UI Designer</p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>Email </span>: jsmith@flatlab.com</p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>Mobile </span>: (12) 03 4567890</p>
+                                            <p><span>Email </span>: {{this.user.email}}</p>
                                         </div>
                                         <div class="bio-row">
                                             <p><span>Phone </span>: 88 (02) 123456</p>
@@ -100,10 +98,12 @@
                                         <i class="fa fa-long-arrow-left me-2"></i>
                                         Back to home
                                     </a>
-                                    <button class="btn btn-success profile-button" type="button">
-                                        <i class="fas fa-user-edit"></i>
-                                        Edit Profile
-                                    </button>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editprofile">
+                                        <button class="btn btn-success profile-button" type="button">
+                                            <i class="fas fa-user-edit"></i>
+                                            Edit Profile
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -161,3 +161,142 @@
         </div>
     </div>
 </section>
+
+<!-- Edit Profile Modal-->
+<div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/profile/edit" method="POST">
+                <div class="modal-header text-white bg-green">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit User Profile</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>First Name</label>
+                    <input type="text" placeholder="Enter your first name" class="form-control" name="name" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Enter your last name" class="form-control" name="desc" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Gender</label>
+                    <div class="d-flex justify-content-start">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Birthday</label>
+                    <input type="date" class="form-control" name="price" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Phone Number</label>
+                    <input type="text" placeholder="Enter your phone number" class="form-control" name="price" required>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save Change</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/profile/change-password" method="POST">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit User Profile</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>First Name</label>
+                    <input type="text" placeholder="Enter your first name" class="form-control" name="name" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Enter your last name" class="form-control" name="desc" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Gender</label>
+                    <div class="d-flex justify-content-start">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Birthday</label>
+                    <input type="date" class="form-control" name="price" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Phone Number</label>
+                    <input type="text" placeholder="Enter your phone number" class="form-control" name="price" required>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save Change</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/profile/change-password" method="POST">
+                <div class="modal-header text-white bg-green">
+                    <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Current Password</label>
+                    <input type="text" placeholder="Enter your password" class="form-control" name="password" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>New Password</label>
+                    <input type="text" placeholder="Enter your new password" class="form-control" name="password" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Confirm Password</label>
+                    <input type="text" placeholder="Repeat your new password" class="form-control" name="password" required>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save Change</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

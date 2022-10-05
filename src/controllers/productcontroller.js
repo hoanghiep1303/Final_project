@@ -2,35 +2,64 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const Category = require('../models/Category');
 
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
 class productcontroller {
     index(req, res) {
-        Product.find({}).limit(3)
-            .then((product) => res.render('home', {
-                product: multipleMongooseToObject(product)
-            }))
-            .catch(err => console.log(err))
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+                User.findOne({ _id: decodeToken }),
+                Product.find({}).limit(3),
+                Category.find(),
+            ])
+                .then(([
+                    user, product, category
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('home', {
+                            user: mongooseToObject(user),
+                            product: multipleMongooseToObject(product),
+                            category: multipleMongooseToObject(category),
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Product.find({}).limit(3)
+                .then((product) => res.render('home', {
+                    product: multipleMongooseToObject(product),
+                    category: multipleMongooseToObject(category),
+                }))
+                .catch(err => console.log(err))
+        }
+        // Product.find({}).limit(3)
+        //     .then((product) => res.render('home', {
+        //         product: multipleMongooseToObject(product)
+        //     }))
+        //     .catch(err => console.log(err))
     }
 
     store(req, res, next) {
-        var newProduct = new Product(req.body)
-        console.log(newProduct);
-        newProduct.save((err, result) => {
-            if (err) {
-                return res.render('admin/createfood', {
-                    msg: 'Product created failed'
-                })
-            }
-            // next()
+        var newProduct = new Product({
+            name: req.body.name,
+            desc: req.body.desc,
+            category: req.body.category,
+            price: req.body.price,
+            image: req.file.filename,
         })
-        return (
-            res.render('admin/createfood', {
-                success: true,
-                msg: 'Product created successfully'
+        newProduct.save()
+            .then(() => res.redirect('back'))
+            .catch(error => {
+                console.log(error)
             })
-        )
     }
 
     delete(req, res) {
@@ -46,6 +75,7 @@ class productcontroller {
     }
 
     update(req, res) {
+        console.log(req.body)
         Product.findOneAndUpdate({ _id: req.params.id }, req.body)
             .then(product => {
                 if (!product) {
@@ -77,6 +107,7 @@ class productcontroller {
                             user: mongooseToObject(user),
                             product: mongooseToObject(product),
                             listProduct: multipleMongooseToObject(listProduct),
+                            cart: req.session.cart,
                         })
                     }
                 })

@@ -6,10 +6,11 @@ const Product = new mongoose.Schema({
     name: {type: String, minLength: 1, maxLength: 255},
     desc: {type: String},
     category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
-    image: {type: String, minLength: 1, maxLength: 255},
+    image: {type: String},
     price: {type: Number, min: 0, default: 0},
     color: {type: String},  
-    size: {type: String}
+    size: {type: String},
+    available: {type: Boolean, default: true},
     // deletedAt: {},
 }, {
     timestamps : true,

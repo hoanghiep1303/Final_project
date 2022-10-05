@@ -165,7 +165,7 @@ a {
 }
 
 a:hover {
-  color: #224abe;
+  color: #0a6007;
   text-decoration: underline;
 }
 
@@ -2914,7 +2914,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-link:hover {
-  color: #224abe;
+  color: #0a6007;
   text-decoration: underline;
 }
 
@@ -4769,7 +4769,7 @@ input[type="button"].btn-block {
 
 .page-link:hover {
   z-index: 2;
-  color: #224abe;
+  color: #0a6007;
   text-decoration: none;
   background-color: #eaecf4;
   border-color: #dddfeb;
@@ -5570,7 +5570,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   line-height: 1;
   color: #000;
   text-shadow: 0 1px 0 #fff;
-  opacity: .5;
+  opacity: 1;
 }
 
 .close:hover {
@@ -9596,7 +9596,7 @@ button.bg-dark:focus {
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #224abe !important;
+  color: #0a6007 !important;
 }
 
 .text-secondary {
@@ -11278,4 +11278,18 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+.modal .modal-header {
+  background-color: green;
+  color: white;
+}
+
+.modal .modal-header .close {
+  color: white;
+}
+
+.modal .modal-body {
+  font-weight: 600;
+  color: black;
 }

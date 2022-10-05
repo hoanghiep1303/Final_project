@@ -1,0 +1,70 @@
+
+.payment-form .green-line{
+	border-top: 6px solid seagreen;
+}
+
+.payment-form .title{
+	margin-bottom: 0;
+	font-size: 1.5em;
+	font-weight: 600;
+}
+
+.payment-form .line{
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	margin-bottom: 0.8em;
+	padding-bottom: 8px;
+}
+
+.payment-form .icon-checkout-page {
+	font-size: 1.25em;
+	font-weight: 600;
+}
+
+.payment-form .products{
+	background-color: #f7fbff;
+    padding: 25px;
+}
+
+.payment-form .products .item{
+	margin-bottom:1em;
+}
+
+.payment-form .products .item-name{
+	font-weight:600;
+	font-size: 0.9em;
+}
+
+.payment-form .products .item-description{
+	font-size:0.8em;
+	opacity:0.6;
+}
+
+.payment-form .products .item p{
+	margin-bottom:0.2em;
+}
+
+.payment-form .products .price{
+	float: right;
+	font-weight: 600;
+	font-size: 0.9em;
+}
+
+.payment-form .products .total{
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	margin-top: 10px;
+	padding-top: 19px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.payment-form .products .discount{
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	margin-top: 10px;
+	padding-top: 11px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.checkout-img {
+	margin-bottom: 5px;
+}

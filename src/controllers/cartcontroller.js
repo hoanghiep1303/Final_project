@@ -12,11 +12,11 @@ class cartcontroller {
 
         Product.findById(productId, function (err, product) {
             if (err) {
-                return res.redirect('/');
+                return res.redirect('/cart');
             }
             cart.add(product, product.id);
             req.session.cart = cart;
-            res.redirect('/');
+            res.redirect('/cart');
         })
     }
     reduce(req, res, next) {
@@ -54,6 +54,7 @@ class cartcontroller {
                         products: cart.generateArray(), 
                         totalPrice: cart.totalPrice,
                         messages: req.flash('error'),
+                        cart: req.session.cart,
                     });
                 })
             .catch(err => console.log(err))

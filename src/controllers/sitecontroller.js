@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Product = require('../models/Product');
+const Category = require('../models/Category');
 const Cart = require('../models/Cart');
+const Notification = require('../models/Notification');
 const paypal = require('paypal-rest-sdk');
 
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
@@ -13,18 +15,22 @@ class sitecontroller {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
-
                 User.findOne({ _id: decodeToken }),
-                Product.find({}).limit(3),
+                Product.find({}).limit(6),
+                Category.find(),
+                Notification.find({user: decodeToken}).sort({createdAt: -1}),
             ])
                 .then(([
-                    user, product
+                    user, product, category, noti
                 ]) => {
                     if (user) {
                         req.user = user
                         res.render('home', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            category: multipleMongooseToObject(category),
+                            noti: multipleMongooseToObject(noti),
+                            cart: req.session.cart,
                         })
                         // next()
                     }
@@ -35,7 +41,7 @@ class sitecontroller {
         else {
             Product.find({}).limit(3)
                 .then((product) => res.render('home', {
-                    product: multipleMongooseToObject(product)
+                    product: multipleMongooseToObject(product),
                 }))
                 .catch(err => console.log(err))
         }
@@ -183,7 +189,8 @@ class sitecontroller {
                     return res.render('checkout', {
                         user: mongooseToObject(user),
                         products: cart.generateArray(),
-                        totalPrice: cart.totalPrice
+                        totalPrice: cart.totalPrice,
+                        cart: req.session.cart,
                     });
                 })
                 .catch(err => console.log(err))
@@ -194,6 +201,7 @@ class sitecontroller {
     }
 
     checkoutbyPaypal(req, res, next) {
+        const userId = req.body.userId;
         paypal.configure({
             'mode': 'sandbox', //sandbox or live
             'client_id': 'Ab9ADnUFlhhvW_yM_7RakcfMJ3LoVD9k7BAP4DM2EpaYG8OYVzSrM92z59FZ4VlSkSzzDF-2H9k4KEuV',
@@ -205,8 +213,8 @@ class sitecontroller {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:5000/checkoutsuccess",
-                "cancel_url": "http://localhost:5000/checkoutfail"
+                "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId,
+                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId,
             },
             "transactions": [{
                 "item_list": {
@@ -247,15 +255,18 @@ class sitecontroller {
 
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
+                Notification.find({user: decodeToken}).sort({createdAt: -1}),
             ])
                 .then(([
-                    user, product
+                    user, product, noti
                 ]) => {
                     if (user) {
                         req.user = user
                         res.render('order', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            noti: multipleMongooseToObject(noti),
+                            cart: req.session.cart,
                         })
                         // next()
                     }
@@ -275,11 +286,21 @@ class sitecontroller {
     checkoutsuccess(req, res, next) {
         req.session.cart = null;
         req.flash('success', 'Checkout successfully!')
+        var noti = new Notification({
+            user: req.body.userId,
+            desc: 'Checkout by Paypal success.' 
+        })
+        noti.save()
         return res.redirect('/cart');
     }
 
     checkoutfail(req, res, next) {
         req.flash('error', 'Checkout failed!')
+        var noti = new Notification({
+            user: req.query.userId,
+            desc: 'Checkout by Paypal failed.' 
+        })
+        noti.save()
         return res.redirect('/cart');
     }
 
@@ -300,6 +321,7 @@ class sitecontroller {
                         res.render('profile', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            cart: req.session.cart,
                         })
                         // next()
                     }
@@ -333,6 +355,7 @@ class sitecontroller {
                         res.render('history', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            cart: req.session.cart,
                         })
                         // next()
                     }

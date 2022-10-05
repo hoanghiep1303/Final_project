@@ -1,9 +1,9 @@
-.profile-head .nav-tabs{
-    margin-bottom:5%;
+.profile-head .nav-tabs {
+    margin-bottom: 5%;
 }
 
-.profile-head .nav-tabs .nav-link{
-    font-weight:600;
+.profile-head .nav-tabs .nav-link {
+    font-weight: 600;
     border: none;
 }
 
@@ -16,7 +16,7 @@
     border-bottom: 1px solid #dee2e6;
 }
 
-.proile-role{
+.proile-role {
     color: #818182;
     margin-top: 5%;
 }
@@ -35,10 +35,44 @@
     width: 50%;
     float: left;
     margin-bottom: 10px;
-    padding:0 15px;
+    padding: 0 15px;
 }
 
 .bio-row p span {
     width: 100px;
     display: inline-block;
+}
+
+.bg-green {
+    background-color: #198754;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: gainsboro;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 1;
+}
+
+.close:hover {
+    color: grayscale($color: #000000);
+    text-decoration: none;
+}
+
+.close:not(:disabled):not(.disabled):hover,
+.close:not(:disabled):not(.disabled):focus {
+    opacity: .75;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+}
+
+a.close.disabled {
+    pointer-events: none;
 }

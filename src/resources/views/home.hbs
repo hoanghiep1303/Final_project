@@ -1,126 +1,3 @@
-{{!-- <div class="home-container">
-    <section class="wrapper-top">
-        <div class="section-top d-flex justify-content-center align-items-center">
-            <h1 class="top-text display-4 text-center">With a world-class team of carpenters, groundbreaking research
-                opportunities that create diverse and distinctive products, Woody is no longer just a lumber shop.</h1>
-        </div>
-    </section>
-
-    <section class="wrapper-second container row">
-        <h1 class="col-6 display-4">Woody at a glance</h1>
-        <div class="col-6 mt-4">
-            <h5>Woody community members join nearly four centuries of carpenters, seasoned with experience and skill in
-                the workplace.</h5>
-            <div class="d-flex mt-4">
-                <i class="fa-solid fa-circle-arrow-right fa-2x text-muted"></i>
-                <h5 class="mx-2 mt-1 font-weight-bold">Learn more about our history</h5>
-            </div>
-        </div>
-        <hr class="mt-5 mb-0">
-    </section>
-
-    <section class="wrapper-third container">
-        <div class="d-flex flex-wrap">
-            <div class="w-33 px-2">
-                <h2 class="text-danger">2022</h2>
-                <h5><b></b>the year Woody was found</b></h5>
-            </div>
-            <div class="w-33 px-2">
-                <h2 class="text-danger">5,212</h2>
-                <h5><b></b>companies around the world in 2021-2022</b></h5>
-            </div>
-            <div class="w-33 px-2">
-                <h2 class="text-danger">$173 million</h2>
-                <h5><b></b>institutional need-based grant aid provided to Woody staffs last year</b></h5>
-            </div>
-            <div class="w-33 px-2 mt-3">
-                <h2 class="text-danger">13,616</h2>
-                <h5><b></b>products sold in 2021-2022</b></h5>
-            </div>
-            <div class="w-33 px-2 mt-3">
-                <h2 class="text-danger">16.448</h2>
-                <h5><b></b>who bought wood at the store</b></h5>
-            </div>
-            <div class="w-33 px-2 mt-3">
-                <h2 class="text-danger">400,000+</h2>
-                <h5><b></b>alumni worldwide</b></h5>
-            </div>
-        </div>
-    </section>
-
-    <section class="wrapper-four bg-black">
-        <div class="container pt-5 mb-0">
-            <h1 class="display-3 text-white">BEST SELLER</h1>
-            <hr>
-            <div class="d-flex flex-wrap">
-                <div class="w-50">
-                    <img src="https://www.woodcraft.com/media/W1siZiIsIjIwMjIvMDEvMTMvMDgvMjIvNTMvODM5L1dvb2RfMi5qcGciXSxbInAiLCJvcHRpbSJdXQ/Wood_2.jpg?sha=7e390c683a961bb5"
-                        class="wrapper-four-img" />
-                </div>
-                <div class="w-50 wrapper-four-right">
-                    <h1 class="text-white">You can find the best wood when exploring Woody and have the most beautiful
-                        patterns and colors!</h1>
-                    <h4 class="text-white pt-3">Iron Man</h4>
-                    <h5 class="text-white">Woody</h5>
-                    <div class="d-flex pt-4">
-                        <i class="fa-solid fa-circle-arrow-right fa-2x text-muted"></i>
-                        <h5 class="mx-2 mt-1 text-white">Learn more about our history</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wrap-four d-flex justify-content-between">
-                {{#each product}}
-                <a href="/product/show/{{this._id}}">
-                    <div class="wrap-four-items">
-                        <div class="wrap-four-overlay"></div>
-                        <img class="wrap-four-img" src="{{this.image}}" />
-                        <div class="wrap-four-text px-4">
-                            <h3 class="text-white">{{this.name}}</h3>
-                            <h5 class="text-white">{{this.desc}}</h5>
-
-                            <div class="d-flex pt-4">
-                                <i class="fa-solid fa-circle-arrow-right fa-2x text-muted"></i>
-                                <b class="mx-2 mt-1 text-white">Learn more about our history</b>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                {{/each}}
-                {{!-- <div class="wrap-four-items">
-                    <div class="wrap-four-overlay"></div>
-                    <img class="wrap-four-img"
-                        src="https://www.woodcraft.com/media/W1siZiIsIjIwMjIvMDEvMTMvMDgvMjIvNTMvODM5L1dvb2RfMi5qcGciXSxbInAiLCJvcHRpbSJdXQ/Wood_2.jpg?sha=7e390c683a961bb5" />
-                    <div class="wrap-four-text px-4">
-                        <h3 class="text-white">Mussab Ali</h3>
-                        <h5 class="text-white">Mussab Ali is the co-president of the Harvard Law School’s student body.
-                        </h5>
-
-                        <div class="d-flex pt-4">
-                            <i class="fa-solid fa-circle-arrow-right fa-2x text-muted"></i>
-                            <b class="mx-2 mt-1 text-white">Learn more about our history</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="wrap-four-items">
-                    <div class="wrap-four-overlay"></div>
-                    <img class="wrap-four-img"
-                        src="https://www.woodcraft.com/media/W1siZiIsIjIwMjIvMDEvMTMvMDgvMjIvNTMvODM5L1dvb2RfMi5qcGciXSxbInAiLCJvcHRpbSJdXQ/Wood_2.jpg?sha=7e390c683a961bb5" />
-                    <div class="wrap-four-text px-4">
-                        <h3 class="text-white">Mussab Ali</h3>
-                        <h5 class="text-white">Mussab Ali is the co-president of the Harvard Law School’s student body.
-                        </h5>
-                        <div class="d-flex pt-4">
-                            <i class="fa-solid fa-circle-arrow-right fa-2x text-muted"></i>
-                            <b class="mx-2 mt-1 text-white">Learn more about our history</b>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
-        </div>
-    </section>
-</div> --}}
-
 
 <div class="home_container">
     <div class="hero_area">
@@ -288,6 +165,7 @@
 
             <div class="filters-content">
                 <div class="row grid">
+                    {{!-- {{#each product}} --}}
                     <div class="col-sm-6 col-lg-4 all pizza">
                         <div class="box shadow">
                             <div>
@@ -322,6 +200,9 @@
                             </div>
                         </div>
                     </div>
+                    {{!-- {{/each}} --}}
+                    
+
                     <div class="col-sm-6 col-lg-4 all burger">
                         <div class="box shadow">
                             <div>
@@ -570,6 +451,8 @@
                             </div>
                         </div>
                     </div>
+
+                
                 </div>
             </div>
             <div class="btn-box">

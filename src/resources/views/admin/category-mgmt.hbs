@@ -1,0 +1,202 @@
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4 pb-2">
+            <h1 class="mt-4" style="color: green"><strong>Category Tables</strong>
+            </h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Tables</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fas fa-table me-1"></i>
+                    Category Database
+                </div>
+                <div class="card-body">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#createcategoryModal"><button
+                            class="btn btn-info mb-2">Create Category</button></a>
+                    {{!-- <a href="#deleted-brand-table">
+                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Products</button>
+                    </a> --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Category Name</th>
+                                    <th>Created date</th>
+                                    <th>Updated date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each category}}
+                                <tr>
+                                    <td>{{this.img}}</td>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <td>{{this.updatedAt}}</td>
+                                    <td>
+                                        <a class="text-decoration-none" href="/admin/category/update/{{this._id}}">
+                                            <button class="btn btn-dark">Edit</button>
+                                        </a>
+                                        <a class="text-decoration-none" href="/category/delete/{{this._id}}">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        There are no products have been created.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Deleted Category Table --}}
+        <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
+            <h1 class="mt-4" style="color: green;"><strong>Deleted Category Tables</strong></h1>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fa-solid fa-trash-can me-1"></i>
+                    Recycle Bin
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Category Name</th>
+                                    <th>Deleted date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each shoetypeDeleted}}
+                                <tr>
+                                    <td><img class="img-user-table" id="{{this._id}}-image" src="../uploads/{{this.image}}" alt="{{this.name}}"></td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a href="" data-toggle="modal" data-target="#restore-shoetype" data-id="{{this._id}}">
+                                            <button class="btn btn-info">Restore</button>
+                                        </a>
+                                        <a href="" data-toggle="modal" data-target="#force-delete-shoetype" data-id="{{this._id}}">
+                                            <button class="btn btn-danger">Permantly Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="13" class="text-center">
+                                        No category have been deleted.
+                                        <a href="#layoutSidenav_content">Available categories</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Create Category Modal-->
+<div class="modal fade" id="createcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/category/store" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Category</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Category Name</label>
+                    <input type="text" placeholder="Enter name" class="form-control" name="name" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Category Image</label>
+                    <input type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
+                        >
+                    <div class="text-center">
+                        <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
+                            src="../images/imgnotfound.png" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Create</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Category Modal-->
+<div class="modal fade" id="deletecategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
+                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure to delete this category?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="/category/delete/{{this._id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Category Modal-->
+<div class="modal fade" id="editcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/category/update/{{category._id}}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Category Name</label>
+                    <input type="text" placeholder="Enter name" class="form-control" name="name"
+                        value="{{category.name}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Product Image</label>
+                    <input type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
+                        required>
+                    <div class="text-center">
+                        <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
+                            src="{{category.image}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

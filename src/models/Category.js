@@ -4,6 +4,7 @@ const mongooseDelete = require('mongoose-delete');
 
 const Category = new Schema({
     name: { type: String },
+    image: {type: String},
     deletedAt: {},
 }, {
     timestamps : true,

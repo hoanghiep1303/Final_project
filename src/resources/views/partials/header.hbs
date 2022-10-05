@@ -16,7 +16,14 @@
                     <li><a class="dropdown-item" href="/admin"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
                     {{/ifeq}}
                     <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History Log</a></li>
+                    <li><a class="dropdown-item" href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i> Activity Log</a></li>
+                    {{#each noti}}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">{{this.desc}}</a></li>
+                    {{/each}}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -39,7 +46,7 @@
             <a href="/cart" class="header-cart btn btn-outline-success rounded">
                 <i class="fa fa-shopping-cart me-1"></i>
                 Cart
-                <span class="badge bg-danger text-white ms-1 rounded-pill">0</span>
+                <span class="badge bg-danger text-white ms-1 rounded-pill">{{cart.totalQty}}</span>
             </a>
         </div>
     </nav>
