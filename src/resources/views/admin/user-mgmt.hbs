@@ -1,7 +1,7 @@
 <div id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4 pb-4">
-            <h1 class="mt-4" style="font-family: 'Nunito', sans-serif; color: green"><strong>User Tables</strong>
+        <div class="container-fluid px-4 pb-5">
+            <h1 class="mt-4" style="font-family: 'Nunito', sans-serif; color: green"><strong>User Table</strong>
             </h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
@@ -13,18 +13,21 @@
                     User Database
                 </div>
                 <div class="card-body">
-                    <a href="/admin/user/create"><button class="btn btn-info mb-2">Create User</button></a>
-                    {{!-- <a href="#deleted-brand-table">
-                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Users</button>
-                    </a> --}}
+                    <a class="text-decoration-none" href="/admin/user-deleted-table">
+                        <button class="btn btn-danger mb-2">
+                            <i class="fa-solid fa-trash-can me-1"></i> User Deleted
+                        </button>
+                    </a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>Avatar</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Social login</th>
                                     <th>Phone</th>
-                                    {{!-- <th>Image</th> --}}
                                     <th>Birthday</th>
                                     <th>Address</th>
                                     <th>Gender</th>
@@ -35,19 +38,32 @@
                             <tbody>
                                 {{#each users}}
                                 <tr>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>{{this.phone}}</td>
-                                    {{!-- <td>{{this.image}}</td> --}}
-                                    <td>{{moment this.birthday format = "DD/MM/yyyy"}}</td>
-                                    <td>{{this.address}}</td>
-                                    <td>{{this.gender}}</td>
-                                    <td>{{moment this.createdAt format = "HH:mm - DD/MM/yyyy"}}</td>
+                                    <td><img id="{{this._id}}-image" src="../../uploads/{{this.image}}"
+                                            class="card-img-top" /></td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-email">{{this.email}}</td>
+                                    <td id="{{this._id}}-role">{{this.role}}</td>
                                     <td>
-                                        <a class="text-decoration-none" href="/admin/user/update/{{this._id}}">
+                                        {{#if this.facebookId}}
+                                            Facebook
+                                        {{else if this.googleId}}
+                                            Google
+                                        {{/if}}
+                                    </td>
+                                    <td id="{{this._id}}-phone">{{this.phone}}</td>
+                                    <td id="{{this._id}}-birthday">{{moment this.birthday format = "DD/MM/yyyy"}}</td>
+                                    <td id="{{this._id}}-address">{{this.address}}</td>
+                                    <td id="{{this._id}}-gender">{{this.gender}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.createdAt format = "HH:mm -
+                                        DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a class="text-decoration-none open-modal-edit-user" href="#"
+                                            data-bs-toggle="modal" data-bs-target="#edituserModal"
+                                            data-id="{{this._id}}">
                                             <button class="btn btn-dark">Edit</button>
                                         </a>
-                                        <a class="text-decoration-none" href="/user/delete/{{this._id}}">
+                                        <a class="text-decoration-none" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteuserModal">
                                             <button class="btn btn-danger">Delete</button>
                                         </a>
                                     </td>
@@ -66,4 +82,80 @@
             </div>
         </div>
     </main>
+</div>
+
+<!-- Delete User Modal-->
+<div class="modal fade" id="deleteuserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure to delete this user?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="/user/delete/{{user._id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User Modal-->
+<div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/user/update/{{user._id}}" method="POST" name="edit-user-form" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserLabel">Edit User</h5>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Name</label>
+                    <input type="text" placeholder="Enter your name" class="form-control" value="{{user.name}}"
+                        name="name" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Gender</label>
+                    <div class="d-flex justify-content-start">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
+                                {{#ifeq user.gender 'male' }} checked {{/ifeq}}>
+                            <label class="form-check-label" for="gender-male">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
+                                {{#ifeq user.gender 'female' }} checked {{/ifeq}}>
+                            <label class="form-check-label" for="gender-female">Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Birthday</label>
+                    <input type="date" class="form-control" id="birthday" name="birthday"
+                        value="{{moment user.birthday format = "yyyy-MM-DD"}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Phone Number</label>
+                    <input type="text" placeholder="Enter your phone number" id="phone" class="form-control"
+                        name="phone" value="{{user.phone}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Address</label>
+                    <input type="text" placeholder="Enter your address" id="address" class="form-control" name="address"
+                        value="{{user.address}}" required>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Save Change</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

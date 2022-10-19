@@ -1,0 +1,16 @@
+.id-link-history:hover {
+    color: var(--bs-link-color);
+    text-decoration: underline;
+}
+
+.active>.page-link, .page-link.active {
+    background-color: #0d9f1c;
+    border-color: #088715;
+}
+
+.pagination {
+    --bs-pagination-color: #0d9f1c;
+    --bs-pagination-hover-color: var(--bs-pagination-color);
+    --bs-pagination-active-bg: #0d9f1c;
+    --bs-pagination-active-border-color: #0d9f1c;
+}

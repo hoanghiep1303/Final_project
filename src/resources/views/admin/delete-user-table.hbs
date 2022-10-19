@@ -1,0 +1,86 @@
+<div id="layoutSidenav_content">
+    <main>
+        {{!-- Deleted Category Table --}}
+        <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
+            <h1 class="mt-4" style="color: green;"><strong>Deleted User Tables</strong></h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/user-mgmt">User Table</a></li>
+                <li class="breadcrumb-item active">Recycle Bin</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fa-solid fa-trash-can me-1"></i>
+                    Recycle Bin
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Social login</th>
+                                    <th>Phone</th>
+                                    <th>Birthday</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
+                                    <th>Deleted date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each userDeleted}}
+                                <tr>
+                                    <td><img id="{{this._id}}-image" src="../../uploads/{{this.image}}"
+                                            class="card-img-top" /></td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-email">{{this.email}}</td>
+                                    <td id="{{this._id}}-role">{{this.role}}</td>
+                                    <td>
+                                        {{#if this.facebookId}}
+                                        Facebook
+                                        {{else if this.googleId}}
+                                        Google
+                                        {{/if}}
+                                    </td>
+                                    <td id="{{this._id}}-phone">{{this.phone}}</td>
+                                    <td id="{{this._id}}-birthday">{{moment this.birthday format = "DD/MM/yyyy"}}</td>
+                                    <td id="{{this._id}}-address">{{this.address}}</td>
+                                    <td id="{{this._id}}-gender">{{this.gender}}</td>
+                                    <td id="{{this._id}}-deletedAt">{{moment this.deletedAt format = "HH:mm -
+                                        DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a class="text-decoration-none open-modal-edit-user" href="#"
+                                            data-bs-toggle="modal" data-bs-target="#edituserModal"
+                                            data-id="{{this._id}}">
+                                            <button class="btn btn-dark">Edit</button>
+                                        </a>
+                                        <a class="text-decoration-none" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deleteuserModal">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="13" class="text-center">
+                                        No user have been deleted.
+                                        <a href="/admin/category-mgmt">Available users</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a class="back-to-mgmt" href="/admin/category-mgmt"><i class="fa-solid fa-reply"></i> Back to User
+                    Table</a>
+            </div>
+        </div>
+    </main>
+</div>

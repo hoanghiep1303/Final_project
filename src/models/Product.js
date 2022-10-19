@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
+const Schema = mongoose.Schema;
 
 const Product = new mongoose.Schema({
     name: {type: String, minLength: 1, maxLength: 255},
@@ -11,7 +12,7 @@ const Product = new mongoose.Schema({
     color: {type: String},  
     size: {type: String},
     available: {type: Boolean, default: true},
-    // deletedAt: {},
+    deletedAt: {},
 }, {
     timestamps : true,
 });

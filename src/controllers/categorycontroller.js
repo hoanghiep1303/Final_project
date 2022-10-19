@@ -60,45 +60,39 @@ class categorycontroller {
     //     //     .catch(next);
     // }
 
-    //[PUT] /categ/:id
-    update(req,res,next) {
-        Category.updateOne({_id: req.params.id}, req.body)
-            .then(categ => res.redirect('back'))
+    update(req, res, next) {
+        Category.findOneAndUpdate({ _id: req.params.id }, req.body)
+            .then(category => res.redirect('back'))
             .catch(next);
     }
 
-    //[DELETE] /categ/:id
-    delete(req,res,next) {
-        Category.delete({_id: req.params.id})
+    delete(req, res, next) {
+        Category.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
-        
     }
 
-    //[DELETE] /categ/:id/force
-    force(req,res,next) {
-        Category.deleteOne({_id: req.params.id})
+    force(req, res, next) {
+        Category.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
-        
+
     }
 
-    //[RESTORE] /categ/:id/store
-    restore(req,res,next) {
-        Category.restore({_id: req.params.id})
+    restore(req, res, next) {
+        Category.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
-        
+
     }
 
-    //[POST] /store categ
-    store(req,res,next) {
-        const categ = new Category({
+    store(req, res, next) {
+        const newCategory = new Category({
             name: req.body.name,
-            //image: req.file.filename
+            image: req.file.filename,
         });
-        categ.save()
-            .then(() => res.redirect('/admin/category-mgmt'))
+        newCategory.save()
+            .then(() => res.redirect('back'))
             .catch(error => {
                 console.log(error)
             })

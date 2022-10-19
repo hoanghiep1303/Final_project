@@ -32,58 +32,61 @@ class admincontroller {
                 res.redirect('/login')
             })
     }
-    create(req, res) {
-        res.render('admin/createfood')
-    }
-    update(req, res) {
-        Product.findOne({ _id: req.params.id })
-            .then(product => {
-                if (!product) {
-                    res.render('admin/updatefood', {
-                        msg: 'Product not found!'
-                    })
-                } else {
-                    res.render('admin/updatefood', {
-                        product: mongooseToObject(product),
-                        messages: req.flash('success')
-                    })
-                }
-            })
-    }
-    createCategory(req, res) {
-        res.render('admin/createcategory')
-    }
-    updateCategory(req, res) {
-        Category.findOne({ _id: req.params.id })
-            .then(category => {
-                if (!category) {
-                    res.render('admin/updatecategory', {
-                        msg: 'Category not found!'
-                    })
-                } else {
-                    res.render('admin/updatecategory', {
-                        category: mongooseToObject(category),
-                        messages: req.flash('success')
-                    })
-                }
-            })
-    }
+    // create(req, res) {
+    //     res.render('admin/product-mgmt')
+    // }
+    // update(req, res) {
+    //     Product.findOne({ _id: req.params.id })
+    //         .then(product => {
+    //             if (!product) {
+    //                 res.render('admin/product-mgmt', {
+    //                     msg: 'Product not found!'
+    //                 })
+    //             } else {
+    //                 res.render('admin/product-mgmt', {
+    //                     product: mongooseToObject(product),
+    //                     messages: req.flash('success')
+    //                 })
+    //             }
+    //         })
+    // }
+    // createCategory(req, res) {
+    //     res.render('admin/category-mgmt')
+    // }
+    // updateCategory(req, res) {
+    //     Category.findOne({ _id: req.params.id })
+    //         .then(category => {
+    //             if (!category) {
+    //                 res.render('admin/category-mgmt', {
+    //                     msg: 'Category not found!'
+    //                 })
+    //             } else {
+    //                 res.render('admin/category-mgmt', {
+    //                     category: mongooseToObject(category),
+    //                     messages: req.flash('success')
+    //                 })
+    //             }
+    //         })
+    // }
 
     productTable(req, res, next) {
         var token = req.cookies.token;
         var decodeToken = jwt.verify(token, 'mytoken');
         Promise.all([
             User.findOne({ _id: decodeToken }),
-            Category.find(),
-            Product.find({}).populate('category')
+            Category.find({}),
+            Product.find().populate('category'),
+            // Product.findDeleted({}).populate('category')
         ])
             .then(([
-                user, category, product
+                user, category, product, 
+                // foodDeleted
             ]) => {
                 res.render('admin/product-mgmt', {
                     user: mongooseToObject(user),
                     category: multipleMongooseToObject(category),
                     product: multipleMongooseToObject(product),
+                    // foodDeleted: multipleMongooseToObject(foodDeleted),
                     layout: 'dashboard',
                 })
 
@@ -100,13 +103,16 @@ class admincontroller {
         Promise.all([
             User.findOne({ _id: decodeToken }),
             Category.find(),
+            // Category.findDeleted(),
         ])
             .then(([
-                user, category
+                user, category, 
+                // categoryDeleted
             ]) => {
                 res.render('admin/category-mgmt', {
                     user: mongooseToObject(user),
                     category: multipleMongooseToObject(category),
+                    // categoryDeleted: multipleMongooseToObject(categoryDeleted),
                     layout: 'dashboard',
                 })
 
@@ -124,12 +130,94 @@ class admincontroller {
             User.findOne({ _id: decodeToken }),
             Category.find(),
             User.find(),
+            // User.findDeleted(),
         ])
             .then(([
                 user, category, users
             ]) => {
 
                 res.render('admin/user-mgmt', {
+                    user: mongooseToObject(user),
+                    users: multipleMongooseToObject(users),
+                    category: multipleMongooseToObject(category),
+                    layout: 'dashboard',
+                })
+
+            })
+            .catch((error) => {
+                console.error(error);
+                res.redirect('/login')
+            })
+    }
+
+    deletedProductTable(req, res, next) {
+        var token = req.cookies.token;
+        var decodeToken = jwt.verify(token, 'mytoken');
+        Promise.all([
+            User.findOne({ _id: decodeToken }),
+            Category.find(),
+            Product.find({}).populate('category'),
+            // Product.findDeleted({}).populate('category')
+        ])
+            .then(([
+                user, category, product, 
+                // foodDeleted
+            ]) => {
+                res.render('admin/delete-product-table', {
+                    user: mongooseToObject(user),
+                    category: multipleMongooseToObject(category),
+                    product: multipleMongooseToObject(product),
+                    // foodDeleted: multipleMongooseToObject(foodDeleted),
+                    layout: 'dashboard',
+                })
+
+            })
+            .catch((error) => {
+                console.error(error);
+                //res.redirect('/login')
+            })
+    }
+
+    deletedCategoryTable(req, res, next) {
+        var token = req.cookies.token;
+        var decodeToken = jwt.verify(token, 'mytoken');
+        Promise.all([
+            User.findOne({ _id: decodeToken }),
+            Category.find(),
+            // Category.findDeleted(),
+        ])
+            .then(([
+                user, category, 
+                // categoryDeleted
+            ]) => {
+                res.render('admin/delete-category-table', {
+                    user: mongooseToObject(user),
+                    category: multipleMongooseToObject(category),
+                    // categoryDeleted: multipleMongooseToObject(categoryDeleted),
+                    layout: 'dashboard',
+                })
+
+            })
+            .catch((error) => {
+                console.error(error);
+                res.redirect('/login')
+            })
+    }
+
+    deletedUserTable(req, res, next) {
+        var token = req.cookies.token;
+        var decodeToken = jwt.verify(token, 'mytoken');
+        Promise.all([
+            User.findOne({ _id: decodeToken }),
+            Category.find(),
+            User.find(),
+            // User.findDeleted(),
+        ])
+            .then(([
+                user, category, users
+            ]) => {
+
+                res.render('admin/delete-user-table', {
                     user: mongooseToObject(user),
                     users: multipleMongooseToObject(users),
                     category: multipleMongooseToObject(category),

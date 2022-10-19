@@ -1,7 +1,7 @@
 <div id="layoutSidenav_content">
     <main>
-        <div class="container-fluid px-4 pb-2">
-            <h1 class="mt-4" style="color: green"><strong>Category Tables</strong>
+        <div class="container-fluid px-4 pb-5">
+            <h1 class="mt-4" style="color: green"><strong>Category Table</strong>
             </h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
@@ -13,17 +13,23 @@
                     Category Database
                 </div>
                 <div class="card-body">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#createcategoryModal"><button
-                            class="btn btn-info mb-2">Create Category</button></a>
-                    {{!-- <a href="#deleted-brand-table">
-                        <button class="btn btn-danger mb-2"><i class="fa fa-trash"></i> Deleted Products</button>
-                    </a> --}}
+                    <a class="text-decoration-none" href="#" data-bs-toggle="modal"
+                        data-bs-target="#createcategoryModal">
+                        <button class="btn btn-info mb-2">
+                            <i class="fa-solid fa-circle-plus"></i> Create Category
+                        </button>
+                    </a>
+                    <a class="text-decoration-none" href="/admin/category-deleted-table">
+                        <button class="btn btn-danger mb-2">
+                            <i class="fa-solid fa-trash-can me-1"></i> Category Deleted
+                        </button>
+                    </a>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Category Name</th>
+                                    <th>Category name</th>
                                     <th>Created date</th>
                                     <th>Updated date</th>
                                     <th>Action</th>
@@ -32,15 +38,21 @@
                             <tbody>
                                 {{#each category}}
                                 <tr>
-                                    <td>{{this.img}}</td>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.createdAt}}</td>
-                                    <td>{{this.updatedAt}}</td>
+                                    <td><img id="{{this._id}}-image" src="../../uploads/{{this.image}}"
+                                            class="card-img-top" style="max-width: 120px;" /></td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.createdAt format = "HH:mm on
+                                        DD/MM/yyyy"}}</td>
+                                    <td id="{{this._id}}-updatedAt">{{moment this.updatedAt format = "HH:mm on
+                                        DD/MM/yyyy"}}</td>
                                     <td>
-                                        <a class="text-decoration-none" href="/admin/category/update/{{this._id}}">
+                                        <a class="text-decoration-none open-modal-edit-category" href="#"
+                                            data-bs-toggle="modal" data-bs-target="#editcategoryModal"
+                                            data-id="{{this._id}}">
                                             <button class="btn btn-dark">Edit</button>
                                         </a>
-                                        <a class="text-decoration-none" href="/category/delete/{{this._id}}">
+                                        <a class="text-decoration-none" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#deletecategoryModal">
                                             <button class="btn btn-danger">Delete</button>
                                         </a>
                                     </td>
@@ -60,7 +72,7 @@
         </div>
 
         {{!-- Deleted Category Table --}}
-        <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
+        {{!-- <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
             <h1 class="mt-4" style="color: green;"><strong>Deleted Category Tables</strong></h1>
             <div class="card mb-2">
                 <div class="card-header text-white" style="background-color: #0d9f1c;">
@@ -73,22 +85,25 @@
                             <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Category Name</th>
+                                    <th>Category name</th>
                                     <th>Deleted date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each shoetypeDeleted}}
+                                {{#each categoryDeleted}}
                                 <tr>
-                                    <td><img class="img-user-table" id="{{this._id}}-image" src="../uploads/{{this.image}}" alt="{{this.name}}"></td>
+                                    <td><img src="../../uploads/{{this.image}}" class="card-img-top" /></td>
                                     <td id="{{this._id}}-name">{{this.name}}</td>
-                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on DD/MM/yyyy"}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on
+                                        DD/MM/yyyy"}}</td>
                                     <td>
-                                        <a href="" data-toggle="modal" data-target="#restore-shoetype" data-id="{{this._id}}">
+                                        <a href="" data-toggle="modal" data-target="#restore-shoetype"
+                                            data-id="{{this._id}}">
                                             <button class="btn btn-info">Restore</button>
                                         </a>
-                                        <a href="" data-toggle="modal" data-target="#force-delete-shoetype" data-id="{{this._id}}">
+                                        <a href="" data-toggle="modal" data-target="#force-delete-shoetype"
+                                            data-id="{{this._id}}">
                                             <button class="btn btn-danger">Permantly Delete</button>
                                         </a>
                                     </td>
@@ -106,7 +121,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </main>
 </div>
 
@@ -115,7 +130,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/category/store" method="POST">
+            <form action="/category/store" method="POST" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create New Category</h5>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
@@ -129,8 +144,7 @@
                 <div class="modal-body py-2">
                     <label>Category Image</label>
                     <input type="file" class="form-control p-1" name="image" accept="image/*"
-                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
-                        >
+                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])">
                     <div class="text-center">
                         <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
                             src="../images/imgnotfound.png" />
@@ -151,7 +165,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete Category</h5>
                 <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -170,31 +184,31 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/category/update/{{category._id}}" method="POST">
+            <form action="/category/update/{{category._id}}" method="POST" name="edit-category-form"
+                enctype="multipart/form-data">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
+                    <h5 class="modal-title" id="editCategoryLabel">Edit Category</h5>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body py-2">
                     <label>Category Name</label>
-                    <input type="text" placeholder="Enter name" class="form-control" name="name"
-                        value="{{category.name}}" required>
+                    <input type="text" id="edit-category-name" placeholder="Enter name" class="form-control" name="name"
+                        value="" required>
                 </div>
                 <div class="modal-body py-2">
-                    <label>Product Image</label>
-                    <input type="file" class="form-control p-1" name="image" accept="image/*"
-                        onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"
-                        required>
+                    <label for="imageFile">Category Image</label>
+                    <input id="imageFile" type="file" class="form-control p-1" name="image" accept="image/*"
+                        onchange="document.getElementById('edit-category-image').src = window.URL.createObjectURL(this.files[0])">
                     <div class="text-center">
-                        <img class="mt-4 mb-2" id="preview-image" alt="x" width="50%" height="50%"
-                            src="{{category.image}}" />
+                        <img class="mt-4 mb-2" id="edit-category-image" alt="x" width="50%" height="50%"
+                            src="../../images/imgnotfound.png" class="card-img-top" />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit" id="btn-edit-category">Update</button>
                 </div>
             </form>
         </div>

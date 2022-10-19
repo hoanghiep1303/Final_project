@@ -4,13 +4,13 @@
     </h1>
   </div>
 
-  <div class="container my-3">
+  <div class="container-fluid my-3">
     <div class="p-2 rounded w-100" style="background-color: rgb(0 0 0 / 10%);">
       <nav class="woocommerce-breadcrumb"><a href="/">Home</a>&nbsp;/&nbsp;Order&nbsp;/&nbsp;Page 2</nav>
     </div>
   </div>
 
-  <div class="container mt-4">
+  <div class="container-fluid mt-4">
 
     <div class="row">
       <aside class="col-lg-3">
@@ -216,24 +216,19 @@
       </aside> <!-- col .// -->
       <main class="col-lg-9">
 
-        <div class="d-xl-flex justify-content-between border-bottom mb-4">
+        <div class="d-lg-flex justify-content-between border-bottom pb-3"
+          style="border-bottom: var(--bs-border-width) var(--bs-border-style) #adb5bd!important;">
           <div class=" col-lg-4 col-md-12 col-12">
             <form action="#" class="">
               <div class="input-group">
                 <input type="search" class="form-control" style="width:55%" placeholder="Search">
-                {{!-- <select class="form-select">
-                  <option value="">All type</option>
-                  <option value="codex">Special</option>
-                  <option value="comments">Only best</option>
-                  <option value="content">Latest</option>
-                </select> --}}
-                <button class="btn btn-primary">
+                <button class="btn btn-success mygreen-btn">
                   <i class="fa fa-search"></i>
                 </button>
               </div> <!-- input-group end.// -->
             </form>
           </div>
-          <div class=" col-lg-4 col-md-12 col-12">
+          <div class="col-lg-4 col-md-12 col-12 mymt-lg-3">
             <form action="#" class="">
               <div class="input-group">
                 <select class="form-select">
@@ -247,143 +242,60 @@
           </div>
         </div>
 
-        {{!-- <div class="container py-2 px-0 m-0"> --}}
-          <div class="row py-2">
-            <div class="col-md-6 col-sm-6 col-lg-4 mb-4 mb-lg-0">
-              <div class="card">
-                <div class="d-flex justify-content-between p-3">
-                  <p class="lead mb-0">Today's Combo Offer</p>
-                  <div class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                    style="width: 35px; height: 35px;">
-                    <p class="text-white mb-0 small">x4</p>
-                  </div>
-                </div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
-                  class="card-img-top" alt="Laptop" />
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
-                    <p class="small text-danger"><s>$1099</s></p>
-                  </div>
 
-                  <div class="d-flex justify-content-between mb-3">
-                    <h5 class="mb-0">HP Notebook</h5>
-                    <h5 class="text-dark mb-0">$999</h5>
-                  </div>
-
-                  <div class="d-flex justify-content-between mb-2">
-                    <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
-                    <div class="ms-auto text-warning">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
+        <section class="food_section pb-2 mt-2">
+          <div class="container-fuild">
+            <div class="filters-content">
+              <div class="row grid">
+                {{#each product}}
+                <div class="col-sm-6 col-md-4 col-lg-4 all pizza">
+                  <div class="box shadow my-2">
+                    <div class="">
+                      <div class="img-box" style="border-radius: 15px">
+                        <img id="{{this._id}}-image" src="../../uploads/{{this.image}}" class="card-img-top" />
+                      </div>
+                      <div class="detail-box">
+                        <div class="d-flex justify-content-between">
+                          <h5>
+                            {{this.name}}
+                          </h5>
+                          <h5>
+                            ${{this.price}}
+                          </h5>
+                        </div>
+                        <p>
+                          {{this.desc}}
+                        </p>
+                        <div class="">
+                          <div class="d-flex justify-content-between">
+                            <a class="text-white me-2 btn btn-success w-100 rounded-pill mygreen-btn" href="#">
+                              <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                            <a class="text-white btn btn-success w-100 rounded-pill mygreen-btn" href="#">
+                              <i class="fa-solid fa-cart-plus"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="d-flex flex-row">
-                    <button type="button" class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-                      Learn more
-                    </button>
-                    <button type="button" class="btn btn-danger flex-fill ms-1">Buy now</button>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-lg-4 mb-4 mb-lg-0">
-              <div class="card">
-                <div class="d-flex justify-content-between p-3">
-                  <p class="lead mb-0">Today's Combo Offer</p>
-                  <div class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                    style="width: 35px; height: 35px;">
-                    <p class="text-white mb-0 small">x2</p>
-                  </div>
-                </div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp"
-                  class="card-img-top" alt="Laptop" />
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
-                    <p class="small text-danger"><s>$1199</s></p>
-                  </div>
-
-                  <div class="d-flex justify-content-between mb-3">
-                    <h5 class="mb-0">HP Envy</h5>
-                    <h5 class="text-dark mb-0">$1099</h5>
-                  </div>
-
-                  <div class="d-flex justify-content-between mb-2">
-                    <p class="text-muted mb-0">Available: <span class="fw-bold">7</span></p>
-                    <div class="ms-auto text-warning">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-row">
-                    <button type="button" class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-                      Learn more
-                    </button>
-                    <button type="button" class="btn btn-danger flex-fill ms-1">Buy now</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-lg-4 mb-4 mb-lg-0">
-              <div class="card">
-                <div class="d-flex justify-content-between p-3">
-                  <p class="lead mb-0">Today's Combo Offer</p>
-                  <div class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                    style="width: 35px; height: 35px;">
-                    <p class="text-white mb-0 small">x3</p>
-                  </div>
-                </div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp"
-                  class="card-img-top" alt="Gaming Laptop" />
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
-                    <p class="small text-danger"><s>$1399</s></p>
-                  </div>
-
-                  <div class="d-flex justify-content-between mb-3">
-                    <h5 class="mb-0">Toshiba B77</h5>
-                    <h5 class="text-dark mb-0">$1299</h5>
-                  </div>
-
-                  <div class="d-flex justify-content-between mb-2">
-                    <p class="text-muted mb-0">Available: <span class="fw-bold">5</span></p>
-                    <div class="ms-auto text-warning">
-                      <i class="fa fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star-half-alt"></i>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-row">
-                    <button type="button" class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-                      Learn more
-                    </button>
-                    <button type="button" class="btn btn-danger flex-fill ms-1">Buy now</button>
-                  </div>
-                </div>
+                {{/each}}
               </div>
             </div>
           </div>
-          {{!--
-        </div> --}}
+        </section>
+
 
         <hr>
 
-        <div class="d-flex mt-4 justify-content-center">
-          <div>
+        <div class="d-flex flex-wrap mt-4 justify-content-center">
+          <div class="">
             <a href="javascript: history.back()" class="btn btn-light"> « Go back</a>
           </div>
           <nav class="ms-3">
             <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
               <li class="page-item"><a class="page-link" href="#">1</a></li>
               <li class="page-item active" aria-current="page">
                 <span class="page-link">2</span>

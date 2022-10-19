@@ -202,6 +202,7 @@ class sitecontroller {
 
     checkoutbyPaypal(req, res, next) {
         const userId = req.body.userId;
+        const cart = new Cart(req.session.cart);
         paypal.configure({
             'mode': 'sandbox', //sandbox or live
             'client_id': 'Ab9ADnUFlhhvW_yM_7RakcfMJ3LoVD9k7BAP4DM2EpaYG8OYVzSrM92z59FZ4VlSkSzzDF-2H9k4KEuV',
@@ -213,22 +214,22 @@ class sitecontroller {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId,
-                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId,
+                "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId + '&totalPrice=' + cart.totalPrice,
+                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId + '&totalPrice=' + cart.totalPrice,
             },
             "transactions": [{
                 "item_list": {
                     "items": [{
                         "name": "item",
                         "sku": "item",
-                        "price": "25.00",
+                        "price": cart.totalPrice,
                         "currency": "USD",
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "currency": "USD",
-                    "total": "25.00"
+                    "total": cart.totalPrice
                 },
                 "description": "Washing Bar soap"
             }]
@@ -252,9 +253,8 @@ class sitecontroller {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
-
                 User.findOne({ _id: decodeToken }),
-                Product.find({}).limit(3),
+                Product.find({}).limit(),
                 Notification.find({user: decodeToken}).sort({createdAt: -1}),
             ])
                 .then(([
@@ -275,7 +275,7 @@ class sitecontroller {
                 .catch(err => console.log(err))
         }
         else {
-            Product.find({}).limit(3)
+            Product.find({}).limit()
                 .then((product) => res.render('order', {
                     product: multipleMongooseToObject(product)
                 }))
@@ -287,7 +287,9 @@ class sitecontroller {
         req.session.cart = null;
         req.flash('success', 'Checkout successfully!')
         var noti = new Notification({
-            user: req.body.userId,
+            user: req.query.userId,
+            amount: req.query.totalPrice,
+            status: true,
             desc: 'Checkout by Paypal success.' 
         })
         noti.save()
@@ -298,6 +300,8 @@ class sitecontroller {
         req.flash('error', 'Checkout failed!')
         var noti = new Notification({
             user: req.query.userId,
+            amount: req.query.totalPrice,
+            status: false,
             desc: 'Checkout by Paypal failed.' 
         })
         noti.save()
@@ -346,15 +350,17 @@ class sitecontroller {
 
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
+                Notification.find({user: decodeToken}).sort({createdAt: -1}),
             ])
                 .then(([
-                    user, product
+                    user, product, noti
                 ]) => {
                     if (user) {
                         req.user = user
                         res.render('history', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            noti: multipleMongooseToObject(noti),
                             cart: req.session.cart,
                         })
                         // next()

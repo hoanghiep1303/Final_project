@@ -6,6 +6,8 @@ const Schema = mongoose.Schema;
 const Notification = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     desc: {type: String},
+    amount: {type: Number, default: 0},
+    status: {type: Boolean, default: false},
     //isRead: {type: Boolean, default: false},
     slug: {type : String, slug : 'desc', unique: true},
 }, {

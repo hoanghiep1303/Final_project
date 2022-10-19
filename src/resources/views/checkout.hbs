@@ -12,7 +12,7 @@
                         <div class="d-flex justify-content-between line">
                             <h3 class="title">Your cart </h3>
                             <span class="icon-checkout-page">
-                                <i class="fa fa-shopping-cart"></i><b> {{ this.item.totalQty }}</b>
+                                <i class="fa fa-shopping-cart"></i><b> {{cart.totalQty}}</b>
                             </span>
                         </div>
                         {{#each products}}
@@ -34,11 +34,12 @@
         </div>
         <div class="col-md-8 order-md-1">
             <div class="d-flex"> 
-                <h4 class="mb-3 text-success fw-bolder" style="font-family: 'Nunito', sans-serif;">
+                <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Eo_circle_green_number-1.svg/1200px-Eo_circle_green_number-1.svg.png" alt="" width="30" height="30" class="checkout-img"> Billing address</h4>
             </div>
             <form action="/checkoutbyPaypal" method="POST" class="needs-validation" novalidate="">
                 <input type="hidden" name="userId" value="{{user._id}}" />
+                
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
@@ -79,7 +80,7 @@
                 </div>
                 <hr class="mb-4">
                 <div class="d-flex">
-                    <h4 class="mb-3 text-success fw-bolder" style="font-family: 'Nunito', sans-serif;">
+                    <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eo_circle_green_number-2.svg/800px-Eo_circle_green_number-2.svg.png" alt="" width="30" height="30" class="checkout-img"> Shipping method</h4>
                 </div>
                 <select class="form-select mb-3">
@@ -90,7 +91,7 @@
                 </select>
                 <hr class="mb-4">
                 <div class="d-flex">
-                    <h4 class="mb-3 text-success fw-bolder" style="font-family: 'Nunito', sans-serif;">
+                    <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Eo_circle_green_number-3.svg/2048px-Eo_circle_green_number-3.svg.png" alt="" width="30" height="30" class="checkout-img"> Payment method</h4>
                 </div>
                 <div class="d-flex justify-content-start my-3">
@@ -116,31 +117,6 @@
                         </label>
                     </div>
                 </div>
-                {{!-- <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="cc-name">Name on card</label>
-                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                        <small class="text-muted">Full name as displayed on card</small>
-                        <div class="invalid-feedback"> Name on card is required </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="cc-number">Credit card number</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
-                        <div class="invalid-feedback"> Credit card number is required </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <label for="cc-expiration">Expiration</label>
-                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
-                        <div class="invalid-feedback"> Expiration date required </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="cc-cvv">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
-                        <div class="invalid-feedback"> Security code required </div>
-                    </div>
-                </div> --}}
                 <hr class="mb-4">
                 <button class="btn btn-success btn-lg btn-block w-100" type="submit">Proceed to checkout</button>
             </form>

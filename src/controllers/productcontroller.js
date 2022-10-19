@@ -34,7 +34,9 @@ class productcontroller {
         }
         else {
             Product.find({}).limit(3)
-                .then((product) => res.render('home', {
+                .then(([
+                    product, category
+                ]) => res.render('home', {
                     product: multipleMongooseToObject(product),
                     category: multipleMongooseToObject(category),
                 }))
@@ -62,33 +64,31 @@ class productcontroller {
             })
     }
 
-    delete(req, res) {
-        Product.deleteOne({ _id: req.params.id })
-            .then(product => {
-                if (!product) {
-                    console.log('Product not found')
-                } else {
-                    res.redirect('back')
-                }
-            })
-            .catch(err => { console.log(err) })
+    update(req, res, next) {
+        Product.findOneAndUpdate({ _id: req.params.id }, req.body)
+            .then(product => res.redirect('back'))
+            .catch(next);
     }
 
-    update(req, res) {
-        console.log(req.body)
-        Product.findOneAndUpdate({ _id: req.params.id }, req.body)
-            .then(product => {
-                if (!product) {
-                    console.log('Product not found')
-                    res.redirect('back')
-                } else {
-                    req.flash('success', 'Product update successfully');
-                    res.redirect('back');
-                }
-            })
-        // Brand.updateOne({_id: req.params.id}, req.body)
-        //     .then(brand => res.redirect('back'))
-        //     .catch(next);
+    delete(req, res, next) {
+        Product.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+
+    }
+
+    force(req, res, next) {
+        Product.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+
+    }
+
+    restore(req, res, next) {
+        Product.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+
     }
 
     show(req, res) {

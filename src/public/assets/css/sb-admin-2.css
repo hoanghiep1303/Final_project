@@ -11293,3 +11293,11 @@ body.sidebar-toggled footer.sticky-footer {
   font-weight: 600;
   color: black;
 }
+
+.back-to-mgmt:hover {
+  text-decoration: none;
+}
+
+.back-to-mgmt {
+  font-weight: bold;
+}

@@ -7,6 +7,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
+const { isLoggined } = require('../ulti/login');
+
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -25,7 +27,7 @@ router.get('/error', sitecontroller.error);
 
 router.get('/logout', sitecontroller.logout);
 
-router.get('/checkout', sitecontroller.checkout);
+router.get('/checkout', isLoggined,sitecontroller.checkout);
 
 router.get('/order', sitecontroller.order);
 
@@ -35,9 +37,9 @@ router.get('/checkoutsuccess', sitecontroller.checkoutsuccess);
 
 router.get('/checkoutfail', sitecontroller.checkoutfail);
 
-router.get('/profile', sitecontroller.profile);
+router.get('/profile', isLoggined,sitecontroller.profile);
 
-router.get('/history', sitecontroller.history);
+router.get('/history', isLoggined,sitecontroller.history);
 
 //social-login-session
 router.use(cookieParser());

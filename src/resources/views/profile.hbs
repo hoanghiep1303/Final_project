@@ -8,15 +8,33 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                        <h5 class="my-3">John Smith</h5>
-                        <p class="text-muted mb-1">Full Stack Developer</p>
-                        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                        <div class="d-flex justify-content-center mb-2">
-                            <button type="button" class="btn btn-success">Follow</button>
-                            <button type="button" class="btn btn-outline-success ms-2">Message</button>
-                        </div>
+                        <form action="/user/change-avatar/{{user._id}}" method="POST" enctype="multipart/form-data">
+                            {{!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3">{{user.name}}</h5>
+                            <p class="text-muted mb-1">Full Stack Developer</p>
+                            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <button type="button" class="btn btn-success">Edit Avatar</button>
+                                <button type="button" class="btn btn-outline-success ms-2">Save Change</button>
+                            </div> --}}
+                            {{!-- <img src="{{#ifCond user.avatar '!=' 'http://.*'}}/uploads/{{/ifCond}}{{user.avatar}}"
+                                class="card-img-top mb-2 img-fluid rounded" alt="img-user"
+                                id="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                style="width: 150px;"> --}}
+                            <h5 class="my-3">{{this.user.name}}</h5>
+                            <p class="text-muted mb-1">File size: maximum 1 MB</p>
+                            <p class="text-muted mb-3">File accepted: JPG, PNG</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <span id="change-avatar-btn" class="btn btn-outline-success mx-2">EDIT AVATAR</span>
+                                <button type="submit" class="btn btn-outline-success mx-2"
+                                    data-mdb-ripple-color="dark">SAVE
+                                    AVATAR</button>
+                            </div>
+                            <input id="file-avatar" type="file" name="image" value="" accept="image/*"
+                                style="display: none;"
+                                onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])">
+                        </form>
                     </div>
                 </div>
                 <div class="card mb-4 mb-lg-0">
@@ -44,10 +62,12 @@
                         <div class="col-md-6">
                             <div class="profile-head">
                                 <h5 class="fw-bold">User Information</h5>
-                                {{!-- <h6 class="text-danger">
-                                    {{this.user.email}}
-                                </h6> --}}
                                 <p class="proile-role"><strong>ROLE : {{this.user.role}}</strong></p>
+                                {{#if messages}}
+                                <div class="{{#if success}}bg-success{{else}}bg-danger{{/if}} shadow p-2 rounded">
+                                    <span class="text-white h6">{{messages}}</span>
+                                </div>
+                                {{/if}}
                                 <ul class="nav nav-tabs" id="myTab" role="tablist"
                                     style="--bs-nav-link-color: #198754; --bs-nav-link-hover-color: #0f5132;">
                                     <li class="nav-item">
@@ -56,13 +76,14 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile"
-                                            role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                            role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#changepassword" class="btn btn-outline-secondary rounded-pill">Change Password</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#changepassword"
+                                class="btn btn-outline-secondary rounded-pill">Change Password</a>
                         </div>
                     </div>
                     <div class="row">
@@ -72,22 +93,22 @@
                                     <h1>Bio Graph</h1>
                                     <div class="row">
                                         <div class="bio-row">
-                                            <p><span>First Name </span>: Camila</p>
+                                            <p><span>Name </span>: {{user.name}}</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Last Name </span>: Smith</p>
+                                            <p><span>Address </span>: {{user.address}}</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Gender </span>: Male</p>
+                                            <p><span>Gender </span>: {{user.gender}}</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Birthday</span>: 13 July 1983</p>
+                                            <p><span>Birthday</span>: {{moment user.birthday format = "DD/MM/yyyy"}}</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Email </span>: {{this.user.email}}</p>
+                                            <p><span>Email </span>: {{user.email}}</p>
                                         </div>
                                         <div class="bio-row">
-                                            <p><span>Phone </span>: 88 (02) 123456</p>
+                                            <p><span>Phone </span>: {{user.phone}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,52 +128,45 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="first name" value="John">
+                                <form action="/user/update/{{user._id}}" method="POST">
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" placeholder="Name" name="""name"
+                                                value="{{user.name}}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="address"
+                                                value="{{user.address}}" placeholder="Address">
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" value="Doe" placeholder="Doe">
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <input type="mail" class="form-control" placeholder="Email" name="email"
+                                                value="{{user.email}}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" value="{{user.phone}}" name="phone"
+                                                placeholder="Phone number">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Email"
-                                            value="john_doe12@bbb.com">
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" placeholder="Gender" name="gender"
+                                                value="{{user.gender}}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="date" class="form-control" name="birthday"
+                                                value="{{moment user.birthday format = "yyyy-MM-DD"}}"
+                                                placeholder="Birthday">
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" value="+19685969668"
-                                            placeholder="Phone number">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="mt-3 text-right">
+                                            <button class="btn btn-danger profile-button" type="button">Save
+                                                Profile</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="address"
-                                            value="D-113, right avenue block, CA,USA">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" value="USA" placeholder="Country">
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Bank Name"
-                                            value="Bank of America">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" value="043958409584095"
-                                            placeholder="Account Number">
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <div class="mt-3 text-right">
-                                        <button class="btn btn-dark profile-button" type="button">Save Profile</button>
-                                    </div>
-                                    <div class="mt-3 text-right">
-                                        <button class="btn btn-danger profile-button" type="button">Save
-                                            Profile</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -167,7 +181,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/profile/edit" method="POST">
+            <form action="/user/update/{{user._id}}" method="POST">
                 <div class="modal-header text-white bg-green">
                     <h5 class="modal-title" id="exampleModalLabel">Edit User Profile</h5>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
@@ -175,37 +189,39 @@
                     </button>
                 </div>
                 <div class="modal-body py-2">
-                    <label>First Name</label>
-                    <input type="text" placeholder="Enter your first name" class="form-control" name="name" required>
-                </div>
-                <div class="modal-body py-2">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Enter your last name" class="form-control" name="desc" required>
+                    <label>Name</label>
+                    <input type="text" placeholder="Enter your name" class="form-control" value="{{user.name}}"
+                        name="name" required>
                 </div>
                 <div class="modal-body py-2">
                     <label>Gender</label>
                     <div class="d-flex justify-content-start">
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Male
-                            </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
+                                {{#ifeq user.gender 'male' }} checked {{/ifeq}}>
+                            <label class="form-check-label" for="gender-male">Male</label>
                         </div>
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Female
-                            </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
+                                {{#ifeq user.gender 'female' }} checked {{/ifeq}}>
+                            <label class="form-check-label" for="gender-female">Female</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body py-2">
                     <label>Birthday</label>
-                    <input type="date" class="form-control" name="price" required>
+                    <input type="date" class="form-control" id="birthday" name="birthday"
+                        value="{{moment user.birthday format = "yyyy-MM-DD"}}" required>
                 </div>
                 <div class="modal-body py-2">
                     <label>Phone Number</label>
-                    <input type="text" placeholder="Enter your phone number" class="form-control" name="price" required>
+                    <input type="text" placeholder="Enter your phone number" id="phone" class="form-control"
+                        name="phone" value="{{user.phone}}" required>
+                </div>
+                <div class="modal-body py-2">
+                    <label>Address</label>
+                    <input type="text" placeholder="Enter your address" id="address" class="form-control" name="address"
+                        value="{{user.address}}" required>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
@@ -215,65 +231,14 @@
         </div>
     </div>
 </div>
+<!-- End Modal-->
 
-<div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="/profile/change-password" method="POST">
-                <div class="modal-header text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit User Profile</h5>
-                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body py-2">
-                    <label>First Name</label>
-                    <input type="text" placeholder="Enter your first name" class="form-control" name="name" required>
-                </div>
-                <div class="modal-body py-2">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Enter your last name" class="form-control" name="desc" required>
-                </div>
-                <div class="modal-body py-2">
-                    <label>Gender</label>
-                    <div class="d-flex justify-content-start">
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Male
-                            </label>
-                        </div>
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Female
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body py-2">
-                    <label>Birthday</label>
-                    <input type="date" class="form-control" name="price" required>
-                </div>
-                <div class="modal-body py-2">
-                    <label>Phone Number</label>
-                    <input type="text" placeholder="Enter your phone number" class="form-control" name="price" required>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" type="submit">Save Change</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
+<!-- Change Password Modal-->
 <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/profile/change-password" method="POST">
+            <form action="/user/change-password" method="POST">
                 <div class="modal-header text-white bg-green">
                     <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
@@ -282,15 +247,18 @@
                 </div>
                 <div class="modal-body py-2">
                     <label>Current Password</label>
-                    <input type="text" placeholder="Enter your password" class="form-control" name="password" required>
+                    <input type="password" placeholder="Enter your password" class="form-control" name="currentPassword"
+                        required>
                 </div>
                 <div class="modal-body py-2">
                     <label>New Password</label>
-                    <input type="text" placeholder="Enter your new password" class="form-control" name="password" required>
+                    <input type="password" placeholder="Enter your new password" class="form-control" name="newPassword"
+                        required>
                 </div>
                 <div class="modal-body py-2">
                     <label>Confirm Password</label>
-                    <input type="text" placeholder="Repeat your new password" class="form-control" name="password" required>
+                    <input type="password" placeholder="Repeat your new password" class="form-control"
+                        name="confirmPassword" required>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
@@ -300,3 +268,4 @@
         </div>
     </div>
 </div>
+<!-- End Modal-->

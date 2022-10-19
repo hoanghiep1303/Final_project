@@ -1099,7 +1099,7 @@ a:focus {
     width: 50%; } }
 
 .payment-form .green-line {
-  border-top: 6px solid seagreen; }
+  border-top: 6px solid #41A145; }
 
 .payment-form .title {
   margin-bottom: 0;
@@ -1256,6 +1256,34 @@ a.close.disabled {
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(81, 88, 94, 0.12); }
+
+.mygreen-btn {
+  background: #1daf2c; }
+
+.mygreen-btn:hover {
+  background: #088715; }
+
+.food-option {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify; }
+
+@media (max-width: 992px) {
+  .mymt-lg-3 {
+    margin-top: 1rem; } }
+
+.id-link-history:hover {
+  color: var(--bs-link-color);
+  text-decoration: underline; }
+
+.active > .page-link, .page-link.active {
+  background-color: #0d9f1c;
+  border-color: #088715; }
+
+.pagination {
+  --bs-pagination-color: #0d9f1c;
+  --bs-pagination-hover-color: var(--bs-pagination-color);
+  --bs-pagination-active-bg: #0d9f1c;
+  --bs-pagination-active-border-color: #0d9f1c; }
 
 body {
   margin: 0;

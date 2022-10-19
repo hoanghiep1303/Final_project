@@ -1,0 +1,67 @@
+<div id="layoutSidenav_content">
+    <main>
+        {{!-- Deleted Food Table --}}
+        <div class="container-fluid px-4 pb-5">
+            <h1 class="mt-4" style="color: green;"><strong>Deleted Food Table</strong></h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product-mgmt">Food Table</a></li>
+                <li class="breadcrumb-item active">Recycle Bin</li>
+            </ol>
+            <div class="card mb-2">
+                <div class="card-header text-white" style="background-color: #0d9f1c;">
+                    <i class="fa-solid fa-trash-can me-1"></i>
+                    Recycle Bin
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Food name</th>
+                                    <th>Deleted date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each foodDeleted}}
+                                <tr>
+                                    <td><img class="img-user-table" id="{{this._id}}-image"
+                                            src="../uploads/{{this.image}}" alt="{{this.name}}"></td>
+                                    <td>{{this.category.name}}</td>
+                                    <td id="{{this._id}}-name">{{this.name}}</td>
+                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on
+                                        DD/MM/yyyy"}}</td>
+                                    <td>
+                                        <a href="" data-toggle="modal" data-target="#restore-food"
+                                            data-id="{{this._id}}">
+                                            <button class="btn btn-info">Restore</button>
+                                        </a>
+                                        <a href="" data-toggle="modal" data-target="#force-delete-food"
+                                            data-id="{{this._id}}">
+                                            <button class="btn btn-danger">Permantly Delete</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="13" class="text-center">
+                                        No product have been deleted.
+                                        <a href="/admin/product-mgmt">Available products</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a class="back-to-mgmt" href="/admin/product-mgmt"><i class="fa-solid fa-reply"></i> Back to Food
+                    Table</a>
+            </div>
+        </div>
+    </main>
+</div>

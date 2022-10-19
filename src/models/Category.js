@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const mongooseDelete = require('mongoose-delete');
 
 const Category = new Schema({
-    name: { type: String },
+    name: {type: String},
     image: {type: String},
     deletedAt: {},
 }, {
