@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $(document).on("click", ".open-modal-edit-product", function () {
     var productId = $(this).data("id");
     var productName = $("#" + productId + "-name").text();
-    // var productCategory = $('#' + productId + '-category-name').text();
+    var productCategory = $('#' + productId + '-category-name').text();
     var productDesc = $("#" + productId + "-desc").text();
     var productPrice = $("#" + productId + "-price").text();
     var productImage = $("#" + productId + "-image").attr("src");
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "edit-category-options"
     );
     for (var i = 0; i < editCategoryOptions.length; i++) {
-      if (editCategoryOptions[i].innerHTML == categoryName) {
+      if (editCategoryOptions[i].innerHTML == productCategory) {
         var selectedOptions = editCategoryOptions[i];
         selectedOptions.setAttribute("selected", "selected");
         break;
