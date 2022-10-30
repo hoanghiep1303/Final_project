@@ -12,7 +12,7 @@ module.exports = function Cart(oldCart) {
         storedItem.qty+= value;
         storedItem.price = storedItem.item.price * storedItem.qty;
         this.totalQty+=value;
-        this.totalPrice += storedItem.item.price;
+        this.totalPrice += storedItem.price;
     };
 
     this.add = function (item, id) {
