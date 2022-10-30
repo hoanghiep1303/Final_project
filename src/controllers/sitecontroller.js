@@ -297,16 +297,17 @@ class sitecontroller {
     checkoutsuccess(req, res, next) {
         req.session.cart = null;
         req.flash('success', 'Checkout successfully!')
+        var notiQuery = JSON.parse(req.query.noti)
         var noti = new Notification({
             user: req.query.userId,
             amount: req.query.totalPrice,
-            firstName: req.query.firstName,
-            lastName: req.query.lastName,
-            email: req.query.email,
-            address: req.query.address,
-            phone: req.query.phone,
-            shipping: req.query.shipping,
-            company: req.query.company,
+            firstName: notiQuery.firstName,
+            lastName: notiQuery.lastName,
+            email: notiQuery.email,
+            address: notiQuery.address,
+            phone: notiQuery.phone,
+            shipping: notiQuery.shipping,
+            company: notiQuery.company,
             status: true,
             desc: 'Checkout by Paypal success.' 
         })
@@ -317,7 +318,6 @@ class sitecontroller {
     checkoutfail(req, res, next) {
         req.flash('error', 'Checkout failed!')
         var notiQuery = JSON.parse(req.query.noti)
-        console.log(notiQuery)
         var noti = new Notification({
             user: req.query.userId,
             amount: req.query.totalPrice,
