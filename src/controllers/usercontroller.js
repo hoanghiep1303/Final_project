@@ -39,58 +39,47 @@ class usercontroller {
 
     changePassword(req, res, next) {
         var token = req.cookies.token;
-        var decodeToken = jwt.verify(token, 'mysecret')
+        var decodeToken = jwt.verify(token, 'mytoken')
 
         const currentPassword = req.body.currentPassword
         const newPassword = req.body.newPassword
         const confirmPassword = req.body.confirmPassword
 
+        console.log(req.body)
         User.findOne({ _id: decodeToken })
             .then(user => {
                 bcrypt.compare(currentPassword, user.password, function (err, result) {
                     if (result) {
                         if (newPassword != confirmPassword) {
-                            // req.flash('error', 'Password does not match'),
-                            res.redirect('back', {
-                                message: req.flash('error', 'Password does not match'),
-                            })
+                            console.log('error'+ 'Password does not match'),
+                            res.redirect('back')
                         }
                         else if (currentPassword == newPassword) {
-                            // req.flash('error', 'Password must not be the same as the old password'),
-                            res.redirect('back', {
-                                messages: req.flash('error', 'Password must not be the same as the old password'),
-                            })
+                            console.log('error'+ 'Password must not be the same as the old password'),
+                            res.redirect('back')
                         }
                         else {
                             bcrypt.hash(newPassword, 10, function (error, hash) {
                                 if (error) {
-                                    // req.flash('error', 'Change password failed'),
-                                    res.redirect('back', {
-                                        messages: req.flash('error', 'Change password failed'),
-                                    })
+                                    console.log('error'+ 'Change password failed'),
+                                    res.redirect('back')
                                 }
                                 User.updateOne({ _id: decodeToken }, { $set: { password: hash } }, (err, status) => {
                                     if (err) {
-                                        // req.flash('error', 'Change password failed'),
-                                        res.redirect('back', {
-                                            messages: req.flash('error', 'Change password failed'),
-                                        })
+                                        console.log('error'+ 'Change password failed'),
+                                        res.redirect('back')
                                     }
-                                    // req.flash('success', 'Change password successfully'),
-                                    res.redirect('back', {
-                                        messages: req.flash('success', 'Change password successfully'),
-                                    })
+                                    console.log('succes', 'Change password successfully'),
+                                    res.redirect('back')
                                 })
                             });
                         }
                     } else {
-                        return res.redirect('back', {
-                            message: req.flash('error', 'Old password is invalid'),
-                        })
+                        console.log('error'+ 'Old password is invalid')
+                        return res.redirect('back')
                     }
                 })
             })
-            
     }
 }
 
