@@ -203,6 +203,17 @@ class sitecontroller {
     checkoutbyPaypal(req, res, next) {
         const userId = req.body.userId;
         const cart = new Cart(req.session.cart);
+
+        var noti = new Notification({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            address: req.body.address,
+            phone: req.body.phone,
+            shipping: req.body.shipping,
+            company: req.body.company,
+        })
+        var notiParams = encodeURIComponent(JSON.stringify(noti))
         paypal.configure({
             'mode': 'sandbox', //sandbox or live
             'client_id': 'Ab9ADnUFlhhvW_yM_7RakcfMJ3LoVD9k7BAP4DM2EpaYG8OYVzSrM92z59FZ4VlSkSzzDF-2H9k4KEuV',
@@ -214,8 +225,8 @@ class sitecontroller {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId + '&totalPrice=' + cart.totalPrice,
-                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId + '&totalPrice=' + cart.totalPrice,
+                "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId + '&totalPrice=' + req.body.totalPrice + '&noti=' + notiParams + "",
+                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId + '&totalPrice=' + req.body.totalPrice + '&noti=' + notiParams + "",
             },
             "transactions": [{
                 "item_list": {
@@ -289,6 +300,13 @@ class sitecontroller {
         var noti = new Notification({
             user: req.query.userId,
             amount: req.query.totalPrice,
+            firstName: req.query.firstName,
+            lastName: req.query.lastName,
+            email: req.query.email,
+            address: req.query.address,
+            phone: req.query.phone,
+            shipping: req.query.shipping,
+            company: req.query.company,
             status: true,
             desc: 'Checkout by Paypal success.' 
         })
@@ -298,9 +316,18 @@ class sitecontroller {
 
     checkoutfail(req, res, next) {
         req.flash('error', 'Checkout failed!')
+        var notiQuery = JSON.parse(req.query.noti)
+        console.log(notiQuery)
         var noti = new Notification({
             user: req.query.userId,
             amount: req.query.totalPrice,
+            firstName: notiQuery.firstName,
+            lastName: notiQuery.lastName,
+            email: notiQuery.email,
+            address: notiQuery.address,
+            phone: notiQuery.phone,
+            shipping: notiQuery.shipping,
+            company: notiQuery.company,
             status: false,
             desc: 'Checkout by Paypal failed.' 
         })

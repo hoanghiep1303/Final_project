@@ -20,7 +20,12 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Description</th>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Adress</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Shipping</th>
+                                        <th scope="col">Company</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Time</th>
@@ -31,7 +36,12 @@
                                     <tr>
                                         <td scope="row">{{sum @index 1}}</td>
                                         <td id="{{this._id}}-desc">{{this.desc}}</td>
-                                        <td id="{{this._id}}"><a class="id-link-history" href="#">{{this._id}}</a></td>
+                                        <td>{{#if this.firstName}}{{this.firstName}}{{/if}} {{#if this.lastName}}{{this.lastName}}{{/if}}</td>
+                                        <td>{{#if this.email}}{{this.email}}{{/if}}</td>
+                                        <td>{{#if this.address}}{{this.address}}{{/if}}</td>
+                                        <td>{{#if this.phone}}{{this.phone}}{{/if}}</td>
+                                        <td>{{#if this.shipping}}{{this.shipping}}{{/if}}</td>
+                                        <td>{{#if this.company}}{{this.company}}{{/if}}</td>
                                         <td>$ {{this.amount}}</td>
                                         <td>
                                             {{#ifeq this.status true}}
@@ -45,7 +55,7 @@
                                     </tr>
                                     {{else}}
                                     <tr>
-                                        <td colspan="5" class="text-center">
+                                        <td colspan="11" class="text-center">
                                             You do not have any activity in the system.
                                         </td>
                                     </tr>
