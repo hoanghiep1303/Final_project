@@ -51,8 +51,9 @@
                                             data-id="{{this._id}}">
                                             <button class="btn btn-dark">Edit</button>
                                         </a>
-                                        <a class="text-decoration-none" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deletecategoryModal">
+                                        <a class="text-decoration-none open-modal-delete-category" href="#" 
+                                            data-bs-toggle="modal" data-bs-target="#deletecategoryModal" 
+                                            data-id="{{this._id}}">
                                             <button class="btn btn-danger">Delete</button>
                                         </a>
                                     </td>
@@ -125,6 +126,8 @@
     </main>
 </div>
 
+
+
 <!-- Create Category Modal-->
 <div class="modal fade" id="createcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -172,7 +175,7 @@
             </div>
             <div class="modal-body">Are you sure to delete this category?</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary btn-delete-category" type="button" data-bs-dismiss="modal">Cancel</button>
                 <a class="btn btn-danger" href="/category/delete/{{this._id}}">Delete</a>
             </div>
         </div>

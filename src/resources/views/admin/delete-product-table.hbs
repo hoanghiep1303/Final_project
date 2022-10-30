@@ -1,67 +1,176 @@
 <div id="layoutSidenav_content">
-    <main>
-        {{!-- Deleted Food Table --}}
-        <div class="container-fluid px-4 pb-5">
-            <h1 class="mt-4" style="color: green;"><strong>Deleted Food Table</strong></h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/admin/product-mgmt">Food Table</a></li>
-                <li class="breadcrumb-item active">Recycle Bin</li>
-            </ol>
-            <div class="card mb-2">
-                <div class="card-header text-white" style="background-color: #0d9f1c;">
-                    <i class="fa-solid fa-trash-can me-1"></i>
-                    Recycle Bin
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Category</th>
-                                    <th>Food name</th>
-                                    <th>Deleted date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each foodDeleted}}
-                                <tr>
-                                    <td><img class="img-user-table" id="{{this._id}}-image"
-                                            src="../uploads/{{this.image}}" alt="{{this.name}}"></td>
-                                    <td>{{this.category.name}}</td>
-                                    <td id="{{this._id}}-name">{{this.name}}</td>
-                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on
-                                        DD/MM/yyyy"}}</td>
-                                    <td>
-                                        <a href="" data-toggle="modal" data-target="#restore-food"
-                                            data-id="{{this._id}}">
-                                            <button class="btn btn-info">Restore</button>
-                                        </a>
-                                        <a href="" data-toggle="modal" data-target="#force-delete-food"
-                                            data-id="{{this._id}}">
-                                            <button class="btn btn-danger">Permantly Delete</button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {{else}}
-                                <tr>
-                                    <td colspan="13" class="text-center">
-                                        No product have been deleted.
-                                        <a href="/admin/product-mgmt">Available products</a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <a class="back-to-mgmt" href="/admin/product-mgmt"><i class="fa-solid fa-reply"></i> Back to Food
-                    Table</a>
-            </div>
+  <main>
+    {{! Deleted Food Table }}
+    <div class="container-fluid px-4 pb-5">
+      <h1 class="mt-4" style="color: green;"><strong>Deleted Food Table</strong></h1>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/admin/product-mgmt">Food Table</a></li>
+        <li class="breadcrumb-item active">Recycle Bin</li>
+      </ol>
+      <div class="card mb-2">
+        <div class="card-header text-white" style="background-color: #0d9f1c;">
+          <i class="fa-solid fa-trash-can me-1"></i>
+          Recycle Bin
         </div>
-    </main>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              class="table table-bordered"
+              id="dataTable"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Category</th>
+                  <th>Food name</th>
+                  <th>Deleted date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each product}}
+                  <tr>
+                    <td><img
+                        class="img-user-table"
+                        id="{{this._id}}-image"
+                        src="../uploads/{{this.image}}"
+                        alt="{{this.name}}"
+                      /></td>
+                    <td>{{this.category.name}}</td>
+                    <td id="{{this._id}}-name">{{this.name}}</td>
+                    <td id="{{this._id}}-createdAt">{{moment
+                        this.deletedAt
+                        format="HH:mm on
+                                        DD/MM/yyyy"
+                      }}</td>
+                    <td>
+                      <a
+                        href=""
+                        data-toggle="modal"
+                        data-target="#restore-food"
+                        data-id="{{this._id}}"
+                      >
+                        <button class="btn btn-info">Restore</button>
+                      </a>
+                      <a
+                        href=""
+                        data-toggle="modal"
+                        data-target="#force-delete-food"
+                        data-id="{{this._id}}"
+                      >
+                        <button class="btn btn-danger">Permantly Delete</button></a>
+                    </td>
+                  </tr>
+                {{else}}
+                  <tr>
+                    <td colspan="13" class="text-center">
+                      No product have been deleted.
+                      <a href="/admin/product-mgmt">Available products</a>
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <a class="back-to-mgmt" href="/admin/product-mgmt"><i
+            class="fa-solid fa-reply"
+          ></i>
+          Back to Food Table</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<form name="restore-food-form" method="post"></form>
+{{! Confirm restore code }}
+<div
+  class="modal fade"
+  id="restore-food"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="restore-food-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-header-confirm-restore">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restore-food-label"><b>Restore food</b></h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">Are you sure to
+        <strong>Restore</strong>
+        this food?</div>
+
+      <div class="modal-footer">
+        <button
+          id="btn-restore-food"
+          type="button"
+          class="btn btn-danger"
+        >Restore</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="permantly-delete-food-form" method="post"></form>
+{{! Confirm delete code }}
+<div
+  class="modal fade"
+  id="force-delete-food"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="delete-food-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-header-confirm-delete">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delete-food-label"><b>Permantly Delete food</b></h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">Are you sure to
+        <strong>Permantly</strong>
+        delete this food?</div>
+
+      <div class="modal-footer">
+        <button
+          id="btn-force-delete-food"
+          type="button"
+          class="btn btn-danger"
+        >Delete</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >No</button>
+      </div>
+    </div>
+  </div>
 </div>
