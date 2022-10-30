@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const Notification = require('../models/Notification');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -32,7 +33,7 @@ class usercontroller {
                 })
                 noti.save()
                 req.flash('successMsg', 'Your avatar has been updated'),
-                    res.redirect('/user/profile')
+                    res.redirect('/profile')
             })
             .catch(next);
     }
@@ -44,8 +45,7 @@ class usercontroller {
         const currentPassword = req.body.currentPassword
         const newPassword = req.body.newPassword
         const confirmPassword = req.body.confirmPassword
-
-        console.log(req.body)
+        
         User.findOne({ _id: decodeToken })
             .then(user => {
                 bcrypt.compare(currentPassword, user.password, function (err, result) {

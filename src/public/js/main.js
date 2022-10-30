@@ -132,3 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreCategoryForm.submit();
   });
 });
+
+// Click change ava btn
+$('#change-avatar-btn').click(() => {
+  $('#file-avatar').trigger('click');
+})

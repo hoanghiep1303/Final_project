@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
   phone: {type: String, maxLength: 11},
   birthday: {type: Date, default: 0},
   address: {type: String, minLength: 1, maxLength: 255},
+  avatar: {type: String, default: "https://www.w3schools.com/howto/img_avatar.png"}, 
   gender: {type: String, default: 'male'},
   googleId: { type: String,},
   facebookId: {type: String},

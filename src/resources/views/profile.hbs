@@ -9,20 +9,16 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <form action="/user/change-avatar/{{user._id}}" method="POST" enctype="multipart/form-data">
-                            {{!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <img src="{{#ifCond user.avatar '!=' 'http://.*'}}/uploads/{{/ifCond}}{{user.avatar}}" 
+                            class="card-img-top mb-2 img-fluid rounded" alt="img-user" id="preview-image">
                             <h5 class="my-3">{{user.name}}</h5>
                             <p class="text-muted mb-1">Full Stack Developer</p>
                             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
                             <div class="d-flex justify-content-center mb-2">
-                                <button type="button" class="btn btn-success">Edit Avatar</button>
-                                <button type="button" class="btn btn-outline-success ms-2">Save Change</button>
-                            </div> --}}
-                            {{!-- <img src="{{#ifCond user.avatar '!=' 'http://.*'}}/uploads/{{/ifCond}}{{user.avatar}}"
-                                class="card-img-top mb-2 img-fluid rounded" alt="img-user"
-                                id="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                style="width: 150px;"> --}}
-                            <h5 class="my-3">{{this.user.name}}</h5>
+                                <button type="button" id="change-avatar-btn" class="btn btn-success">Edit Avatar</button>
+                                <button type="submit" class="btn btn-outline-success ms-2">Save Change</button>
+                            </div>
+                            {{!-- <h5 class="my-3">{{this.user.name}}</h5>
                             <p class="text-muted mb-1">File size: maximum 1 MB</p>
                             <p class="text-muted mb-3">File accepted: JPG, PNG</p>
                             <div class="d-flex justify-content-center mb-2">
@@ -30,10 +26,10 @@
                                 <button type="submit" class="btn btn-outline-success mx-2"
                                     data-mdb-ripple-color="dark">SAVE
                                     AVATAR</button>
-                            </div>
+                            </div>--}}
                             <input id="file-avatar" type="file" name="image" value="" accept="image/*"
                                 style="display: none;"
-                                onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])">
+                                onchange="document.getElementById('preview-image').src = window.URL.createObjectURL(this.files[0])"> 
                         </form>
                     </div>
                 </div>
@@ -248,17 +244,17 @@
                 <div class="modal-body py-2">
                     <label>Current Password</label>
                     <input type="password" placeholder="Enter your password" class="form-control" name="currentPassword"
-                        required>
+                        required autocomplete="">
                 </div>
                 <div class="modal-body py-2">
                     <label>New Password</label>
                     <input type="password" placeholder="Enter your new password" class="form-control" name="newPassword"
-                        required>
+                        required autocomplete="">
                 </div>
                 <div class="modal-body py-2">
                     <label>Confirm Password</label>
                     <input type="password" placeholder="Repeat your new password" class="form-control"
-                        name="confirmPassword" required>
+                        name="confirmPassword" required autocomplete="">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
