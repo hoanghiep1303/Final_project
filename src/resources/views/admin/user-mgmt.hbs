@@ -51,7 +51,7 @@
                                         {{/if}}
                                     </td>
                                     <td id="{{this._id}}-phone">{{this.phone}}</td>
-                                    <td id="{{this._id}}-birthday">{{moment this.birthday format = "DD/MM/yyyy"}}</td>
+                                    <td id="{{this._id}}-birthday">{{moment this.birthday format = "YYYY-MM-DD  "}}</td>
                                     <td id="{{this._id}}-address">{{this.address}}</td>
                                     <td id="{{this._id}}-gender">{{this.gender}}</td>
                                     <td id="{{this._id}}-createdAt">{{moment this.createdAt format = "HH:mm -
@@ -109,9 +109,9 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/user/update/{{user._id}}" method="POST" name="edit-user-form" enctype="multipart/form-data">
+            <form action="/user/update/{{user._id}}" method="POST" name="edit-user-form">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editUserLabel">Edit User</h5>
+                    <h5 class="modal-title" id="edit-user-label">Edit User</h5>
                     <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -119,36 +119,29 @@
                 <div class="modal-body py-2">
                     <label>Name</label>
                     <input type="text" placeholder="Enter your name" class="form-control" value="{{user.name}}"
-                        name="name" required>
+                        name="name" required id="edit-user-name">
                 </div>
                 <div class="modal-body py-2">
-                    <label>Gender</label>
-                    <div class="d-flex justify-content-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
-                                {{#ifeq user.gender 'male' }} checked {{/ifeq}}>
-                            <label class="form-check-label" for="gender-male">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
-                                {{#ifeq user.gender 'female' }} checked {{/ifeq}}>
-                            <label class="form-check-label" for="gender-female">Female</label>
-                        </div>
-                    </div>
+                    <label>Role</label>
+                    <select name="role" id="role" class="form-control" required>
+                        <option value="" disabled selected>Please choose role</option>
+                        <option value="Admin" class="edit-role-options">Admin</option>
+                        <option value="Customer" class="edit-role-options">Customer</option>
+                    </select>
                 </div>
                 <div class="modal-body py-2">
                     <label>Birthday</label>
-                    <input type="date" class="form-control" id="birthday" name="birthday"
-                        value="{{moment user.birthday format = "yyyy-MM-DD"}}" required>
+                    <input type="date" class="form-control" id="edit-user-birthday" name="birthday"
+                        required>
                 </div>
                 <div class="modal-body py-2">
                     <label>Phone Number</label>
-                    <input type="text" placeholder="Enter your phone number" id="phone" class="form-control"
-                        name="phone" value="{{user.phone}}" required>
+                    <input type="text" placeholder="Enter your phone number" id="edit-user-phone" class="form-control"
+                        name="phone" required>
                 </div>
                 <div class="modal-body py-2">
                     <label>Address</label>
-                    <input type="text" placeholder="Enter your address" id="address" class="form-control" name="address"
+                    <input type="text" placeholder="Enter your address" id="edit-user-address" class="form-control" name="address"
                         value="{{user.address}}" required>
                 </div>
                 <div class="modal-footer">

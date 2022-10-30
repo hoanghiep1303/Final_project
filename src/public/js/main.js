@@ -137,3 +137,34 @@ document.addEventListener("DOMContentLoaded", function () {
 $('#change-avatar-btn').click(() => {
   $('#file-avatar').trigger('click');
 })
+
+// Get ID of user to modal for editing
+$(document).on("click", ".open-modal-edit-user", function () {
+  var userId = $(this).data("id");
+  var userName = $("#" + userId + "-name").text();
+  var userRole = $("#" + userId + "-role").text();
+  var userPhone = $("#" + userId + "-phone").text();
+  var userBirthday = $("#" + userId + "-birthday").text();
+  var userAddress = $("#" + userId + "-address").text();
+
+  document.getElementById("edit-user-name").value = userName;
+  document.getElementById("edit-user-phone").value = userPhone;
+  document.getElementById("edit-user-birthday").value = userBirthday;
+  document.getElementById("edit-user-address").value = userAddress;
+  document.getElementById("edit-user-label").innerHTML =
+    "Edit user <b> " + userName + "</b>";
+
+  var editUserForm = document.forms["edit-user-form"];
+  editUserForm.setAttribute("action", "/user/update/" + userId);
+
+  var editUserRole = document.getElementsByClassName(
+    "edit-role-options"
+  );
+  for (var i = 0; i < editUserRole.length; i++) {
+    if (editUserRole[i].innerHTML == userRole) {
+      var selectedOptions = editUserRole[i];
+      selectedOptions.setAttribute("selected", "selected");
+      break;
+    }
+  }
+});
