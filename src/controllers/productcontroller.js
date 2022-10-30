@@ -71,7 +71,7 @@ class productcontroller {
   }
 
   delete(req, res, next) {
-    Product.findOneAndUpdate({ _id: req.params.id }, { deleted: true })
+    Product.delete({ _id: req.params.id })
       .then((product) => res.redirect("back"))
       .catch(next);
   }
@@ -83,7 +83,8 @@ class productcontroller {
   }
 
   restore(req, res, next) {
-    Product.findOneAndUpdate({ _id: req.params.id }, { deleted: false })
+    console.log('GEt in')
+    Product.restore({ _id: req.params.id })
       .then((product) => res.redirect("back"))
       .catch(next);
   }

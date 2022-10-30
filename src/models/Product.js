@@ -3,7 +3,7 @@ const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
 
-const Product = new mongoose.Schema({
+const Product = new Schema({
     name: {type: String, minLength: 1, maxLength: 255},
     desc: {type: String},
     category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},

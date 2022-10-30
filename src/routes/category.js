@@ -15,12 +15,12 @@ const categorycontroller =require('../controllers/categorycontroller');
 router.post('/update/:id', categorycontroller.update)
 
 // [PATCH] /category/:id/update category
-router.patch('/:id/restore', categorycontroller.restore)
+router.post('/:id/restore', categorycontroller.restore)
 
 // [DELETE] /category/:id/detele category
-router.delete('/delete/:id', categorycontroller.delete)
+router.post('/delete/:id', categorycontroller.delete)
 
-router.delete('/:id/force', categorycontroller.force)
+router.post('/force/:id', categorycontroller.force)
 
 // // [POST] /category/store category
 router.post('/store', categorycontroller.store)

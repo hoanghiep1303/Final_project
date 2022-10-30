@@ -71,58 +71,6 @@
                 </div>
             </div>
         </div>
-
-        {{!-- Deleted Category Table --}}
-        {{!-- <div class="container-fluid px-4 pb-5" id="deleted-shoetype-table">
-            <h1 class="mt-4" style="color: green;"><strong>Deleted Category Tables</strong></h1>
-            <div class="card mb-2">
-                <div class="card-header text-white" style="background-color: #0d9f1c;">
-                    <i class="fa-solid fa-trash-can me-1"></i>
-                    Recycle Bin
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Category name</th>
-                                    <th>Deleted date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each categoryDeleted}}
-                                <tr>
-                                    <td><img src="../../uploads/{{this.image}}" class="card-img-top" /></td>
-                                    <td id="{{this._id}}-name">{{this.name}}</td>
-                                    <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on
-                                        DD/MM/yyyy"}}</td>
-                                    <td>
-                                        <a href="" data-toggle="modal" data-target="#restore-shoetype"
-                                            data-id="{{this._id}}">
-                                            <button class="btn btn-info">Restore</button>
-                                        </a>
-                                        <a href="" data-toggle="modal" data-target="#force-delete-shoetype"
-                                            data-id="{{this._id}}">
-                                            <button class="btn btn-danger">Permantly Delete</button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {{else}}
-                                <tr>
-                                    <td colspan="13" class="text-center">
-                                        No category have been deleted.
-                                        <a href="#layoutSidenav_content">Available categories</a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </main>
 </div>
 
@@ -162,6 +110,7 @@
     </div>
 </div>
 
+<form name="delete-category-form" method="POST"></form>
 <!-- Delete Category Modal-->
 <div class="modal fade" id="deletecategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -176,7 +125,7 @@
             <div class="modal-body">Are you sure to delete this category?</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary btn-delete-category" type="button" data-bs-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="/category/delete/{{this._id}}">Delete</a>
+                <a class="btn btn-danger" id="btn-delete-category">Delete</a>
             </div>
         </div>
     </div>

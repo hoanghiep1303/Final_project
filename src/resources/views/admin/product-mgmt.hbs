@@ -189,9 +189,6 @@
     </div>
 </div>
 
-
-<form name="delete-food-form" method="post"></form>
-
 <!-- Delete Food Modal-->
 <div class="modal fade" id="deletefoodModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"
     aria-hidden="true">
@@ -266,22 +263,3 @@
         </div>
     </div>
 </div>
-
-{{!--
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var productId;
-        var deleteFoodForm = document.forms['delete-food-form'];
-        var btnDeleteFood = document.getElementById('btn-delete-food');
-
-        $('#deletefoodModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            productId = button.data('id');
-        });
-
-        btnDeleteFood.onclick = function () {
-            deleteFoodForm.action = '/product/' + productId + '?_method=DELETE';
-            deleteFoodForm.submit();
-        }
-    })
-</script> --}}

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     productId = button.data("id");
   });
   $("#btn-delete-food").click(function () {
-    deleteFoodForm.action = "/product/" + productId + "?_method=DELETE";
+    deleteFoodForm.action = "/product/delete/" + productId;
     deleteFoodForm.submit();
   });
 
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreProductId = button.data("id");
   });
   $("#btn-restore-food").click(function () {
-    restoreFoodForm.action = "/product/restore/" + restoreProductId;
-    console.log(restoreFoodForm.action);
+    restoreFoodForm.action = "/product/" + restoreProductId + "/restore";
+    //alert(restoreFoodForm.action);
     restoreFoodForm.submit();
   });
 
@@ -89,5 +89,46 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
       }
     }
+  });
+
+  // Delete category
+  var categoryId;
+  var deleteCategoryForm = document.forms["delete-category-form"];
+
+  $("#deletecategoryModal").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget);
+    categoryId = button.data("id");
+  });
+  $("#btn-delete-category").click(function () {
+    deleteCategoryForm.action = "/category/delete/" + categoryId;
+    deleteCategoryForm.submit();
+  });
+
+  //Permantly delete category
+  var forceCategoryId;
+  var forceDeleteCategoryForm = document.forms["permantly-delete-category-form"];
+
+  $("#force-delete-category").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget);
+    forceCategoryId = button.data("id");
+  });
+
+  $("#btn-force-delete-category").click(function () {
+    forceDeleteCategoryForm.action = "/category/force/" + forceCategoryId;
+    forceDeleteCategoryForm.submit();
+  });
+
+  //Restore category
+  var restoreCategoryId;
+  var restoreCategoryForm = document.forms["restore-category-form"];
+
+  $("#restore-category").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget);
+    restoreCategoryId = button.data("id");
+  });
+  $("#btn-restore-category").click(function () {
+    restoreCategoryForm.action = "/category/" + restoreCategoryId + "/restore";
+    //alert(restoreCategoryForm.action);
+    restoreCategoryForm.submit();
   });
 });

@@ -25,18 +25,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each categoryDeleted}}
+                                {{#each category}}
                                 <tr>
                                     <td><img src="../../uploads/{{this.image}}" class="card-img-top" /></td>
                                     <td id="{{this._id}}-name">{{this.name}}</td>
                                     <td id="{{this._id}}-createdAt">{{moment this.deletedAt format = "HH:mm on
                                         DD/MM/yyyy"}}</td>
                                     <td>
-                                        <a href="" data-toggle="modal" data-target="#restore-shoetype"
+                                        <a href="" data-toggle="modal" data-target="#restore-category"
                                             data-id="{{this._id}}">
                                             <button class="btn btn-info">Restore</button>
                                         </a>
-                                        <a href="" data-toggle="modal" data-target="#force-delete-shoetype"
+                                        <a href="" data-toggle="modal" data-target="#force-delete-category"
                                             data-id="{{this._id}}">
                                             <button class="btn btn-danger">Permantly Delete</button>
                                         </a>
@@ -61,4 +61,92 @@
             </div>
         </div>
     </main>
+</div>
+
+<form name="restore-category-form" method="post"></form>
+{{! Confirm restore code }}
+<div
+  class="modal fade"
+  id="restore-category"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="restore-category-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-header-confirm-restore">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restore-category-label"><b>Restore category</b></h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">Are you sure to
+        <strong>Restore</strong>
+        this category?</div>
+
+      <div class="modal-footer">
+        <button
+          id="btn-restore-category"
+          type="button"
+          class="btn btn-danger"
+        >Restore</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="permantly-delete-category-form" method="post"></form>
+{{! Confirm delete code }}
+<div
+  class="modal fade"
+  id="force-delete-category"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="delete-category-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-header-confirm-delete">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delete-category-label"><b>Permantly Delete category</b></h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">Are you sure to
+        <strong>Permantly</strong>
+        delete this category?</div>
+
+      <div class="modal-footer">
+        <button
+          id="btn-force-delete-category"
+          type="button"
+          class="btn btn-danger"
+        >Delete</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >No</button>
+      </div>
+    </div>
+  </div>
 </div>

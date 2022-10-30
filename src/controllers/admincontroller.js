@@ -185,7 +185,7 @@ class admincontroller {
     var decodeToken = jwt.verify(token, "mytoken");
     Promise.all([
       User.findOne({ _id: decodeToken }),
-      Category.find(),
+      Category.findDeleted(),
       // Category.findDeleted(),
     ])
       .then(
