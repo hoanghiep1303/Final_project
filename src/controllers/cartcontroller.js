@@ -6,6 +6,19 @@ const jwt = require('jsonwebtoken');
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
 class cartcontroller {
+    addtocartfromshow(req,res,next){
+        const productId = req.params.id;
+        const cart = new Cart(req.session.cart ? req.session.cart : {});
+
+        Product.findById(productId, function (err, product) {
+            if (err) {
+                return res.redirect('/cart');
+            }
+            cart.addMultiple(product, product.id, req.body.value);
+            req.session.cart = cart;
+            res.redirect('/cart');
+        })
+    }
     addtocart(req, res, next) {
         const productId = req.params.id;
         const cart = new Cart(req.session.cart ? req.session.cart : {});

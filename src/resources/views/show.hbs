@@ -13,14 +13,16 @@
                     <span>${{product.price}}</span>
                 </div>
                 <p class="lead">{{product.desc}}</p>
-                <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
-                        style="max-width: 3rem" />
-                    <a href="/cart/add-to-cart/{{product._id}}" class="btn btn-outline-dark flex-shrink-0">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to cart
-                    </a>
-                </div>
+                <form action="/cart/add-to-cart-from-show/{{product._id}}" method="POST">
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                            style="max-width: 3rem" min="1" name="value"/>
+                        <button type="submit" class="btn btn-outline-dark flex-shrink-0">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

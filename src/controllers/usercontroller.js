@@ -29,7 +29,8 @@ class usercontroller {
             .then(() => {
                 var noti = new Notification({
                     user: req.params.id,
-                    desc: 'Avatar changed.'
+                    desc: 'Avatar changed.',
+                    status: true
                 })
                 noti.save()
                 req.flash('successMsg', 'Your avatar has been updated'),
