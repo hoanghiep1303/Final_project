@@ -222,14 +222,14 @@ class sitecontroller {
                     "items": [{
                         "name": "item",
                         "sku": "item",
-                        "price": cart.totalPrice,
+                        "price": parseInt(req.body.totalPrice),
                         "currency": "USD",
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "currency": "USD",
-                    "total": cart.totalPrice
+                    "total": parseInt(req.body.totalPrice)
                 },
                 "description": "Washing Bar soap"
             }]

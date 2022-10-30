@@ -168,3 +168,22 @@ $(document).on("click", ".open-modal-edit-user", function () {
     }
   }
 });
+
+// Shipping method
+function selectShipping(select){
+  var value = select.value;
+  var totalPriceEle = document.getElementById("total-price");
+  var formPriceEle = document.getElementById("hidden-total-price")
+  var currentPrice = $('#total-price').data("price");
+  var afterPrice;
+
+  if(value == "Normal"){
+    afterPrice = currentPrice += 5
+  } else if (value == "Fast"){
+    afterPrice = currentPrice += 15
+  } else {
+    afterPrice = currentPrice
+  }
+  formPriceEle.value = afterPrice;
+  totalPriceEle.innerHTML = `$ ${afterPrice}`
+}

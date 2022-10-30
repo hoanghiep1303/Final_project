@@ -26,7 +26,7 @@
                             Discount<span class="price">- $0</span>
                         </div>
                         <div class="total">
-                            Total (USD)<span class="price">${{totalPrice}}</span>
+                            Total (USD)<span class="price" id="total-price" data-price="{{totalPrice}}">${{totalPrice}}</span>
                         </div>
                     </div>
                 </div>
@@ -39,6 +39,7 @@
             </div>
             <form action="/checkoutbyPaypal" method="POST" class="needs-validation" novalidate="">
                 <input type="hidden" name="userId" value="{{user._id}}" />
+                <input type="hidden" name="totalPrice" id="hidden-total-price" value="{{totalPrice}}" />
                 
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -83,11 +84,10 @@
                     <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eo_circle_green_number-2.svg/800px-Eo_circle_green_number-2.svg.png" alt="" width="30" height="30" class="checkout-img"> Shipping method</h4>
                 </div>
-                <select class="form-select mb-3">
-                    <option selected disabled>Please select a shipping method</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select mb-3" onchange="selectShipping(this)" name="shipping">
+                    <option value="Standard" selected>Lấy đồ ăn tại quán (không + thêm phí ship)</option>
+                    <option value="Normal">Giao bình thường ( + 5 $)</option>
+                    <option value="Fast">Giao nhanh ( +15$)</option>
                 </select>
                 <hr class="mb-4">
                 <div class="d-flex">
