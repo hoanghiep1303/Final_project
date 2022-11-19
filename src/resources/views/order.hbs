@@ -165,9 +165,9 @@
                   <span class="form-check-label">
                     <ul class="rating-stars">
                       <li class="stars-active" style="width: 100%;">
-                        <img src="images/misc/stars-active.svg" alt="">
+                        {{!-- <img src="images/misc/stars-active.svg" alt=""> --}}
                       </li>
-                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                      {{!-- <li> <img src="images/misc/starts-disable.svg" alt=""> </li> --}}
                     </ul>
                   </span>
                 </label> <!-- form-check end.// -->
@@ -176,9 +176,11 @@
                   <span class="form-check-label">
                     <ul class="rating-stars">
                       <li class="stars-active" style="width: 80%;">
-                        <img src="images/misc/stars-active.svg" alt="">
+                        {{!-- <img src="images/misc/stars-active.svg" alt=""> --}}
                       </li>
-                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                      <li> 
+                        {{!-- <img src="images/misc/starts-disable.svg" alt="">  --}}
+                        </li>
                     </ul>
                   </span>
                 </label> <!-- form-check end.// -->
@@ -187,9 +189,11 @@
                   <span class="form-check-label">
                     <ul class="rating-stars">
                       <li class="stars-active" style="width: 60%;">
-                        <img src="images/misc/stars-active.svg" alt="">
+                        {{!-- <img src="images/misc/stars-active.svg" alt=""> --}}
                       </li>
-                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                      <li>
+                         {{!-- <img src="images/misc/starts-disable.svg" alt="">  --}}
+                      </li>
                     </ul>
                   </span>
                 </label> <!-- form-check end.// -->
@@ -198,9 +202,11 @@
                   <span class="form-check-label">
                     <ul class="rating-stars">
                       <li class="stars-active" style="width: 40%;">
-                        <img src="images/misc/stars-active.svg" alt="">
+                        {{!-- <img src="images/misc/stars-active.svg" alt=""> --}}
                       </li>
-                      <li> <img src="images/misc/starts-disable.svg" alt=""> </li>
+                      <li> 
+                        {{!-- <img src="images/misc/starts-disable.svg" alt="">  --}}
+                        </li>
                     </ul>
                   </span>
                 </label> <!-- form-check end.// -->
@@ -221,8 +227,8 @@
           <div class=" col-lg-4 col-md-12 col-12">
             <form action="#" class="">
               <div class="input-group">
-                <input type="search" class="form-control" style="width:55%" placeholder="Search">
-                <button class="btn btn-success mygreen-btn">
+                <input id="search-input" class="form-control" style="width:55%" placeholder="Search" >
+                <button class="btn btn-success mygreen-btn" onclick="productSearch()">
                   <i class="fa fa-search"></i>
                 </button>
               </div> <!-- input-group end.// -->
@@ -248,7 +254,7 @@
             <div class="filters-content">
               <div class="row grid">
                 {{#each product}}
-                <div class="col-sm-6 col-md-4 col-lg-4 all pizza">
+                <div class="col-sm-6 col-md-4 col-lg-4 all pizza product-item" id="{{this._id}}-item">
                   <div class="box shadow my-2">
                     <div class="">
                       <div class="img-box" style="border-radius: 15px">
@@ -256,7 +262,7 @@
                       </div>
                       <div class="detail-box">
                         <div class="d-flex justify-content-between">
-                          <h5>
+                          <h5 class="product-name" data-id="{{this._id}}">
                             {{this.name}}
                           </h5>
                           <h5>

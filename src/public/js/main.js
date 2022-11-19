@@ -187,3 +187,20 @@ function selectShipping(select){
   formPriceEle.value = afterPrice;
   totalPriceEle.innerHTML = `$ ${afterPrice}`
 }
+
+function productSearch(){
+  $('.product-item').hide();
+
+  var text = document.getElementById("search-input").value;
+  var arr = document.getElementsByClassName('product-name')
+  var ids = [];
+
+  for(var i = 0; i < arr.length; i++){
+    if((arr[i].innerText.toLowerCase()).includes(text)){
+      ids.push(arr[i].getAttribute('data-id'));
+    }
+  }
+  for(var i = 0; i < ids.length; i++){
+    $('#' + ids[i] + '-item').show();
+  }
+}
