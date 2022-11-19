@@ -204,3 +204,34 @@ function productSearch(){
     $('#' + ids[i] + '-item').show();
   }
 }
+
+function priceFilter(){
+  var min = document.getElementById("min").value;
+  var max = document.getElementById("max").value;
+
+  if(min == "" || max == ""){
+    alert("Please input min and max !")
+  } else if (min >= max){
+    alert("Please input valid values (min < max) !")
+  } else {
+    $('.product-item').hide();
+    var arr = document.getElementsByClassName('product-price')
+    console.log(arr)
+    var ids = [];
+
+    for(var i = 0; i < arr.length; i++){
+      if(arr[i].innerText >= min && arr[i].innerText <= max){
+        ids.push(arr[i].getAttribute('data-id'));
+      }
+    }
+    for(var i = 0; i < ids.length; i++){
+      $('#' + ids[i] + '-item').show();
+    }
+  }
+}
+
+function rangePrice(val){
+  val = parseInt(val);
+  document.getElementById("min").value = val - 1;
+  document.getElementById("max").value = 1 + val;
+}

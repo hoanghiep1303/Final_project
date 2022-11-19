@@ -267,9 +267,10 @@ class sitecontroller {
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(),
                 Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Category.find(),
             ])
                 .then(([
-                    user, product, noti
+                    user, product, noti, category
                 ]) => {
                     if (user) {
                         req.user = user
@@ -277,6 +278,7 @@ class sitecontroller {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
                             noti: multipleMongooseToObject(noti),
+                            category: multipleMongooseToObject(category),
                             cart: req.session.cart,
                         })
                         // next()
@@ -286,9 +288,57 @@ class sitecontroller {
                 .catch(err => console.log(err))
         }
         else {
-            Product.find({}).limit()
-                .then((product) => res.render('order', {
-                    product: multipleMongooseToObject(product)
+            Promise.all([
+                Product.find({}).limit(),
+                Category.find({})
+            ])
+                .then(([product, category]) => 
+                res.render('order', {
+                    product: multipleMongooseToObject(product),
+                    category: multipleMongooseToObject(category)
+                }))
+                .catch(err => console.log(err))
+        }
+    }
+
+    orderSearch(req, res, next) {
+        var query = req.query.category;
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+                User.findOne({ _id: decodeToken }),
+                Product.find({category: query}).populate('category'),
+                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Category.find(),
+            ])
+                .then(([
+                    user, product, noti, category
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('order', {
+                            user: mongooseToObject(user),
+                            product: multipleMongooseToObject(product),
+                            noti: multipleMongooseToObject(noti),
+                            category: multipleMongooseToObject(category),
+                            cart: req.session.cart,
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Promise.all([
+                Product.find({}).limit(),
+                Category.find({})
+            ])
+                .then(([product, category]) => 
+                res.render('order', {
+                    product: multipleMongooseToObject(product),
+                    category: multipleMongooseToObject(category)
                 }))
                 .catch(err => console.log(err))
         }

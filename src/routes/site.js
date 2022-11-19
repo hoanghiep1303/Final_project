@@ -30,6 +30,7 @@ router.get('/logout', sitecontroller.logout);
 router.get('/checkout', isLoggined,sitecontroller.checkout);
 
 router.get('/order', sitecontroller.order);
+router.get('/order/search', sitecontroller.orderSearch);
 
 router.post('/checkoutbyPaypal', sitecontroller.checkoutbyPaypal);
 
