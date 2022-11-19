@@ -24,6 +24,17 @@
                     <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                 </ul>
             </li>
+            <li class="nav-item mx-1 dropdown">
+                <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" style="padding: 10px 20px;">
+                    <i class="fa fa-bell"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#each noti}}
+                    <li><a class="dropdown-item {{#ifeq this.status false}}text-danger{{/ifeq}}" href="/history">{{this.desc}}</a></li>
+                    {{/each}}
+                </ul>
+            </li>
             {{else}}
             <li class="nav-item mx-1"><a href="/login" class="rounded">Login</a></li>
             <li class="nav-item mx-1"><a href="/register" class="rounded">Register</a></li>

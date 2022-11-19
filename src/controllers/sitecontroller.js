@@ -390,18 +390,19 @@ class sitecontroller {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
-
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
+                Notification.find({user: decodeToken}).sort({'createdAt': 1})
             ])
                 .then(([
-                    user, product
+                    user, product, noti
                 ]) => {
                     if (user) {
                         req.user = user
                         res.render('profile', {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
+                            noti: multipleMongooseToObject(noti),
                             cart: req.session.cart,
                         })
                         // next()

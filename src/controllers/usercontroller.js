@@ -10,13 +10,15 @@ const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose
 class usercontroller {
     // [PUT] /user/:id 
     update(req, res, next) {
-        User.findOneAndUpdate({ _id: req.params.id }, { $set: req.body })
+        var userId = req.params.id
+        User.findOneAndUpdate({ _id: userId }, { $set: req.body })
             .then(() => {
-                // var noti = new Notification({
-                //     user: req.params.id,
-                //     desc: 'Your profile has been updated.' 
-                // })
-                // noti.save()
+                var noti = new Notification({
+                    user: userId,
+                    status: true,
+                    desc: 'Change password successfully' 
+                })
+                noti.save()
                 req.flash('successMsg', 'Your profile information has been updated'),
                     res.redirect('back')
             })
@@ -25,10 +27,11 @@ class usercontroller {
 
     // [POST] /user/change-avatar
     changeAvatar(req, res, next) {
-        User.findOneAndUpdate({ _id: req.params.id }, { $set: { avatar: req.file.filename } })
+        var userId = req.params.id
+        User.findOneAndUpdate({ _id: userId }, { $set: { avatar: req.file.filename } })
             .then(() => {
                 var noti = new Notification({
-                    user: req.params.id,
+                    user: userId,
                     desc: 'Avatar changed.',
                     status: true
                 })
@@ -70,7 +73,12 @@ class usercontroller {
                                         console.log('error'+ 'Change password failed'),
                                         res.redirect('back')
                                     }
-                                    console.log('succes', 'Change password successfully'),
+                                    var noti = new Notification({
+                                        user: decodeToken,
+                                        status: true,
+                                        desc: 'Change password successfully' 
+                                    })
+                                    noti.save()
                                     res.redirect('back')
                                 })
                             });

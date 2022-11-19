@@ -2,6 +2,7 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const Category = require("../models/Category");
+const Notification = require("../models/Notification");
 
 const {
   multipleMongooseToObject,
@@ -17,14 +18,16 @@ class productcontroller {
         User.findOne({ _id: decodeToken }),
         Product.find({}).limit(3),
         Category.find(),
+        Notification.find({user: decodeToken}).sort({'createdAt': 1})
       ])
-        .then(([user, product, category]) => {
+        .then(([user, product, category, noti]) => {
           if (user) {
             req.user = user;
             res.render("home", {
               user: mongooseToObject(user),
               product: multipleMongooseToObject(product),
               category: multipleMongooseToObject(category),
+              noti: multipleMongooseToObject(noti),
             });
             // next()
           }
@@ -97,14 +100,16 @@ class productcontroller {
         User.findOne({ _id: decodeToken }),
         Product.findById(req.params.id),
         Product.find({}).limit(4),
+        Notification.find({user: decodeToken}).sort({'createdAt': 1})
       ])
-        .then(([user, product, listProduct]) => {
+        .then(([user, product, listProduct, noti]) => {
           if (user) {
             req.user = user;
             res.render("show", {
               user: mongooseToObject(user),
               product: mongooseToObject(product),
               listProduct: multipleMongooseToObject(listProduct),
+              noti: multipleMongooseToObject(noti),
               cart: req.session.cart,
             });
           }
