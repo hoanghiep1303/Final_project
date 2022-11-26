@@ -32,7 +32,8 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local-mongoose": "^7.1.2",
     "paypal-rest-sdk": "^1.8.1",
-    "req-flash": "^0.0.3"
+    "req-flash": "^0.0.3",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "mongoose-delete": "^0.5.4",

@@ -16,11 +16,11 @@ class usercontroller {
                 var noti = new Notification({
                     user: userId,
                     status: true,
-                    desc: 'Change password successfully' 
+                    desc: 'Your profile has been updated.' 
                 })
                 noti.save()
                 req.flash('successMsg', 'Your profile information has been updated'),
-                    res.redirect('back')
+                    res.redirect('/profile')
             })
             .catch(next);
     }

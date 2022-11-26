@@ -1,3 +1,4 @@
+
 <section class="padding-y">
   <div class="d-flex flex-row my-4 justify-content-center">
     <h1 class="m-0 text-uppercase text-success text-center pages-title">Order
@@ -6,7 +7,7 @@
 
   <div class="container-fluid my-3">
     <div class="p-2 rounded w-100" style="background-color: rgb(0 0 0 / 10%);">
-      <nav class="woocommerce-breadcrumb"><a href="/">Home</a>&nbsp;/&nbsp;Order&nbsp;/&nbsp;Page 2</nav>
+      <nav class="woocommerce-breadcrumb"><a href="/">Home</a>&nbsp;/&nbsp;Order</nav>
     </div>
   </div>
 
@@ -104,7 +105,8 @@
             </header>
             <div class="collapse" id="collapse_aside2" style="">
               <div class="card-body">
-                <input type="range" class="form-range" id="range" value="25" min="1" max="24" oninput="rangePrice(this.value)">
+                <input type="range" class="form-range" id="range" value="25" min="1" max="24"
+                  oninput="rangePrice(this.value)">
                 <div class="row mb-3">
                   <div class="col-6">
                     <label for="min" class="form-label">Min</label>
@@ -165,7 +167,7 @@
           <div class=" col-lg-4 col-md-12 col-12">
             <form action="#" class="">
               <div class="input-group">
-                <input id="search-input" class="form-control" style="width:55%" placeholder="Search" >
+                <input id="search-input" class="form-control" style="width:55%" placeholder="Search">
                 <button class="btn btn-success mygreen-btn" onclick="productSearch()">
                   <i class="fa fa-search"></i>
                 </button>
@@ -188,7 +190,7 @@
 
 
         <section class="food_section pb-2 mt-2">
-          <div class="container-fuild">
+          <div class="container-fuild product-wrapper">
             <div class="filters-content">
               <div class="row grid">
                 {{#each product}}
@@ -212,10 +214,12 @@
                         </p>
                         <div class="">
                           <div class="d-flex justify-content-between">
-                            <a class="text-white me-2 btn btn-success w-100 rounded-pill mygreen-btn" href="/product/show/{{this._id}}">
+                            <a class="text-white me-2 btn btn-success w-100 rounded-pill mygreen-btn"
+                              href="/product/show/{{this._id}}">
                               <i class="fa-solid fa-magnifying-glass"></i>
                             </a>
-                            <a class="text-white btn btn-success w-100 rounded-pill mygreen-btn" href="/cart/add-to-cart/{{this._id}}">
+                            <a class="text-white btn btn-success w-100 rounded-pill mygreen-btn"
+                              href="/cart/add-to-cart/{{this._id}}">
                               <i class="fa-solid fa-cart-plus"></i>
                             </a>
                           </div>
@@ -233,12 +237,12 @@
 
         <hr>
 
-        <div class="d-flex flex-wrap mt-4 justify-content-center">
-          <div class="">
+        <div class="d-flex flex-wrap mt-4 mb-2 justify-content-center">
+          {{!-- <div class="">
             <a href="javascript: history.back()" class="btn btn-light"> « Go back</a>
-          </div>
+          </div> --}}
           <nav class="ms-3">
-            <ul class="pagination">
+            <ul class="pagination" id="pagination-container">
               <li class="page-item"><a class="page-link" href="#">Previous</a></li>
               <li class="page-item"><a class="page-link" href="#">1</a></li>
               <li class="page-item active" aria-current="page">
@@ -256,3 +260,23 @@
     </div> <!-- row .// -->
   </div> <!-- container .//  -->
 </section>
+
+<script type="text/javascript">
+  var items = $(".product-wrapper .product-item");
+  var numItems = items.length;
+  var perPage = 3;
+
+  items.slice(perPage).hide();
+
+  $('#pagination-container').pagination({
+    items: numItems,
+    itemsOnPage: perPage,
+    prevText: "&laquo;",
+    nextText: "&raquo;",
+    onPageClick: function (pageNumber) {
+      var showFrom = perPage * (pageNumber - 1);
+      var showTo = showFrom + perPage;
+      items.hide().slice(showFrom, showTo).show();
+    }
+  });
+</script>

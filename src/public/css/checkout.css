@@ -54,3 +54,9 @@
 
 .checkout-img {
   margin-bottom: 5px; }
+
+.my-link {
+  color: #1daf2c; }
+
+.my-link:hover {
+  color: #000; }

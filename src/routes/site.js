@@ -42,6 +42,8 @@ router.get('/profile', isLoggined,sitecontroller.profile);
 
 router.get('/history', isLoggined,sitecontroller.history);
 
+router.get('/notification', isLoggined,sitecontroller.notification);
+
 //social-login-session
 router.use(cookieParser());
 router.use(passport.initialize());

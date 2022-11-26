@@ -265,7 +265,7 @@ class sitecontroller {
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
                 User.findOne({ _id: decodeToken }),
-                Product.find({}).limit(),
+                Product.find({}),
                 Notification.find({user: decodeToken}).sort({createdAt: -1}),
                 Category.find(),
             ])
@@ -450,6 +450,39 @@ class sitecontroller {
         else {
             Product.find({}).limit(3)
                 .then((product) => res.render('history', {
+                    product: multipleMongooseToObject(product)
+                }))
+                .catch(err => console.log(err))
+        }
+    }
+
+    notification(req, res, next) {
+        if (req.cookies.token) {
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+                User.findOne({ _id: decodeToken }),
+                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+            ])
+                .then(([
+                    user, noti
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        res.render('notification', {
+                            user: mongooseToObject(user),
+                            noti: multipleMongooseToObject(noti),
+                            cart: req.session.cart,
+                        })
+                        // next()
+                    }
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            Product.find({}).limit(3)
+                .then((product) => res.render('notification', {
                     product: multipleMongooseToObject(product)
                 }))
                 .catch(err => console.log(err))

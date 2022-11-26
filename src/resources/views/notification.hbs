@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="d-flex flex-row justify-content-center">
+        <div class="col-lg-auto w-100">
+            <div class="d-flex flex-row my-4 justify-content-center">
+                <h1 class="m-0 text-uppercase text-success text-center pages-title">NOTIFICATIONS</h1>
+            </div>
+            <div class="container mb-3">
+                <h4 class="mb-4 pt-1 fw-bolder">Activity Notice</h4>
+                {{#if successMsg}}
+                <h6 class="text-success"><i class="fa fa-check"></i> {{successMsg}}</h6>
+                {{/if}}
+                {{#if failedMsg}}
+                <h6 class="text-danger"><i class="fa fa-times"></i> {{failedMsg}}</h6>
+                {{/if}}
+                <hr class="my-0">
+                <div class="table-notification notification-wrapper">
+                    <table class="table table-responsive table-success table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">#</th>
+                                <th class="text-center" scope="col">Description</th>
+                                <th class="text-center" scope="col">Status</th>
+                                <th class="text-center" scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {{#each noti}}
+                            <tr class="notification-item">
+                                <th class="text-center" scope="row">{{sum @index 1}}</th>
+                                <td class="text-center">{{this.desc}}</td>
+                                <td class="text-center">
+                                    {{#ifeq this.status true}}
+                                    <i class="fa-solid fa-circle-check text-success fa-2x"></i>
+                                    {{else}}
+                                    <i class="fa-solid fa-circle-xmark text-danger fa-2x"></i>
+                                    {{/ifeq}}
+                                </td>
+                                <td class="text-center">{{moment this.createdAt format = "HH:mm on DD/MM/yyyy"}}</td>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td colspan="11" class="text-center">
+                                    You do not have any activity in the system.
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <nav class="d-flex justify-content-sm-center pt-3">
+                        <ul class="pagination" id="pagination-container">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">2</span>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var items = $(".notification-wrapper .notification-item");
+    var numItems = items.length;
+    var perPage = 20;
+
+    items.slice(perPage).hide();
+
+    $('#pagination-container').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
+</script>

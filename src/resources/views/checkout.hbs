@@ -23,24 +23,27 @@
                         </div>
                         {{/each}}
                         <div class="discount">
-                            Discount<span class="price">- $0</span>
+                            Shipping<span class="price">$0</span>
                         </div>
                         <div class="total">
-                            Total (USD)<span class="price" id="total-price" data-price="{{totalPrice}}">${{totalPrice}}</span>
+                            Total (USD)<span class="price" id="total-price"
+                                data-price="{{totalPrice}}">${{totalPrice}}</span>
                         </div>
                     </div>
                 </div>
             </ul>
         </div>
         <div class="col-md-8 order-md-1">
-            <div class="d-flex"> 
+            <div class="d-flex">
                 <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Eo_circle_green_number-1.svg/1200px-Eo_circle_green_number-1.svg.png" alt="" width="30" height="30" class="checkout-img"> Billing address</h4>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Eo_circle_green_number-1.svg/1200px-Eo_circle_green_number-1.svg.png"
+                        alt="" width="30" height="30" class="checkout-img"> Billing address
+                </h4>
             </div>
             <form action="/checkoutbyPaypal" method="POST" class="needs-validation" novalidate="">
                 <input type="hidden" name="userId" value="{{user._id}}" />
                 <input type="hidden" name="totalPrice" id="hidden-total-price" value="{{totalPrice}}" />
-                
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
@@ -59,40 +62,52 @@
                 </div>
                 <div class="mb-3">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email">
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email"
+                        value="{{user.email}}">
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required=""
-                        name="address">
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{user.address}}" name="address" required>
                     <div class="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
                 <div class="mb-3">
                     <label for="phone">Phone Number</label>
-                    <input type="text" class="form-control" id="phone" placeholder="0123456789" required=""
-                        name="phone">
+                    <input type="text" class="form-control" id="phone" placeholder="0123456789" required name="phone"
+                        value="{{user.phone}}">
                 </div>
                 <div class="mb-3">
-                    <label for="email">Company name <span class="text-muted">(Optional)</span></label>
+                    <label for="email">Notes for restaurants <span class="text-muted">(Optional)</span></label>
                     <input type="text" name="company" class="form-control" id="">
                 </div>
                 <hr class="mb-4">
                 <div class="d-flex">
                     <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eo_circle_green_number-2.svg/800px-Eo_circle_green_number-2.svg.png" alt="" width="30" height="30" class="checkout-img"> Shipping method</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Eo_circle_green_number-2.svg/800px-Eo_circle_green_number-2.svg.png"
+                            alt="" width="30" height="30" class="checkout-img"> Shipping method
+                    </h4>
                 </div>
                 <select class="form-select mb-3" onchange="selectShipping(this)" name="shipping">
-                    <option value="Standard" selected>Lấy đồ ăn tại quán (không + thêm phí ship)</option>
-                    <option value="Normal">Giao bình thường ( + 5 $)</option>
-                    <option value="Fast">Giao nhanh ( +15$)</option>
+                    <option value="Standard" selected>Pick up food at the restaurant ($0)</option>
+                    <option value="Normal">Standard delivery ($5)</option>
+                    <option value="Fast">Fast delivery ($15)</option>
                 </select>
+                <div class="d-flex">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deliverymodal"
+                        class="text-decoration-none my-link fw-bolder"><i class="fa-solid fa-circle-exclamation"></i>
+                        Details of
+                        delivery
+                        methods</a>
+                </div>
                 <hr class="mb-4">
                 <div class="d-flex">
                     <h4 class="mb-3 fw-bolder" style="font-family: 'Nunito', sans-serif; color:#41A145;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Eo_circle_green_number-3.svg/2048px-Eo_circle_green_number-3.svg.png" alt="" width="30" height="30" class="checkout-img"> Payment method</h4>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Eo_circle_green_number-3.svg/2048px-Eo_circle_green_number-3.svg.png"
+                            alt="" width="30" height="30" class="checkout-img"> Payment method
+                    </h4>
                 </div>
                 <div class="d-flex justify-content-start my-3">
                     <div class="custom-control custom-radio me-3">
@@ -120,6 +135,36 @@
                 <hr class="mb-4">
                 <button class="btn btn-success btn-lg btn-block w-100" type="submit">Proceed to checkout</button>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deliverymodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background:#198754">
+                <h1 class="modal-title fw-bolder" id="exampleModalLabel"><i class="fas fa-shipping-fast"></i> Shipping
+                    method</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="fw-bolder text-uppercase">Includes 3 main delivery methods</h5>
+                <p><i class="fa-solid fa-circle-chevron-right"></i> <strong>Pick up food at the restaurant:</strong>
+                    Customers who choose this delivery method will come to the store to receive food prepared by the
+                    restaurant. <strong>This method does not include shipping fees.</strong></p>
+                <p><i class="fa-solid fa-circle-chevron-right"></i> <strong>Standard delivery:</strong>
+                    The store will make dishes for customers in turn, based on the time when the customer orders
+                    <strong>(If we have too many orders, the preparation will take a long time).</strong> After placing
+                    an order, customers will have to wait for the restaurant to process the food and deliver it to the
+                    customer's address. <strong>The shipping method will add $5 to the total bill.</strong>
+                </p>
+                <p><i class="fa-solid fa-circle-chevron-right"></i> <strong>Fast delivery:</strong>
+                    Orders that choose this delivery method will be prioritized to be executed first and delivered to
+                    customers at the fastest speed. <strong>This method will add $15 to the total bill.</strong></p>
+                <p><i class="fa-solid fa-triangle-exclamation"></i> <strong>Notice: These shipping methods are
+                        only applicable within Ho Chi Minh City and not nationwide. Customers' orders are only shipped
+                        during the restaurant's operating hours.</strong></p>
+            </div>
         </div>
     </div>
 </div>
