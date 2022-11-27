@@ -8,6 +8,17 @@ const bcrypt = require('bcrypt');
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose');
 
 class usercontroller {
+    // Delete user 
+    delete(req, res, next) {
+        var userId = req.params.id;
+        User.findOneAndDelete({_id: userId})
+        .then(() => {
+            req.flash('successMsg', 'The user has been deleted'),
+            res.redirect('back')
+        })
+        .catch(err => console.log(err));
+    }
+
     // [PUT] /user/:id 
     update(req, res, next) {
         var userId = req.params.id

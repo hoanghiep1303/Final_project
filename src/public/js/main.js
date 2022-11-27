@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Delete user
+  var userId;
+  var deleteUserForm = document.forms["delete-user-form"];
+
+  $("#deleteuserModal").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget);
+    userId = button.data("id");
+  });
+  $("#btn-delete-user").click(function () {
+    deleteUserForm.action = "/user/delete/" + userId;
+    deleteUserForm.submit();
+  });
+
   // Delete food
   var productId;
   var deleteFoodForm = document.forms["delete-food-form"];

@@ -64,7 +64,7 @@
                                             <button class="btn btn-dark">Edit</button>
                                         </a>
                                         <a class="text-decoration-none" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#deleteuserModal">
+                                            data-bs-target="#deleteuserModal" data-id="{{this._id}}">
                                             <button class="btn btn-danger">Delete</button>
                                         </a>
                                     </td>
@@ -85,6 +85,7 @@
     </main>
 </div>
 
+<form name="delete-user-form" method="get"></form>
 <!-- Delete User Modal-->
 <div class="modal fade" id="deleteuserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -99,7 +100,8 @@
             <div class="modal-body">Are you sure to delete this user?</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="/user/delete/{{user._id}}">Delete</a>
+                <button class="btn btn-danger" type="button" id="btn-delete-user">Delete</button>
+                {{!-- <a class="btn btn-danger" href="/user/delete/{{user._id}}">Delete</a> --}}
             </div>
         </div>
     </div>
