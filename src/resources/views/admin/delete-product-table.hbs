@@ -34,10 +34,11 @@
                 {{#each product}}
                   <tr>
                     <td><img
-                        class="img-user-table"
+                        class="img-user-table card-img-top"
                         id="{{this._id}}-image"
                         src="../uploads/{{this.image}}"
                         alt="{{this.name}}"
+                        style="max-width: 120px;"
                       /></td>
                     <td>{{this.category.name}}</td>
                     <td id="{{this._id}}-name">{{this.name}}</td>
