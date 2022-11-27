@@ -402,10 +402,9 @@ class sitecontroller {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
-
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
-                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Notification.find({user: decodeToken, status: true, desc : /.*Checkout.*/}).sort({createdAt: -1}),
             ])
                 .then(([
                     user, product, noti
