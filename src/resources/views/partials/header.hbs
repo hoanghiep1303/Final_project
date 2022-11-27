@@ -31,8 +31,11 @@
                 </a>
                 <ul class="dropdown-menu">
                     {{#each noti}}
-                    <li><a class="dropdown-item {{#ifeq this.status false}}text-danger{{/ifeq}}" href="/notification">{{this.desc}}</a></li>
+                        {{#ifeq this.isRead false}}
+                        <li><a class="dropdown-item {{#ifeq this.status false}}text-danger {{else}} text-primary{{/ifeq}}" href="/notification">{{this.desc}}</a></li>
+                        {{/ifeq}}
                     {{/each}}
+                    <li class="dropdown-item text-center p-0"><a href="/notification/read-all">Read all</a></li>
                 </ul>
             </li>
             {{else}}
