@@ -185,17 +185,24 @@ $(document).on("click", ".open-modal-edit-user", function () {
 // Shipping method
 function selectShipping(select){
   var value = select.value;
+  var shippingPrice = document.getElementById("shipping-price")
   var totalPriceEle = document.getElementById("total-price");
   var formPriceEle = document.getElementById("hidden-total-price")
   var currentPrice = $('#total-price').data("price");
   var afterPrice;
+  var fee;
 
   if(value == "Normal"){
-    afterPrice = currentPrice += 5
+    fee = 5;
+    afterPrice = currentPrice += fee;
+    shippingPrice.innerHTML = `$ ${fee}`
   } else if (value == "Fast"){
-    afterPrice = currentPrice += 15
+    fee = 15;
+    afterPrice = currentPrice += fee;
+    shippingPrice.innerHTML = `$ ${fee}`
   } else {
     afterPrice = currentPrice
+    shippingPrice.innerHTML = `$0`
   }
   formPriceEle.value = afterPrice;
   totalPriceEle.innerHTML = `$ ${afterPrice}`
