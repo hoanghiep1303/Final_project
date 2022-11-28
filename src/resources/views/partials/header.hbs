@@ -11,28 +11,49 @@
                     aria-expanded="false" style="padding: 10px 20px;">
                     {{#if this.user.email}}{{this.user.email}} {{else}}{{this.user.name}} {{/if}}
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menu-end">
                     {{#ifeq user.role "Admin"}}
-                    <li><a class="dropdown-item" href="/admin"><i class="fa-solid fa-clipboard-list"></i> Dashboard</a></li>
+                    <li><a class="dropdown-item" href="/admin"><i class="fa-solid fa-clipboard-list"></i> Dashboard</a>
+                    </li>
                     {{/ifeq}}
                     <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
-                    {{!-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i> Activity Log</a></li> --}}
+                    <li><a class="dropdown-item" href="/history"><i class="fa-solid fa-clock-rotate-left"></i>
+                            History</a></li>
+                    {{!-- <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i> Activity Log</a></li>
+                    --}}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>
+                            Logout</a></li>
                 </ul>
             </li>
             <li class="nav-item mx-1 dropdown">
                 <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" style="padding: 10px 20px;">
-                    <i class="fa fa-bell"></i>
+                    <i class="fa fa-bell dropdown-link text-pirmary">
+                        {{#if noti}}
+                        <span class="badge bg-danger badge-noti text-white ms-1 rounded-pill number text-center">
+                            {{counterUnRead noti}}
+                        </span>
+                        {{else}}
+                        <span
+                            class="badge bg-danger badge-noti text-white ms-1 rounded-pill number text-center">0</span>
+                        {{/if}}
+                    </i>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <div class="dropdown-items text-center">
+                        <h3 class="title pt-2">Notifications</h3>
+                    </div>
+                    <hr>
                     {{#each noti}}
-                    <li><a class="dropdown-item {{#ifeq this.status false}}text-danger{{/ifeq}}" href="/notification">{{this.desc}}</a></li>
+                    {{#ifeq this.isRead false}}
+                    <li><a class="dropdown-item {{#ifeq this.status false}}text-danger {{else}} text-primary{{/ifeq}}"
+                            href="/notification">{{this.desc}}</a></li>
+                    {{/ifeq}}
                     {{/each}}
+                    <li class="dropdown-item text-center p-0"><a href="/notification/read-all">Read all</a></li>
                 </ul>
             </li>
             {{else}}
@@ -51,7 +72,13 @@
             <a href="/cart" class="header-cart btn btn-outline-success rounded">
                 <i class="fa fa-shopping-cart me-1"></i>
                 Cart
-                <span class="badge bg-danger text-white ms-1 rounded-pill">{{cart.totalQty}}</span>
+                {{#if session.cart.totalQty}}
+                <span
+                    class="badge bg-danger badge-counter text-white ms-1 rounded-pill">{{session.cart.totalQty}}</span>
+                {{else}}
+                <span class="badge bg-danger badge-counter text-white ms-1 rounded-pill">0</span>
+                {{/if}}
+                {{!-- <span class="badge bg-danger text-white ms-1 rounded-pill">{{cart.totalQty}}</span> --}}
             </a>
         </div>
     </nav>

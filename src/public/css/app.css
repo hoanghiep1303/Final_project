@@ -86,6 +86,16 @@ header {
 .header-font {
   font-family: 'Dancing Script', cursive; }
 
+.dropdown-link {
+  display: inline-block;
+  position: relative; }
+
+.dropdown-link .number {
+  position: absolute;
+  top: -10px;
+  right: -23px;
+  border: 2px solid white; }
+
 /* footer section*/
 .footer_section {
   background-color: #222831;
@@ -1557,4 +1567,6 @@ body {
 @media (max-width: 376px) {
   .pages-title {
     max-width: 128px;
-    letter-spacing: 0; } }
+    letter-spacing: 0; }
+  .page-noti {
+    max-width: 200px !important; } }

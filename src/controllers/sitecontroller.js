@@ -18,10 +18,11 @@ class sitecontroller {
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(6),
                 Category.find(),
-                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
+                Notification.find({ user: decodeToken, status: true, desc: /.*Checkout.*/ }).sort({ createdAt: -1 }),
             ])
                 .then(([
-                    user, product, category, noti
+                    user, product, category, noti, history
                 ]) => {
                     if (user) {
                         req.user = user
@@ -30,6 +31,7 @@ class sitecontroller {
                             product: multipleMongooseToObject(product),
                             category: multipleMongooseToObject(category),
                             noti: multipleMongooseToObject(noti),
+                            history: multipleMongooseToObject(history),
                             cart: req.session.cart,
                         })
                         // next()
@@ -203,7 +205,7 @@ class sitecontroller {
             },
             "redirect_urls": {
                 "return_url": "http://localhost:5000/checkoutsuccess?userId=" + userId + '&totalPrice=' + req.body.totalPrice + '&noti=' + notiParams + "",
-                "cancel_url": "http://localhost:5000/checkoutfail?userId="+ userId + '&totalPrice=' + req.body.totalPrice + '&noti=' + notiParams + "",
+                "cancel_url": "http://localhost:5000/checkoutfail?userId=" + userId + '&totalPrice=' + req.body.totalPrice + '&noti=' + notiParams + "",
             },
             "transactions": [{
                 "item_list": {
@@ -243,7 +245,7 @@ class sitecontroller {
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}),
-                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
                 Category.find(),
             ])
                 .then(([
@@ -269,11 +271,11 @@ class sitecontroller {
                 Product.find({}).limit(),
                 Category.find({})
             ])
-                .then(([product, category]) => 
-                res.render('order', {
-                    product: multipleMongooseToObject(product),
-                    category: multipleMongooseToObject(category)
-                }))
+                .then(([product, category]) =>
+                    res.render('order', {
+                        product: multipleMongooseToObject(product),
+                        category: multipleMongooseToObject(category)
+                    }))
                 .catch(err => console.log(err))
         }
     }
@@ -285,8 +287,8 @@ class sitecontroller {
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
                 User.findOne({ _id: decodeToken }),
-                Product.find({category: query}).populate('category'),
-                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Product.find({ category: query }).populate('category'),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
                 Category.find(),
             ])
                 .then(([
@@ -312,11 +314,11 @@ class sitecontroller {
                 Product.find({}).limit(),
                 Category.find({})
             ])
-                .then(([product, category]) => 
-                res.render('order', {
-                    product: multipleMongooseToObject(product),
-                    category: multipleMongooseToObject(category)
-                }))
+                .then(([product, category]) =>
+                    res.render('order', {
+                        product: multipleMongooseToObject(product),
+                        category: multipleMongooseToObject(category)
+                    }))
                 .catch(err => console.log(err))
         }
     }
@@ -336,7 +338,7 @@ class sitecontroller {
             shipping: notiQuery.shipping,
             company: notiQuery.company,
             status: true,
-            desc: 'Checkout by Paypal success.' 
+            desc: 'Checkout by Paypal success.'
         })
         noti.save()
         return res.redirect('/cart');
@@ -356,7 +358,7 @@ class sitecontroller {
             shipping: notiQuery.shipping,
             company: notiQuery.company,
             status: false,
-            desc: 'Checkout by Paypal failed.' 
+            desc: 'Checkout by Paypal failed.'
         })
         noti.save()
         return res.redirect('/cart');
@@ -369,7 +371,7 @@ class sitecontroller {
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
-                Notification.find({user: decodeToken}).sort({'createdAt': 1})
+                Notification.find({ user: decodeToken }).sort({ 'createdAt': 1 })
             ])
                 .then(([
                     user, product, noti
@@ -404,7 +406,7 @@ class sitecontroller {
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
-                Notification.find({user: decodeToken, status: true, desc : /.*Checkout.*/}).sort({createdAt: -1}),
+                Notification.find({ user: decodeToken, status: true, desc: /.*Checkout.*/ }).sort({ createdAt: -1 }),
             ])
                 .then(([
                     user, product, noti
@@ -438,7 +440,7 @@ class sitecontroller {
             var decodeToken = jwt.verify(token, 'mytoken');
             Promise.all([
                 User.findOne({ _id: decodeToken }),
-                Notification.find({user: decodeToken}).sort({createdAt: -1}),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
             ])
                 .then(([
                     user, noti
@@ -463,6 +465,13 @@ class sitecontroller {
                 }))
                 .catch(err => console.log(err))
         }
+    }
+    readAll(req, res, next) {
+        var token = req.cookies.token;
+        var decodeToken = jwt.verify(token, 'mytoken');
+        Notification.updateMany({ user: decodeToken }, { $set: { isRead: true } })
+            .then(() => res.redirect('/notification'))
+            .catch(err => console.log(err));
     }
 };
 

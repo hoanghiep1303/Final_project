@@ -123,3 +123,19 @@ header {
     // font-family: 'Nunito', sans-serif;
     font-family: 'Dancing Script', cursive;
 }
+
+.dropdown-link {
+    // color: #888;
+    // font-size: 20px;
+    display: inline-block;
+    // padding-right: 0px;
+    position: relative;
+}
+
+.dropdown-link .number {
+    position: absolute;
+    // font-size: 15px !important;
+    top: -10px;
+    right: -23px;
+    border: 2px solid white;
+}
