@@ -31,29 +31,32 @@
             <li class="nav-item mx-1 dropdown">
                 <a class="nav-link rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" style="padding: 10px 20px;">
-                    <i class="fa fa-bell dropdown-link text-pirmary">
+                    <i class="fa fa-bell dropdown-link">
                         {{#if noti}}
                         <span class="badge bg-danger badge-noti text-white ms-1 rounded-pill number text-center">
                             {{counterUnRead noti}}
                         </span>
                         {{else}}
-                        <span
-                            class="badge bg-danger badge-noti text-white ms-1 rounded-pill number text-center">0</span>
+                        <span class="badge bg-danger badge-noti text-white ms-1 rounded-pill number text-center">0</span>
                         {{/if}}
                     </i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <div class="dropdown-items text-center">
-                        <h3 class="title pt-2">Notifications</h3>
-                    </div>
+                    <li class="dropdown-items text-center">
+                        <h3 class="title pt-2 text-success fw-bolder mx-5">Notifications</h3>
+                    </li>
                     <hr>
+                    {{#if noti}}
                     {{#each noti}}
                     {{#ifeq this.isRead false}}
                     <li><a class="dropdown-item {{#ifeq this.status false}}text-danger {{else}} text-primary{{/ifeq}}"
-                            href="/notification">{{this.desc}}</a></li>
+                            href="/notification/read-all">{{this.desc}}</a></li>
                     {{/ifeq}}
                     {{/each}}
-                    <li class="dropdown-item text-center p-0"><a href="/notification/read-all">Read all</a></li>
+                    <li class="dropdown-item text-center p-0"><a href="/notification/read-all">View all</a></li>
+                    {{else}}
+                    <li class="dropdown-item text-center p-0"><a href="/notification/read-all">No Notifications!</a></li>
+                    {{/if}}
                 </ul>
             </li>
             {{else}}
@@ -72,9 +75,9 @@
             <a href="/cart" class="header-cart btn btn-outline-success rounded">
                 <i class="fa fa-shopping-cart me-1"></i>
                 Cart
-                {{#if session.cart.totalQty}}
+                {{#if cart.totalQty}}
                 <span
-                    class="badge bg-danger badge-counter text-white ms-1 rounded-pill">{{session.cart.totalQty}}</span>
+                    class="badge bg-danger badge-counter text-white ms-1 rounded-pill">{{cart.totalQty}}</span>
                 {{else}}
                 <span class="badge bg-danger badge-counter text-white ms-1 rounded-pill">0</span>
                 {{/if}}

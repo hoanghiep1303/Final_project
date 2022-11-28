@@ -126,7 +126,7 @@ header {
 
 .dropdown-link {
     // color: #888;
-    // font-size: 20px;
+    font-size: 20px;
     display: inline-block;
     // padding-right: 0px;
     position: relative;
@@ -134,8 +134,8 @@ header {
 
 .dropdown-link .number {
     position: absolute;
-    // font-size: 15px !important;
-    top: -10px;
-    right: -23px;
+    font-size: 12px;
+    top: -7px;
+    right: -22px;
     border: 2px solid white;
 }

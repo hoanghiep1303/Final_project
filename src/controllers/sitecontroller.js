@@ -19,10 +19,9 @@ class sitecontroller {
                 Product.find({}).limit(6),
                 Category.find(),
                 Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
-                Notification.find({ user: decodeToken, status: true, desc: /.*Checkout.*/ }).sort({ createdAt: -1 }),
             ])
                 .then(([
-                    user, product, category, noti, history
+                    user, product, category, noti,
                 ]) => {
                     if (user) {
                         req.user = user
@@ -31,7 +30,6 @@ class sitecontroller {
                             product: multipleMongooseToObject(product),
                             category: multipleMongooseToObject(category),
                             noti: multipleMongooseToObject(noti),
-                            history: multipleMongooseToObject(history),
                             cart: req.session.cart,
                         })
                         // next()
@@ -155,22 +153,31 @@ class sitecontroller {
         if (req.cookies.token) {
             var token = req.cookies.token;
             var decodeToken = jwt.verify(token, 'mytoken');
-            User.findOne({ _id: decodeToken })
-                .then(user => {
-                    req.user = user
-                    if (!req.session.cart) {
+            Promise.all([
+                User.findOne({ _id: decodeToken }),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
+            ])
+                .then(([
+                    user, noti,
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        if (!req.session.cart) {
+                            return res.render('checkout', {
+                                user: mongooseToObject(user),
+                                products: null,
+                                noti: multipleMongooseToObject(noti),
+                            });
+                        }
+                        const cart = new Cart(req.session.cart);
                         return res.render('checkout', {
                             user: mongooseToObject(user),
-                            products: null,
+                            products: cart.generateArray(),
+                            totalPrice: cart.totalPrice,
+                            cart: req.session.cart,
+                            noti: multipleMongooseToObject(noti),
                         });
                     }
-                    const cart = new Cart(req.session.cart);
-                    return res.render('checkout', {
-                        user: mongooseToObject(user),
-                        products: cart.generateArray(),
-                        totalPrice: cart.totalPrice,
-                        cart: req.session.cart,
-                    });
                 })
                 .catch(err => console.log(err))
         }
@@ -406,10 +413,11 @@ class sitecontroller {
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
+                Notification.find({ user: decodeToken }).sort({ 'createdAt': 1 }),
                 Notification.find({ user: decodeToken, status: true, desc: /.*Checkout.*/ }).sort({ createdAt: -1 }),
             ])
                 .then(([
-                    user, product, noti
+                    user, product, noti, history
                 ]) => {
                     if (user) {
                         req.user = user
@@ -417,6 +425,7 @@ class sitecontroller {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
                             noti: multipleMongooseToObject(noti),
+                            history: multipleMongooseToObject(history),
                             cart: req.session.cart,
                         })
                         // next()

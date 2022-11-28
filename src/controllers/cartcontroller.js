@@ -2,11 +2,12 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const Notification = require('../models/Notification');
 
 const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
 class cartcontroller {
-    addtocartfromshow(req,res,next){
+    addtocartfromshow(req, res, next) {
         const productId = req.params.id;
         const cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -48,29 +49,39 @@ class cartcontroller {
     }
     cart(req, res, next) {
         if (req.cookies.token) {
-        var token = req.cookies.token;
-        var decodeToken = jwt.verify(token, 'mytoken');
-            User.findOne({ _id: decodeToken })
-            .then(user => {
-                    req.user = user
-                    if (!req.session.cart) {
-                        return res.render('cart', { 
+            var token = req.cookies.token;
+            var decodeToken = jwt.verify(token, 'mytoken');
+            Promise.all([
+                User.findOne({ _id: decodeToken }),
+                Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
+            ])
+                .then(([
+                    user, noti,
+                ]) => {
+                    if (user) {
+                        req.user = user
+                        if (!req.session.cart) {
+                            return res.render('cart', {
+                                user: mongooseToObject(user),
+                                noti: multipleMongooseToObject(noti),
+                                products: null,
+                                messages: req.flash('success'),
+                                success: true,
+                            });
+                        }
+                        const cart = new Cart(req.session.cart);
+                        return res.render('cart', {
                             user: mongooseToObject(user),
-                            products: null,
-                            messages: req.flash('success'),
-                            success: true,
+                            products: cart.generateArray(),
+                            totalPrice: cart.totalPrice,
+                            messages: req.flash('error'),
+                            cart: req.session.cart,
+                            noti: multipleMongooseToObject(noti),
                         });
                     }
-                    const cart = new Cart(req.session.cart);
-                    return res.render('cart', { 
-                        user: mongooseToObject(user),
-                        products: cart.generateArray(), 
-                        totalPrice: cart.totalPrice,
-                        messages: req.flash('error'),
-                        cart: req.session.cart,
-                    });
+
                 })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
         }
         else {
             res.redirect('/error');
