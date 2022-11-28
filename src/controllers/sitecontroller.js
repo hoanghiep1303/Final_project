@@ -404,11 +404,10 @@ class sitecontroller {
             Promise.all([
                 User.findOne({ _id: decodeToken }),
                 Product.find({}).limit(3),
-                Notification.find({user: decodeToken}).sort({'createdAt': 1}),
                 Notification.find({user: decodeToken, status: true, desc : /.*Checkout.*/}).sort({createdAt: -1}),
             ])
                 .then(([
-                    user, product, noti, history
+                    user, product, noti
                 ]) => {
                     if (user) {
                         req.user = user
@@ -416,7 +415,6 @@ class sitecontroller {
                             user: mongooseToObject(user),
                             product: multipleMongooseToObject(product),
                             noti: multipleMongooseToObject(noti),
-                            history: multipleMongooseToObject(history),
                             cart: req.session.cart,
                         })
                         // next()
@@ -465,13 +463,6 @@ class sitecontroller {
                 }))
                 .catch(err => console.log(err))
         }
-    }
-    readAll(req, res, next) {
-        var token = req.cookies.token;
-        var decodeToken = jwt.verify(token, 'mytoken');
-        Notification.updateMany({user: decodeToken}, {$set: {isRead: true}})
-        .then(() => res.redirect('/notification'))
-        .catch(err => console.log(err));
     }
 };
 

@@ -43,7 +43,6 @@ router.get('/profile', isLoggined,sitecontroller.profile);
 router.get('/history', isLoggined,sitecontroller.history);
 
 router.get('/notification', isLoggined,sitecontroller.notification);
-router.get('/notification/read-all', isLoggined,sitecontroller.readAll);
 
 //social-login-session
 router.use(cookieParser());
