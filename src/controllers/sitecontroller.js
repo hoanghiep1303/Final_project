@@ -39,7 +39,7 @@ class sitecontroller {
                 .catch(err => console.log(err))
         }
         else {
-            Product.find({}).limit(3)
+            Product.find({}).limit(6)
                 .then((product) => res.render('home', {
                     product: multipleMongooseToObject(product),
                 }))

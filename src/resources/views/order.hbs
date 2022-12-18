@@ -1,4 +1,3 @@
-
 <section class="padding-y">
   <div class="d-flex flex-row my-4 justify-content-center">
     <h1 class="m-0 text-uppercase text-success text-center pages-title">Order
@@ -48,54 +47,6 @@
             </div> <!-- collapse.// -->
           </article> <!-- filter-group // -->
 
-          {{!-- <article class="filter-group">
-            <header class="card-header">
-              <a href="#" class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapse_aside_brands"
-                aria-expanded="false">
-                <i class="icon-control fa fa-chevron-down"></i> Brands
-              </a>
-            </header>
-            <div class="collapse" id="collapse_aside_brands" style="">
-              <div class="card-body">
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="" checked="">
-                  <span class="form-check-label"> Mercedes </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">120</b>
-                </label> <!-- form-check end.// -->
-
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="" checked="">
-                  <span class="form-check-label"> Toyota </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">15</b>
-                </label> <!-- form-check end.// -->
-
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="" checked="">
-                  <span class="form-check-label"> Mitsubishi </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">35</b>
-                </label> <!-- form-check end.// -->
-
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="" checked="">
-                  <span class="form-check-label"> Nissan </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">89</b>
-                </label> <!-- form-check end.// -->
-
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="">
-                  <span class="form-check-label"> Honda </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">30</b>
-                </label> <!-- form-check end.// -->
-
-                <label class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" value="">
-                  <span class="form-check-label"> Honda accord </span>
-                  <b class="badge rounded-pill bg-gray-dark float-end">30</b>
-                </label> <!-- form-check end.// -->
-              </div> <!-- card-body .// -->
-            </div> <!-- collapse.// -->
-          </article> --}}
-
           <article class="filter-group">
             <header class="card-header">
               <a href="#" class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapse_aside2"
@@ -122,38 +73,6 @@
               </div> <!-- card-body.// -->
             </div> <!-- collapse.// -->
           </article> <!-- filter-group // -->
-
-          {{!-- <article class="filter-group">
-            <header class="card-header">
-              <a href="#" class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapse_aside3"
-                aria-expanded="false">
-                <i class="icon-control fa fa-chevron-down"></i> Size
-              </a>
-            </header>
-            <div class="collapse" id="collapse_aside3" style="">
-              <div class="card-body">
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> XS </span>
-                </label>
-
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> SM </span>
-                </label>
-
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> LG </span>
-                </label>
-
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> XXL </span>
-                </label>
-              </div> <!-- card-body.// -->
-            </div> <!-- collapse.// -->
-          </article> <!-- filter-group // --> --}}
 
 
         </div> <!-- card.// -->
@@ -196,23 +115,39 @@
                 {{#each product}}
                 <div class="col-sm-6 col-md-4 col-lg-4 all pizza product-item" id="{{this._id}}-item">
                   <div class="box shadow my-2">
-                    <div class="">
+                    <div class="pb-4">
                       <div class="img-box" style="border-radius: 15px">
                         <img id="{{this._id}}-image" src="../../uploads/{{this.image}}" class="card-img-top" />
                       </div>
-                      <div class="detail-box">
+                      <div class="detail-box overflow-hidden" style="max-height: 120px;">
                         <div class="d-flex justify-content-between">
-                          <h5 class="product-name" data-id="{{this._id}}">
+                          <h5 class="product-name me-3" data-id="{{this._id}}">
                             {{this.name}}
                           </h5>
                           <h5>
                             $<span class="product-price" data-id="{{this._id}}">{{this.price}}</span>
                           </h5>
                         </div>
-                        <p>
-                          {{this.desc}}
-                        </p>
                         <div class="">
+                          <p class="">
+                            {{this.desc}}
+                          </p>
+                        </div>
+
+                        {{!-- <div class="">
+                          <div class="d-flex justify-content-between">
+                            <a class="text-white me-2 btn btn-success w-100 rounded-pill mygreen-btn"
+                              href="/product/show/{{this._id}}">
+                              <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                            <a class="text-white btn btn-success w-100 rounded-pill mygreen-btn"
+                              href="/cart/add-to-cart/{{this._id}}">
+                              <i class="fa-solid fa-cart-plus"></i>
+                            </a>
+                          </div>
+                        </div> --}}
+                      </div>
+                      <div class="mx-4 mt-3">
                           <div class="d-flex justify-content-between">
                             <a class="text-white me-2 btn btn-success w-100 rounded-pill mygreen-btn"
                               href="/product/show/{{this._id}}">
@@ -224,7 +159,6 @@
                             </a>
                           </div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -264,7 +198,7 @@
 <script type="text/javascript">
   var items = $(".product-wrapper .product-item");
   var numItems = items.length;
-  var perPage = 3;
+  var perPage = 6;
 
   items.slice(perPage).hide();
 

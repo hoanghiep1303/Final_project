@@ -2,6 +2,9 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const jwt = require("jsonwebtoken");
+const Notification = require('../models/Notification');
+
+// const { multipleMongooseToObject, mongooseToObject } = require('../ulti/mongoose')
 
 const {
   multipleMongooseToObject,
@@ -16,12 +19,14 @@ class admincontroller {
       User.findOne({ _id: decodeToken }),
       Product.find({}),
       Category.find(),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
     ])
-      .then(([user, product, category]) => {
+      .then(([user, product, category, noti, ]) => {
         res.render("admin", {
           user: mongooseToObject(user),
           product: multipleMongooseToObject(product),
           category: multipleMongooseToObject(category),
+          noti: multipleMongooseToObject(noti),
           layout: "dashboard",
         });
       })
@@ -74,6 +79,7 @@ class admincontroller {
       User.findOne({ _id: decodeToken }),
       Category.find({}),
       Product.find().populate("category"),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // Product.findDeleted({}).populate('category')
     ])
       .then(
@@ -81,6 +87,7 @@ class admincontroller {
           user,
           category,
           product,
+          noti,
           // foodDeleted
         ]) => {
           res.render("admin/product-mgmt", {
@@ -88,6 +95,7 @@ class admincontroller {
             category: multipleMongooseToObject(category),
             product: multipleMongooseToObject(product),
             // foodDeleted: multipleMongooseToObject(foodDeleted),
+            noti: multipleMongooseToObject(noti),
             layout: "dashboard",
           });
         }
@@ -104,17 +112,20 @@ class admincontroller {
     Promise.all([
       User.findOne({ _id: decodeToken }),
       Category.find(),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // Category.findDeleted(),
     ])
       .then(
         ([
           user,
           category,
+          noti,
           // categoryDeleted
         ]) => {
           res.render("admin/category-mgmt", {
             user: mongooseToObject(user),
             category: multipleMongooseToObject(category),
+            noti: multipleMongooseToObject(noti),
             // categoryDeleted: multipleMongooseToObject(categoryDeleted),
             layout: "dashboard",
           });
@@ -133,13 +144,15 @@ class admincontroller {
       User.findOne({ _id: decodeToken }),
       Category.find(),
       User.find(),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // User.findDeleted(),
     ])
-      .then(([user, category, users]) => {
+      .then(([user, category, users, noti]) => {
         res.render("admin/user-mgmt", {
           user: mongooseToObject(user),
           users: multipleMongooseToObject(users),
           category: multipleMongooseToObject(category),
+          noti: multipleMongooseToObject(noti),
           layout: "dashboard",
         });
       })
@@ -156,6 +169,7 @@ class admincontroller {
       User.findOne({ _id: decodeToken }),
       Category.find(),
       Product.findDeleted({}).populate("category"),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // Product.findDeleted({}).populate('category')
     ])
       .then(
@@ -163,12 +177,14 @@ class admincontroller {
           user,
           category,
           product,
+          noti,
           // foodDeleted
         ]) => {
           res.render("admin/delete-product-table", {
             user: mongooseToObject(user),
             category: multipleMongooseToObject(category),
             product: multipleMongooseToObject(product),
+            noti: multipleMongooseToObject(noti),
             // foodDeleted: multipleMongooseToObject(foodDeleted),
             layout: "dashboard",
           });
@@ -186,17 +202,20 @@ class admincontroller {
     Promise.all([
       User.findOne({ _id: decodeToken }),
       Category.findDeleted(),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // Category.findDeleted(),
     ])
       .then(
         ([
           user,
           category,
+          noti,
           // categoryDeleted
         ]) => {
           res.render("admin/delete-category-table", {
             user: mongooseToObject(user),
             category: multipleMongooseToObject(category),
+            noti: multipleMongooseToObject(noti),
             // categoryDeleted: multipleMongooseToObject(categoryDeleted),
             layout: "dashboard",
           });
@@ -215,13 +234,15 @@ class admincontroller {
       User.findOne({ _id: decodeToken }),
       Category.find(),
       User.find(),
+      Notification.find({ user: decodeToken }).sort({ createdAt: -1 }),
       // User.findDeleted(),
     ])
-      .then(([user, category, users]) => {
+      .then(([user, category, users, noti]) => {
         res.render("admin/delete-user-table", {
           user: mongooseToObject(user),
           users: multipleMongooseToObject(users),
           category: multipleMongooseToObject(category),
+          noti: multipleMongooseToObject(noti),
           layout: "dashboard",
         });
       })

@@ -31,7 +31,7 @@ class usercontroller {
                 })
                 noti.save()
                 req.flash('successMsg', 'Your profile information has been updated'),
-                    res.redirect('/profile')
+                    res.redirect('back')
             })
             .catch(next);
     }

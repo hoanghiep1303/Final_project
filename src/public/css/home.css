@@ -434,7 +434,7 @@ a:focus {
   background: linear-gradient(to bottom, #f1f2f3 25px, #222831 25px); }
 
 .food_section .box .img-box {
-  background: #f1f2f3;
+  background: #ffffff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

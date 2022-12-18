@@ -27,9 +27,7 @@
                                         <th scope="col">Shipping</th>
                                         <th scope="col">Notes</th>
                                         <th scope="col">Amount</th>
-                                        {{!-- <th scope="col">Status</th> --}}
                                         <th scope="col">Time</th>
-                                        <th scope="col">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
@@ -44,18 +42,8 @@
                                         <td>{{#if this.shipping}}{{this.shipping}}{{/if}}</td>
                                         <td>{{#if this.company}}{{this.company}}{{/if}}</td>
                                         <td>$ {{this.amount}}</td>
-                                        {{!-- <td>
-                                            {{#ifeq this.status true}}
-                                                <i class="fa-solid fa-circle-check text-success fa-2x"></i>
-                                            {{else}}
-                                                <i class="fa-solid fa-circle-xmark text-danger fa-2x"></i>                                            
-                                            {{/ifeq}}
-                                        </td> --}}
                                         <td id="{{this._id}}-createdAt">{{moment this.createdAt format = "HH:mm on
                                             DD/MM/yyyy"}}</td>
-                                        <td>
-                                            <button class="btn btn-dark">Details</button>
-                                        </td>
                                     </tr>
                                     {{else}}
                                     <tr>
