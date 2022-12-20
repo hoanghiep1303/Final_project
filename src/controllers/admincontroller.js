@@ -35,42 +35,6 @@ class admincontroller {
         res.redirect("/login");
       });
   }
-  // create(req, res) {
-  //     res.render('admin/product-mgmt')
-  // }
-  // update(req, res) {
-  //     Product.findOne({ _id: req.params.id })
-  //         .then(product => {
-  //             if (!product) {
-  //                 res.render('admin/product-mgmt', {
-  //                     msg: 'Product not found!'
-  //                 })
-  //             } else {
-  //                 res.render('admin/product-mgmt', {
-  //                     product: mongooseToObject(product),
-  //                     messages: req.flash('success')
-  //                 })
-  //             }
-  //         })
-  // }
-  // createCategory(req, res) {
-  //     res.render('admin/category-mgmt')
-  // }
-  // updateCategory(req, res) {
-  //     Category.findOne({ _id: req.params.id })
-  //         .then(category => {
-  //             if (!category) {
-  //                 res.render('admin/category-mgmt', {
-  //                     msg: 'Category not found!'
-  //                 })
-  //             } else {
-  //                 res.render('admin/category-mgmt', {
-  //                     category: mongooseToObject(category),
-  //                     messages: req.flash('success')
-  //                 })
-  //             }
-  //         })
-  // }
 
   productTable(req, res, next) {
     var token = req.cookies.token;

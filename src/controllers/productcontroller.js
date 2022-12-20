@@ -44,11 +44,6 @@ class productcontroller {
         )
         .catch((err) => console.log(err));
     }
-    // Product.find({}).limit(3)
-    //     .then((product) => res.render('home', {
-    //         product: multipleMongooseToObject(product)
-    //     }))
-    //     .catch(err => console.log(err))
   }
 
   store(req, res, next) {
