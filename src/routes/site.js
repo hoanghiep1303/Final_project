@@ -66,23 +66,17 @@ passport.use(new GoogleStrategy({
         // return done(null, profile)
         process.nextTick(function () {
 
-            // find the user in the database based on their google id
             User.findOne({ 'googleId': profile.id }, function (err, user) {
                 console.log(profile)
-                // if there is an error, stop everything and return that
-                // ie an error connecting to the database
                 if (err)
                     return done(err);
 
-                // if the user is found, then log them in
                 if (user) {
-                    return done(null, user); // user found, return that user
+                    return done(null, user); 
                 } else {
-                    // if there is no user found with that google id, create them
                     var newUser = new User();
-                    // set all of the google information in our user model
-                    newUser.googleId = profile.id; // set the users google id           
-                    newUser.name = profile.displayName; // look at the passport user profile to see how names are returned
+                    newUser.googleId = profile.id; 
+                    newUser.name = profile.displayName; 
                     newUser.email = profile.emails[0].value;
                     newUser.money = 0;
                     newUser.gender = profile.gender;
@@ -92,7 +86,6 @@ passport.use(new GoogleStrategy({
                         if (err)
                             throw err;
 
-                        // if successful, return the new user
                         return done(null, newUser);
                     });
                 }
@@ -109,7 +102,7 @@ passport.deserializeUser(function (id, done) {
         done(err, user);
     });
 });
-
+// Setup router for user request
 router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 router.get('/auth/google/callback',
     passport.authenticate('google', {
@@ -134,33 +127,25 @@ passport.use(new FacebookStrategy({
         // return done(null, profile)
         process.nextTick(function () {
 
-            // find the user in the database based on their facebook id
             User.findOne({ 'facebookId': profile.id }, function (err, user) {
                 console.log(profile)
-                // if there is an error, stop everything and return that
-                // ie an error connecting to the database
                 if (err)
                     return done(err);
 
-                // if the user is found, then log them in
                 if (user) {
-                    return done(null, user); // user found, return that user
+                    return done(null, user); 
                 } else {
-                    // if there is no user found with that facebook id, create them
                     var newUser = new User();
-                    newUser.facebookId = profile.id; // set the users facebook id
+                    newUser.facebookId = profile.id; 
                     // newUser.email = profile.email;
-                    // set all of the facebook information in our user model           
-                    newUser.name  = profile.displayName; // look at the passport user profile to see how names are returned
+                    newUser.name  = profile.displayName; 
                     newUser.money = 0;
                     newUser.gender = profile.gender;
                     newUser.avatar = profile.photos;
-                    // save our user to the database
                     newUser.save(function (err) {
                         if (err)
                             throw err;
 
-                        // if successful, return the new user
                         return done(null, newUser);
                     });
                 }
@@ -177,7 +162,7 @@ passport.deserializeUser(function (id, done) {
         done(err, user);
     });
 });
-
+// Setup router for user request
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
